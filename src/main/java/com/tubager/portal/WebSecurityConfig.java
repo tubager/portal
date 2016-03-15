@@ -6,22 +6,24 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
+
+import com.tubager.service.UserService;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private UserService userService;
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
 	        .csrf().disable()
 	        .authorizeRequests()
-            .antMatchers("/img/**", "/js/**", "/css/**", "/fonts/**", "/font/**", "/font-awesome/**", "/bower_components/**", "/application/helper.js").permitAll()
-			.anyRequest().authenticated()
+            .antMatchers("/account/**").authenticated()
+			.anyRequest().permitAll()
         .and()
             .formLogin().loginPage("/login.html").defaultSuccessUrl("/index.html").failureUrl("/login.html?error=1").permitAll()
         .and()
@@ -31,8 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER");
+        auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
+//            .inMemoryAuthentication()
+//                .withUser("user").password("password").roles("USER");
     }
 }

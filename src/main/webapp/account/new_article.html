@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥旅行网</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+	<style>
+		body{
+			font-family: Microsoft YaHei;
+			background-color: #f9f9f9;
+		}
+		p{
+			-webkit-margin-before: 0px;
+    		-webkit-margin-after: 0px;
+		}
+		nav{
+			padding: 0px 15px;
+		}
+		#wrapper{
+			position: relative;
+		}
+		.footer{
+			position: absolute;
+			bottom: 0px;
+		}
+		.navbar-static-top{
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			right: 0px;
+		}
+		#content-area{
+			position: relative;
+			border-width: 0px;
+			padding-bottom: 60px;
+		}
+		#tbg-toolbar{
+			background-color: white;
+			box-shadow: #d3d3d3 0px 24px 59px;
+			width: 100px;
+			padding: 10px;
+			position: fixed;
+			left: 50px;
+			top: 100px;
+		}
+		.toolbar-item{
+			margin: 10px;
+			cursor: pointer;
+		}
+		.toolbar-divider{
+			min-height: 10px;
+		}
+		#tbg-toolbar .fa{
+			font-size: 35px;
+		    display: block;
+		}
+		.toolbar-title{
+			width: 100%;
+			text-align: center;
+		}
+		.toolbar-icon{
+			width: 100%;
+			text-align: center;
+			color: #39c6cd;
+		}
+		#article-area{
+			max-width: 700px;
+			display: block;
+			margin-top: 70px;
+			background-color: white;
+			border-width: 0px;
+			min-height: 600px;
+			box-shadow: 0px 24px 59px #b2c0bf;
+		}
+		#article-content{
+			min-height: 600px;
+		}
+		#title-area{
+			position: fixed;
+			top: 100px;
+			right: 4%;
+			width: 20%;
+		}
+		#uploadCoverBtn{
+			display: block;
+			margin: 0px auto;
+		}
+		#coverImgPreview{
+			max-width: 100%;
+			margin: 0px auto;
+			display: block;
+		}
+	</style>
+</head>
+
+<body class="top-navigation">
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area" class="row">
+        	<div class="row">
+        		<div class="col-xs-3"></div>
+	        	<div id="article-area" class="col-xs-6">
+	        		<div id="article-content" class="sortable droppable">
+	        		</div>
+	        	</div>
+        		<div class="col-xs-3">
+        			<div id="title-area">
+        				<input type="text" class="form-control" placeholder="游记标题" />
+        				<div style="margin-top: 20px;">
+        					<img id="coverImgPreview" src="" />
+        				</div>
+        				<div style="margin-top: 20px;">
+        					<button id="uploadCoverBtn" class="btn btn-primary " type="button"><i class="fa fa-picture-o"></i>上传封面图片</button>
+        					<input type="file" id="coverinputfile" style="height:0;width:0;z-index: -1;"/>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        	<div id="tbg-toolbar">
+        		<div class="toolbar-item draggable" data-type="title">
+        			<p class="toolbar-icon" data-type="title">
+        				<i class="fa fa-list-ul"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="title">标题</p>
+        		</div>
+        		<div class="toolbar-divider">
+        		</div>
+        		<div class="toolbar-item draggable" data-type="text">
+        			<p class="toolbar-icon" data-type="text">
+        				<i class="fa fa-align-justify"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="text">文字</p>
+        		</div>
+        		<div class="toolbar-divider">
+        		</div>
+        		<div class="toolbar-item draggable" data-type="image">
+        			<p class="toolbar-icon" data-type="image">
+        				<i class="fa fa-picture-o"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="image">照片</p>
+        		</div>
+        		<div class="toolbar-divider">
+        		</div>
+        		<div class="toolbar-item draggable" data-type="tip">
+        			<p class="toolbar-icon" data-type="tip">
+        				<i class="fa fa-info"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="tip">小贴士</p>
+        		</div>
+        	</div>
+        </div>
+        <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                       <h4 class="modal-title">段落标题</h4>
+                   </div>
+                   <div class="modal-body">
+                       <input type="text" class="form-control" placeholder="段落标题" />
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+   </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/js/tbg/header.js"></script>
+	
+	<script>
+		$("#uploadCoverBtn").click(function(){
+			document.getElementById('coverinputfile').click();
+			
+			$("#coverinputfile").change(function(){
+				var data = new FormData();
+				data.append('file', $('#coverinputfile')[0].files[0]);
+				$.ajax({
+					url:'/upload/image',
+					type:'POST',
+					data:data,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success:function(d){
+						var img = document.getElementById("coverImgPreview");
+						img.src = "/resource/file/" + d;
+					},
+					error:function(){
+						console.log("upload failed");
+					}
+				});
+			});
+		});
+		
+		$(document).ready(function(){
+			$( "#tbg-toolbar .draggable" ).draggable({
+	    		opacity: 0.7,
+	    		connectWith: ".droppable",
+	    		connectToSortable: ".droppable",
+	    		zIndex:100000,
+	    		cursor: "move",
+	    		helper: function() {
+	    			var type = this.dataset["type"];
+		            var img = $(this).clone();
+		            var div = $('<div class="article-item" data-type="'+type+'"></div>').append(img);
+		            return $(div);
+		        }
+			});
+			$( ".sortable" ).sortable({
+	    		opacity: 0.7,
+	    		connectWith: ".droppable",
+	    		receive: onDrop
+			});
+			$(".toolbar-item").click(function(evt){
+				var ele = evt.target;
+				while(!ele.classList.contains("toolbar-item")){
+					ele = ele.parentNode;
+				}
+				var type = ele.dataset["type"];
+				var node = document.createElement("div");
+				node.classList.add("article-item");
+				node.dataset["type"] = type;
+				node.textContent = "AAAAAAAAA";
+				document.getElementById("article-content").appendChild(node);
+				addItem(type, node);
+			});
+			
+			function onDrop(evt){
+		    	var ele = evt.toElement;
+				while(!ele.classList.contains("article-item")){
+					ele = ele.parentNode;
+				}
+		    	var type = ele.dataset["type"];
+		    	addItem(type, ele);
+			}
+			
+			function addItem(type, node){
+				switch(type){
+		    		case "text":
+		    			break;
+		    		case "title":
+		    			showTitle();
+		    			break;
+		    		case "image":
+		    			break;
+		    		case "tip":
+		    			break;
+		    	}
+			}
+			
+			function showTitle(){
+				$("#myModal5").modal("show");
+			}
+		});
+	</script>
+
+</body>
+
+</html>
