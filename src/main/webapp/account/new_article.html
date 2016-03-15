@@ -79,9 +79,11 @@
 			border-width: 0px;
 			min-height: 600px;
 			box-shadow: 0px 24px 59px #b2c0bf;
+			padding: 0px;
 		}
 		#article-content{
 			min-height: 600px;
+			padding: 20px;
 		}
 		#title-area{
 			position: fixed;
@@ -97,6 +99,44 @@
 			max-width: 100%;
 			margin: 0px auto;
 			display: block;
+		}
+		.toolbar-button{
+			margin: 5px;
+			font-size: 16px;
+		}
+		.article-item{
+			position: relative;
+			margin: 10px;
+			padding: 5px;
+		}
+		.article-item-toolbar{
+			position: absolute;
+			right: 0px;
+			top: 2px;
+			display: none;
+		}
+		.article-item:hover{
+			border: 1px dotted green;
+		}
+		.article-item:hover .article-item-toolbar{
+			display: block;
+		}
+		#newImg{
+			cursor: pointer;
+			max-width: 400px;
+			display: block;
+			margin: 0px auto;
+		}
+		#newImageText{
+			margin-top: 20px;
+		}
+		.tbg-article-img-text{
+			text-align: center;
+		}
+		.tbg-article-img{
+			max-width: 100%;
+			display: block;
+			margin: 0px auto;
 		}
 	</style>
 </head>
@@ -159,20 +199,77 @@
         		</div>
         	</div>
         </div>
-        <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal inmodal fade" id="titleModal" tabindex="-1" role="dialog"  aria-hidden="true">
            <div class="modal-dialog modal-lg">
                <div class="modal-content">
                    <div class="modal-header">
                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                       <h4 class="modal-title">段落标题</h4>
+                       <h2 class="modal-title">段落标题</h2>
                    </div>
                    <div class="modal-body">
-                       <input type="text" class="form-control" placeholder="段落标题" />
+                       <input id="newTitleText" type="text" class="form-control" placeholder="段落标题" />
                    </div>
 
                    <div class="modal-footer">
                        <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
-                       <button type="button" class="btn btn-primary">确定</button>
+                       <button type="button" class="btn btn-primary" id="newTitleBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="textModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                       <h2 class="modal-title">文字段落</h2>
+                   </div>
+                   <div class="modal-body">
+                       <textarea id="newTextArea" rows="10" class="form-control" placeholder="书写故事..." ></textarea>
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newTextBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="tipModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                       <h2 class="modal-title">旅行小贴士</h2>
+                   </div>
+                   <div class="modal-body">
+                       <textarea id="newTipArea" rows="10" class="form-control" placeholder="温馨提示" ></textarea>
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newTipBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="imageModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                       <h2 class="modal-title">图片</h2>
+                   </div>
+                   <div class="modal-body">
+                   		<label style="margin-bottom:10px;">点击图片可选择新图片</label>
+                   		<img id="newImg" src="/img/default.png "/>
+                   		<input id="newImageText" class="form-control" placeholder="给我一个描述" ></input>
+                   		<input type="file" id="imageinputfile" style="height:0;width:0;z-index: -1;"/>
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newImageBtn">确定</button>
                    </div>
                </div>
            </div>
@@ -215,6 +312,30 @@
 			});
 		});
 		
+		$("#newImg").click(function(){
+			document.getElementById('imageinputfile').click();
+			
+			$("#imageinputfile").change(function(){
+				var data = new FormData();
+				data.append('file', $('#imageinputfile')[0].files[0]);
+				$.ajax({
+					url:'/upload/image',
+					type:'POST',
+					data:data,
+					cache: false,
+					contentType: false,
+					processData: false,
+					success:function(d){
+						var img = document.getElementById("newImg");
+						img.src = "/resource/file/" + d;
+					},
+					error:function(){
+						console.log("upload failed");
+					}
+				});
+			});
+		});
+		
 		$(document).ready(function(){
 			$( "#tbg-toolbar .draggable" ).draggable({
 	    		opacity: 0.7,
@@ -243,7 +364,7 @@
 				var node = document.createElement("div");
 				node.classList.add("article-item");
 				node.dataset["type"] = type;
-				node.textContent = "AAAAAAAAA";
+				node.textContent = "";
 				document.getElementById("article-content").appendChild(node);
 				addItem(type, node);
 			});
@@ -253,6 +374,8 @@
 				while(!ele.classList.contains("article-item")){
 					ele = ele.parentNode;
 				}
+				ele.innerHTML = "";
+				ele.removeAttribute("style");
 		    	var type = ele.dataset["type"];
 		    	addItem(type, ele);
 			}
@@ -260,20 +383,183 @@
 			function addItem(type, node){
 				switch(type){
 		    		case "text":
+		    			showText(node,"", "new");
 		    			break;
 		    		case "title":
-		    			showTitle();
+		    			showTitle(node,"", "new");
 		    			break;
 		    		case "image":
+		    			showImage(node,"/img/default.png","", "new");
 		    			break;
 		    		case "tip":
+		    			showTip(node,"", "new");
 		    			break;
 		    	}
 			}
 			
-			function showTitle(){
-				$("#myModal5").modal("show");
+			function editItem(node){
+				var type = node.dataset["type"];
+				switch(type){
+		    		case "text":
+		    			var text = node.firstElementChild.textContent;
+		    			showText(node,text, "edit");
+		    			break;
+		    		case "title":
+		    			var title = node.firstElementChild.textContent;
+		    			showTitle(node,title, "edit");
+		    			break;
+		    		case "image":
+		    			var img = node.firstElementChild.firstElementChild;
+		    			var p = img.nextSibling;
+		    			showImage(node, img.getAttribute("src"), p.textContent, "edit");
+		    			break;
+		    		case "tip":
+		    			var tip = node.firstElementChild.textContent;
+		    			showTip(node,tip, "edit");
+		    			break;
+		    	}
 			}
+			
+			function showTitle(node,val, mode){
+				$("#newTitleText").val(val);
+				$("#titleModal").modal("show");
+				$("#titleModal").data("node", node);
+				$("#titleModal").data("mode", mode);
+			}
+			
+			function showText(node,val, mode){
+				$("#newTextArea").val(val);
+				$("#textModal").modal("show");
+				$("#textModal").data("node", node);
+				$("#textModal").data("mode", mode);
+			}
+			
+			function showTip(node,val, mode){
+				$("#newTipArea").val(val);
+				$("#tipModal").modal("show");
+				$("#tipModal").data("node", node);
+				$("#tipModal").data("mode", mode);
+			}
+			
+			function showImage(node,src,val, mode){
+				$("#newImg").attr("src", src);
+				$("#newImageText").val(val);
+				$("#imageModal").modal("show");
+				$("#imageModal").data("node", node);
+				$("#imageModal").data("mode", mode);
+			}
+			
+			function createToolbar(){
+				var bar = document.createElement("span");
+				bar.classList.add("article-item-toolbar");
+				bar.innerHTML = '<a class="toolbar-button" href="#" data-action="edit" title="编辑"><i class="fa fa-pencil"></i></a>' +
+								'<a class="toolbar-button" href="#" data-action="delete" title="删除"><i class="fa fa-trash-o"></i></a>';
+				return bar;
+			}
+			
+			$("#newTitleBtn").click(function(){
+				var node = $("#titleModal").data("node");
+				var mode = $("#titleModal").data("mode");
+				var title = $("#newTitleText").val();
+				if(mode == "new"){
+					node.innerHTML = "";
+					var content = document.createElement("div");
+					content.textContent = title;
+					content.classList.add("article-item-content");
+					content.dataset["type"] = "title";
+					node.appendChild(content);
+					node.appendChild(createToolbar());
+				}
+				else{
+					node.firstElementChild.textContent = title;
+				}
+				$("#titleModal").modal("hide");
+			});
+			
+			$("#newTextBtn").click(function(){
+				var node = $("#textModal").data("node");
+				var mode = $("#textModal").data("mode");
+				var title = $("#newTextArea").val();
+				if(mode == "new"){
+					node.innerHTML = "";
+					var content = document.createElement("div");
+					content.textContent = title;
+					content.classList.add("article-item-content");
+					content.dataset["type"] = "text";
+					node.appendChild(content);
+					node.appendChild(createToolbar());
+				}
+				else{
+					node.firstElementChild.textContent = title;
+				}
+				$("#textModal").modal("hide");
+			});
+			
+			$("#newTipBtn").click(function(){
+				var node = $("#tipModal").data("node");
+				var mode = $("#tipModal").data("mode");
+				var title = $("#newTipArea").val();
+				if(mode == "new"){
+					node.innerHTML = "";
+					var content = document.createElement("div");
+					content.textContent = title;
+					content.classList.add("article-item-content");
+					content.dataset["type"] = "tip";
+					node.appendChild(content);
+					node.appendChild(createToolbar());
+				}
+				else{
+					node.firstElementChild.textContent = title;
+				}
+				$("#tipModal").modal("hide");
+			});
+			
+			$("#newImageBtn").click(function(){
+				var node = $("#imageModal").data("node");
+				var mode = $("#imageModal").data("mode");
+				var title = $("#newImageText").val();
+				var src = $("#newImg").attr("src");
+				if(mode == "new"){
+					node.innerHTML = "";
+					var content = document.createElement("div");
+					content.classList.add("article-item-content");
+					content.dataset["type"] = "image";
+					var img = document.createElement("img");
+					img.setAttribute("src", src);
+					img.classList.add("tbg-article-img");
+					content.appendChild(img);
+					var p = document.createElement("p");
+					p.textContent = title;
+					p.classList.add("tbg-article-img-text");
+					content.appendChild(p);
+					node.appendChild(content);
+					node.appendChild(createToolbar());
+				}
+				else{
+					var img = node.firstElementChild.firstElementChild;
+					img.setAttribute("src", src);
+					var p = img.nextSibling;
+					p.textContent = title;
+				}
+				$("#imageModal").modal("hide");
+			});
+			
+			$("#article-content").on("click", ".toolbar-button", function(evt){
+				var node = evt.originalEvent.srcElement;
+				while(node && node.tagName != "A"){
+					node = node.parentNode;
+				}
+				var action = node.dataset["action"];
+				while(!node.classList.contains("article-item")){
+					node = node.parentNode;
+				}
+				if(action == "edit"){
+					editItem(node);
+				}
+				else if(action == "delete"){
+					node.parentNode.removeChild(node);
+				}
+			});
 		});
 	</script>
 
