@@ -41,6 +41,7 @@
 			position: relative;
 			border-width: 0px;
 			padding-bottom: 60px;
+			background: url(http://tupian.enterdesk.com/2013/xll/006/0616/17.jpg) fixed;
 		}
 		#tbg-toolbar{
 			background-color: white;
@@ -49,7 +50,7 @@
 			padding: 10px;
 			position: fixed;
 			left: 50px;
-			top: 100px;
+			top: 90px;
 		}
 		.toolbar-item{
 			margin: 10px;
@@ -72,9 +73,9 @@
 			color: #39c6cd;
 		}
 		#article-area{
-			max-width: 700px;
+			max-width: 800px;
 			display: block;
-			margin-top: 70px;
+			margin-top: 90px;
 			background-color: white;
 			border-width: 0px;
 			min-height: 600px;
@@ -87,9 +88,12 @@
 		}
 		#title-area{
 			position: fixed;
-			top: 100px;
-			right: 4%;
-			width: 20%;
+			top: 150px;
+			right: 25px;
+			width: 22%;
+			padding: 10px;
+			background: white;
+			box-shadow: 0px 24px 59px #b2c0bf;
 		}
 		#uploadCoverBtn{
 			display: block;
@@ -138,6 +142,11 @@
 			display: block;
 			margin: 0px auto;
 		}
+		#tbg-header-toolbar{
+			position: fixed;
+			top: 90px;
+			right: 25px;
+		}
 	</style>
 </head>
 
@@ -147,9 +156,12 @@
         <div id="header-area" class="row border-bottom">
         </div>
         <div id="content-area" class="row">
+			<div id="tbg-header-toolbar">
+				<button id="" class="btn btn-primary btn-lg  pull-right" type="button"><i class="fa fa-save"></i></button>
+			</div>
         	<div class="row">
-        		<div class="col-xs-3"></div>
-	        	<div id="article-area" class="col-xs-6">
+        		<div class="col-xs-2"></div>
+	        	<div id="article-area" class="col-xs-7">
 	        		<div id="article-content" class="sortable droppable">
 	        		</div>
 	        	</div>
@@ -157,10 +169,10 @@
         			<div id="title-area">
         				<input type="text" class="form-control" placeholder="游记标题" />
         				<div style="margin-top: 20px;">
-        					<img id="coverImgPreview" src="" />
+        					<img id="coverImgPreview" src="/img/default.png" />
         				</div>
         				<div style="margin-top: 20px;">
-        					<button id="uploadCoverBtn" class="btn btn-primary " type="button"><i class="fa fa-picture-o"></i>上传封面图片</button>
+        					<button id="uploadCoverBtn" class="btn btn-primary btn-outline" type="button"><i class="fa fa-picture-o"></i>上传封面图片</button>
         					<input type="file" id="coverinputfile" style="height:0;width:0;z-index: -1;"/>
         				</div>
         			</div>
@@ -171,7 +183,7 @@
         			<p class="toolbar-icon" data-type="title">
         				<i class="fa fa-list-ul"></i>
         			</p>
-        			<p class="toolbar-title" data-type="title">标题</p>
+        			<p class="toolbar-title" data-type="title">段落标题</p>
         		</div>
         		<div class="toolbar-divider">
         		</div>
@@ -203,7 +215,6 @@
            <div class="modal-dialog modal-lg">
                <div class="modal-content">
                    <div class="modal-header">
-                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                        <h2 class="modal-title">段落标题</h2>
                    </div>
                    <div class="modal-body">
@@ -211,7 +222,7 @@
                    </div>
 
                    <div class="modal-footer">
-                       <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-white" id="newTitleCancelBtn" data-dismiss="modal">取消</button>
                        <button type="button" class="btn btn-primary" id="newTitleBtn">确定</button>
                    </div>
                </div>
@@ -221,7 +232,6 @@
            <div class="modal-dialog modal-lg">
                <div class="modal-content">
                    <div class="modal-header">
-                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                        <h2 class="modal-title">文字段落</h2>
                    </div>
                    <div class="modal-body">
@@ -229,7 +239,7 @@
                    </div>
 
                    <div class="modal-footer">
-                       <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-white" id="newTextCancelBtn" data-dismiss="modal">取消</button>
                        <button type="button" class="btn btn-primary" id="newTextBtn">确定</button>
                    </div>
                </div>
@@ -239,7 +249,6 @@
            <div class="modal-dialog modal-lg">
                <div class="modal-content">
                    <div class="modal-header">
-                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                        <h2 class="modal-title">旅行小贴士</h2>
                    </div>
                    <div class="modal-body">
@@ -247,7 +256,7 @@
                    </div>
 
                    <div class="modal-footer">
-                       <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-white" id="newTipCancelBtn" data-dismiss="modal">取消</button>
                        <button type="button" class="btn btn-primary" id="newTipBtn">确定</button>
                    </div>
                </div>
@@ -257,7 +266,6 @@
            <div class="modal-dialog modal-lg">
                <div class="modal-content">
                    <div class="modal-header">
-                       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                        <h2 class="modal-title">图片</h2>
                    </div>
                    <div class="modal-body">
@@ -268,7 +276,7 @@
                    </div>
 
                    <div class="modal-footer">
-                       <button type="button" class="btn btn-white" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-white" id="newImageCancelBtn" data-dismiss="modal">取消</button>
                        <button type="button" class="btn btn-primary" id="newImageBtn">确定</button>
                    </div>
                </div>
@@ -475,6 +483,13 @@
 				}
 				$("#titleModal").modal("hide");
 			});
+			$("#newTitleCancelBtn").click(function(){
+				var node = $("#titleModal").data("node");
+				var mode = $("#titleModal").data("mode");
+				if(mode == "new"){
+					node.parentNode.removeChild(node);
+				}
+			});
 			
 			$("#newTextBtn").click(function(){
 				var node = $("#textModal").data("node");
@@ -494,6 +509,13 @@
 				}
 				$("#textModal").modal("hide");
 			});
+			$("#newTextCancelBtn").click(function(){
+				var node = $("#textModal").data("node");
+				var mode = $("#textModal").data("mode");
+				if(mode == "new"){
+					node.parentNode.removeChild(node);
+				}
+			});
 			
 			$("#newTipBtn").click(function(){
 				var node = $("#tipModal").data("node");
@@ -512,6 +534,13 @@
 					node.firstElementChild.textContent = title;
 				}
 				$("#tipModal").modal("hide");
+			});
+			$("#newTipCancelBtn").click(function(){
+				var node = $("#tipModal").data("node");
+				var mode = $("#tipModal").data("mode");
+				if(mode == "new"){
+					node.parentNode.removeChild(node);
+				}
 			});
 			
 			$("#newImageBtn").click(function(){
@@ -542,6 +571,13 @@
 					p.textContent = title;
 				}
 				$("#imageModal").modal("hide");
+			});
+			$("#newImageCancelBtn").click(function(){
+				var node = $("#imageModal").data("node");
+				var mode = $("#imageModal").data("mode");
+				if(mode == "new"){
+					node.parentNode.removeChild(node);
+				}
 			});
 			
 			$("#article-content").on("click", ".toolbar-button", function(evt){
