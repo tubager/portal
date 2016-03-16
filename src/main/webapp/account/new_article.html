@@ -41,7 +41,7 @@
 			position: relative;
 			border-width: 0px;
 			padding-bottom: 60px;
-			background: url(http://tupian.enterdesk.com/2013/xll/006/0616/17.jpg) fixed;
+			background: url(/img/background.jpg) fixed;
 		}
 		#tbg-toolbar{
 			background-color: white;
@@ -147,6 +147,50 @@
 			top: 90px;
 			right: 25px;
 		}
+		.tbg-p-title{
+			border-left-width: 5px;
+    		border-left-style: solid;
+    		padding-left: 10px;
+		    font-size: 1.1em;
+		    font-weight: bolder;
+		    margin-top: 20px;
+		}
+		.tbg-p-title:nth-child(7n+1){
+			border-left-color: #0a9dc7;
+			color: #0a9dc7;
+		}
+		.tbg-p-title:nth-child(7n+2){
+			border-left-color: #ad5f00;
+			color: #ad5f00;
+		}
+		.tbg-p-title:nth-child(7n+3){
+			border-left-color: #adad00;
+			color: #adad00;
+		}
+		.tbg-p-title:nth-child(7n+4){
+			border-left-color: #00ad00;
+			color: #00ad00;
+		}
+		.tbg-p-title:nth-child(7n+5){
+			border-left-color: #adad00;
+			color: #adad00;
+		}
+		.tbg-p-title:nth-child(7n+6){
+			border-left-color: #ad5f00;
+			color: #ad5f00;
+		}
+		.tbg-p-title:nth-child(7n+7){
+			border-left-color: #ad0000;
+			color: #ad0000;
+		}
+		.tbg-p-tip{
+			border: 1px solid #1ab394;
+		    padding: 20px;
+		    margin-top: 20px;
+		}
+		.article-item-content{
+			word-break: break-all;
+		}
 	</style>
 </head>
 
@@ -157,7 +201,7 @@
         </div>
         <div id="content-area" class="row">
 			<div id="tbg-header-toolbar">
-				<button id="" class="btn btn-primary btn-lg  pull-right" type="button"><i class="fa fa-save"></i></button>
+				<button id="tbgSaveBtn" class="btn btn-primary btn-lg  pull-right" type="button"><i class="fa fa-save"></i></button>
 			</div>
         	<div class="row">
         		<div class="col-xs-2"></div>
@@ -477,6 +521,7 @@
 					content.dataset["type"] = "title";
 					node.appendChild(content);
 					node.appendChild(createToolbar());
+					node.classList.add("tbg-p-title");
 				}
 				else{
 					node.firstElementChild.textContent = title;
@@ -503,6 +548,7 @@
 					content.dataset["type"] = "text";
 					node.appendChild(content);
 					node.appendChild(createToolbar());
+					node.classList.add("tbg-p-text");
 				}
 				else{
 					node.firstElementChild.textContent = title;
@@ -529,6 +575,7 @@
 					content.dataset["type"] = "tip";
 					node.appendChild(content);
 					node.appendChild(createToolbar());
+					node.classList.add("tbg-p-tip");
 				}
 				else{
 					node.firstElementChild.textContent = title;
@@ -563,6 +610,7 @@
 					content.appendChild(p);
 					node.appendChild(content);
 					node.appendChild(createToolbar());
+					node.classList.add("tbg-p-image");
 				}
 				else{
 					var img = node.firstElementChild.firstElementChild;
@@ -595,6 +643,24 @@
 				else if(action == "delete"){
 					node.parentNode.removeChild(node);
 				}
+			});
+			
+			$("#tbgSaveBtn").click(function(){
+				var model = [];
+				$(".article-item-content").each(function(){
+					var item = {};
+				    var type = this.dataset["type"];
+				    item.type = type;
+				    if(type == "image"){
+				    	item.src = this.children[0].src;
+				    	item.text = this.children[1].textContent;
+				    }
+				    else{
+				    	item.text = this.textContent;
+				    }
+				    model.push(item);
+				 });
+				console.log(model);
 			});
 		});
 	</script>
