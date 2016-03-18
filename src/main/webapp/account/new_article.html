@@ -211,7 +211,7 @@
 	        	</div>
         		<div class="col-xs-3">
         			<div id="title-area">
-        				<input type="text" class="form-control" placeholder="游记标题" />
+        				<input id="article-title-input" type="text" class="form-control" placeholder="游记标题" />
         				<div style="margin-top: 20px;">
         					<img id="coverImgPreview" src="/img/default.png" />
         				</div>
@@ -338,6 +338,7 @@
     <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
 	
 	<script>
 		$("#uploadCoverBtn").click(function(){
@@ -646,9 +647,18 @@
 			});
 			
 			$("#tbgSaveBtn").click(function(){
-				var model = [];
+				var articleUuid = "A"+tbgUtil.getUuid();
+				var today = tbgUtil.getToday();
+				var items = [];
+				var idx = 1;
 				$(".article-item-content").each(function(){
-					var item = {};
+					var item = {
+						uuid: "P"+tbgUtil.getUuid(),
+						status: "D",
+						index: idx,
+						bookUuid: articleUuid,
+						date: today
+					};
 				    var type = this.dataset["type"];
 				    item.type = type;
 				    if(type == "image"){
@@ -658,10 +668,37 @@
 				    else{
 				    	item.text = this.textContent;
 				    }
-				    model.push(item);
+				    items.push(item);
+				    idx++;
 				 });
-				console.log(model);
+				var article = {
+					uuid: articleUuid,
+					title: document.getElementById("article-title-input").value,
+					coverImg: document.getElementById("coverImgPreview").src,
+					status: "D",
+					items: items,
+					dateCreated: today,
+					startDate: today,
+					finishDate: today
+				};
+				console.log(article);
+				saveArticle(article);
 			});
+			
+			function saveArticle(article){
+				$.ajax({
+					url:'/upload/article',
+					type:'POST',
+					data: JSON.stringify(article),
+					contentType:"application/json;charset=UTF-8",
+					success:function(d){
+						console.log(d);
+					},
+					error:function(){
+						console.log("upload failed");
+					}
+				});
+			}
 		});
 	</script>
 
