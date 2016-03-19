@@ -1,10 +1,13 @@
 package com.tubager.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -12,6 +15,7 @@ import com.tubager.dao.UserDao;
 import com.tubager.domain.CurrentUser;
 import com.tubager.domain.TAuth;
 import com.tubager.domain.TUser;
+import com.tubager.exception.UserExistException;
 
 @Service
 public class UserService implements UserDetailsService{
@@ -44,4 +48,27 @@ public class UserService implements UserDetailsService{
 		user.setName((String) obj);
 		return user;
 	}
+	
+	public void signup(String userName, String password, String mobile, String email) throws RuntimeException{
+		TAuth auth = userDao.getAuth(userName);
+		System.out.println(userName);
+		if(auth != null){
+			throw new UserExistException("用户名已存在");
+		}
+//		String cacheCode = SmsCache.getInstance().get(userName);
+//		if(cacheCode == null || !cacheCode.equals(code)){
+//			throw new InvalidSmsCodeException("验证码不正确");
+//		}
+		//new BCryptPasswordEncoder().matches(data.oldPw, persistUser.passwordHash)
+		String encoded = new BCryptPasswordEncoder().encode(password);
+		auth = new TAuth();
+		auth.setUserName(userName);
+		auth.setPassword(encoded);
+		Date date = new Date();
+		auth.setDateCreated(date);
+		auth.setLastUpdated(date);
+		
+		userDao.register(auth, mobile, email);
+	}
+	
 }

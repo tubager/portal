@@ -52,7 +52,7 @@ public class UserDao {
 				user.getMobileVerified(), user.getEmailVerified(), today,user.getLastWord(), user.getName()});
 	}
 	
-	public void register(TAuth auth, String mobile, String email, String techId){
+	public void register(TAuth auth, String mobile, String email){
 		Date date = new Date();
 		java.sql.Timestamp today = new java.sql.Timestamp(date.getTime());
 		
@@ -60,7 +60,7 @@ public class UserDao {
 		jdbcTemplate.update(insertSql, new Object[]{auth.getUserName(),auth.getPassword(),today,today});
 		
 		insertSql = "INSERT INTO user (name, mobile, email, date_created, last_updated, tech_id) values(?,?,?,?,?,?)";
-		jdbcTemplate.update(insertSql, new Object[]{auth.getUserName(),mobile, email,today,today,techId});
+		jdbcTemplate.update(insertSql, new Object[]{auth.getUserName(),mobile, email,today,today,null});
 	}
 	
 	public TAuth getAuth(String userName){

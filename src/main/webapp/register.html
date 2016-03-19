@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥  注册</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<style>
+		body{
+			font-family: Microsoft YaHei;
+		}
+		.form-group{
+			position: relative;
+		}
+		.tbg-message-form{
+			position: absolute;
+			top: 8px;
+			right: -90px;
+			color: #ed5565;
+			display: none;
+		}
+	</style>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen   animated fadeInDown">
+        <div>
+            <div>
+            </div>
+            <h3>注册途八哥会员</h3>
+            <p>加入我们，开启精彩生活。</p>
+            <form class="m-t" role="form" action="#">
+                <div class="form-group">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="用户名" required=""><p class="tbg-message-form">用户名已存在</p>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" class="form-control" placeholder="邮箱" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="密码" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="passwordrepeat" name="passwordrepeat" class="form-control" placeholder="重复密码" required="">
+                </div>
+                <div class="form-group">
+                        <div class="checkbox i-checks"><label> <input type="checkbox" checked /><i></i> 同意途八哥会员条款 </label></div>
+                </div>
+                <button type="button" id="submit" class="btn btn-primary block full-width m-b">注册</button>
+
+                <p class="text-muted text-center"><small>已有账号？</small></p>
+                <a class="btn btn-sm btn-white btn-block" href="login.html">登录</a>
+            </form>
+            <p class="m-t"> <small></small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+            
+            $("#name").on("blur", function(){
+            	console.log($("#name").val());
+            });
+            
+            $("#submit").click(function(){
+            	var data = {
+            		name: $("#name").val(),
+            		password: $("#password").val(),
+            		email: $("#email").val()
+            	};
+            	console.log(data);
+            	$.ajax({
+            		url: "/signup",
+					type:'POST',
+					data: JSON.stringify(data),
+					contentType:"application/json;charset=UTF-8",
+					success:function(d){
+						self.location.href = "login.html";
+					},
+					error:function(){
+						console.log("upload failed");
+					}
+            	});
+            });
+        });
+    </script>
+</body>
+
+</html>
