@@ -11,6 +11,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <!-- Toastr style -->
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 	<style>
@@ -68,15 +70,88 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- iCheck -->
     <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <!-- Toastr script -->
+    <script src="js/plugins/toastr/toastr.min.js"></script>
     <script>
         $(document).ready(function(){
+        	function showMessage(fun, message){
+        		toastr.options = {
+        				  "closeButton": true,
+        				  "positionClass": "toast-bottom-right",
+        				  "showDuration": "400",
+        				  "hideDuration": "1000",
+        				  "timeOut": "3000",
+        				  "extendedTimeOut": "1000",
+        				  "showEasing": "swing",
+        				  "hideEasing": "linear",
+        				  "showMethod": "fadeIn",
+        				  "hideMethod": "fadeOut"
+        				};
+        		toastr[fun](message);
+        	}
+        	
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green',
             });
             
             $("#name").on("blur", function(){
-            	console.log($("#name").val());
+            	var name = $("#name").val();
+            	if(name == ""){
+            		document.getElementById("name").parentNode.classList.add("has-error");
+            		showMessage("error", "用户名不能为空");
+            		return;
+            	}
+            	$.ajax({
+            		url: "/checkuserexistence?name=" + name,
+            		type:'GET',
+            		success: function(data){
+            			if(data){
+            				document.getElementById("name").parentNode.classList.add("has-error");
+                    		showMessage("error", "用户名已存在！");
+            			}
+            		},
+            		error: function(error){
+            			console.log(error);
+            		}
+            	});
+            });
+            $("#name").on("change", function(){
+            	document.getElementById("name").parentNode.classList.remove("has-error");
+            });
+            
+            $("#email").on("blur", function(){
+            	var email = $("#email").val();
+            	var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            	if(!filter.test(email)){
+            		document.getElementById("email").parentNode.classList.add("has-warning");
+            		showMessage("warning", "强烈建议请输入正确的邮箱，以便找回密码和接受通知！");
+            		return;
+            	}
+            });
+            $("#email").on("change", function(){
+            	document.getElementById("email").parentNode.classList.remove("has-warning");
+            });
+            
+            $("#password").on("blur", function(){
+            	var password = $("#password").val();
+            	
+            });
+            $("#password").on("change", function(){
+            	document.getElementById("password").parentNode.classList.remove("has-error");
+            });
+            
+            $("#passwordrepeat").on("blur", function(){
+            	var passwordrepeat = $("#passwordrepeat").val();
+            	var password = $("#password").val();
+            	if(password != passwordrepeat){
+            		document.getElementById("passwordrepeat").parentNode.classList.add("has-error");
+            		showMessage("error", "两次输入的密码不一致！");
+            		return;
+            	}
+            });
+            $("#passwordrepeat").on("change", function(){
+            	document.getElementById("passwordrepeat").parentNode.classList.remove("has-error");
             });
             
             $("#submit").click(function(){
@@ -92,10 +167,15 @@
 					data: JSON.stringify(data),
 					contentType:"application/json;charset=UTF-8",
 					success:function(d){
-						self.location.href = "login.html";
+						showMessage("success", "注册成功，请登录！");
+						setTimeout(function(){
+							self.location.href = "login.html";
+			    		}.bind(this),1100);
 					},
-					error:function(){
-						console.log("upload failed");
+					error:function(e){
+						if(e.responseJSON.message == "USER_EXISTS"){
+							showMessage("error", "用户名已存在！");
+						}
 					}
             	});
             });

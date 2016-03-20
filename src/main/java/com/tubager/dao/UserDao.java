@@ -21,25 +21,29 @@ public class UserDao {
 	}
 	
 	public TUser getUser(String userName){
-		TUser user = (TUser)jdbcTemplate.queryForObject("select * from user where name = ?", new Object[] {userName},
-				(rs, rowNum) ->{
-					TUser b = new TUser();
-					b.setName(userName);
-					b.setId(rs.getInt("id"));
-					b.setTechId(rs.getString("tech_id"));
-					b.setNickName(rs.getString("nick_name"));
-					b.setGender(rs.getString("gender"));
-					b.setImg(rs.getString("img"));
-					b.setMobile(rs.getString("mobile"));
-					b.setEmail(rs.getString("email"));
-					b.setAddress(rs.getString("address"));
-					b.setRegion(rs.getString("region"));
-					b.setMobileVerified(rs.getString("mobile_verified"));
-					b.setEmailVerified(rs.getString("email_verified"));
-					b.setLastWord(rs.getString("last_word"));
-					return b;
-				});
-		return user;
+		try{
+			TUser user = (TUser)jdbcTemplate.queryForObject("select * from user where name = ?", new Object[] {userName},
+					(rs, rowNum) ->{
+						TUser b = new TUser();
+						b.setName(userName);
+						b.setId(rs.getInt("id"));
+						b.setTechId(rs.getString("tech_id"));
+						b.setNickName(rs.getString("nick_name"));
+						b.setGender(rs.getString("gender"));
+						b.setImg(rs.getString("img"));
+						b.setMobile(rs.getString("mobile"));
+						b.setEmail(rs.getString("email"));
+						b.setAddress(rs.getString("address"));
+						b.setRegion(rs.getString("region"));
+						b.setMobileVerified(rs.getString("mobile_verified"));
+						b.setEmailVerified(rs.getString("email_verified"));
+						b.setLastWord(rs.getString("last_word"));
+						return b;
+					});
+			return user;
+		}catch(Exception e){
+			return null;
+		}
 	}
 	
 	public void updateUser(TUser user){

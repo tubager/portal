@@ -35,6 +35,14 @@ public class UserService implements UserDetailsService{
 		}
 	}
 	
+	public boolean checkExistence(String name){
+		TUser user = userDao.getUser(name);
+		if(user != null){
+			return true;
+		}
+		return false;
+	}
+	
 	public TUser getCurrentUser(){
 		CurrentUser current = null;
 		Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
