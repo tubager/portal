@@ -131,6 +131,9 @@
 			display: block;
 			margin: 0px auto;
 		}
+		#coverImgPreview{
+			cursor: pointer;
+		}
 		#newImageText{
 			margin-top: 20px;
 		}
@@ -207,6 +210,16 @@
         		<div class="col-xs-2"></div>
 	        	<div id="article-area" class="col-xs-7">
 	        		<div id="article-content" class="sortable droppable">
+	        			<div class="article-item tbg-p-image" data-type="image">
+	        				<div class="article-item-content" data-type="image">
+	        					<img src="/img/instruction.png" class="tbg-article-img">
+	        					<p class="tbg-article-img-text"></p>
+	        				</div>
+	        				<span class="article-item-toolbar">
+	        					<a class="toolbar-button" href="#" data-action="edit" title="编辑"><i class="fa fa-pencil"></i></a>
+	        					<a class="toolbar-button" href="#" data-action="delete" title="删除"><i class="fa fa-trash-o"></i></a>
+	        				</span>
+	        			</div>
 	        		</div>
 	        	</div>
         		<div class="col-xs-3">
@@ -216,7 +229,6 @@
         					<img id="coverImgPreview" src="/img/default.png" />
         				</div>
         				<div style="margin-top: 20px;">
-        					<button id="uploadCoverBtn" class="btn btn-primary btn-outline" type="button"><i class="fa fa-picture-o"></i>上传封面图片</button>
         					<input type="file" id="coverinputfile" style="height:0;width:0;z-index: -1;"/>
         				</div>
         			</div>
@@ -313,7 +325,7 @@
                        <h2 class="modal-title">图片</h2>
                    </div>
                    <div class="modal-body">
-                   		<label style="margin-bottom:10px;">点击图片可选择新图片</label>
+                   		<label style="margin-bottom:10px;"></label>
                    		<img id="newImg" src="/img/default.png "/>
                    		<input id="newImageText" class="form-control" placeholder="给我一个描述" ></input>
                    		<input type="file" id="imageinputfile" style="height:0;width:0;z-index: -1;"/>
@@ -341,7 +353,7 @@
 	<script src="/js/tbg/utility.js"></script>
 	
 	<script>
-		$("#uploadCoverBtn").click(function(){
+		$("#coverImgPreview").click(function(){
 			document.getElementById('coverinputfile').click();
 			
 			$("#coverinputfile").change(function(){
