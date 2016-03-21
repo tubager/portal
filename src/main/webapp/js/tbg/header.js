@@ -15,33 +15,32 @@ if(header){
         <li class="dropdown">\
             <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 精彩游记 <span class="caret"></span></a>\
             <ul role="menu" class="dropdown-menu">\
-                <li><a href="">热门</a></li>\
-                <li><a href="">最新</a></li>\
-                <li><a href="">搜索</a></li>\
+                <li><a href="#">热门</a></li>\
+                <li><a href="#">最新</a></li>\
+                <li><a href="#">搜索</a></li>\
             </ul>\
         </li>\
         <li class="dropdown">\
-            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 达人线路 <span class="caret"></span></a>\
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 创意线路 <span class="caret"></span></a>\
             <ul role="menu" class="dropdown-menu">\
-                <li><a href="">中国</a></li>\
-                <li><a href="">美洲</a></li>\
-                <li><a href="">欧洲</a></li>\
-                <li><a href="">亚洲</a></li>\
+                <li><a href="#">最新</a></li>\
+                <li><a href="#">经典</a></li>\
+                <li><a href="#">热门</a></li>\
             </ul>\
         </li>\
         <li class="dropdown">\
-            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 我的账户 <span class="caret"></span></a>\
+            <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 个人中心 <span class="caret"></span></a>\
             <ul role="menu" class="dropdown-menu">\
-                <li><a href="/account/new_article.html">写游记</a></li>\
-                <li><a href="">我的游记</a></li>\
-                <li><a href="">我的线路</a></li>\
+                <li><a id="tbg-menu-edit" href="#">写游记</a></li>\
+                <li><a href="#">我的游记</a></li>\
+                <li><a href="#">我的线路</a></li>\
             </ul>\
         </li>\
         <li class="dropdown">\
             <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 关于我们 <span class="caret"></span></a>\
             <ul role="menu" class="dropdown-menu">\
-                <li><a href="">关于我们</a></li>\
-                <li><a href="">联系我们</a></li>\
+                <li><a href="#">关于我们</a></li>\
+                <li><a href="#">联系我们</a></li>\
             </ul>\
         </li>\
     </ul>\
@@ -77,5 +76,15 @@ $.ajax({
 		}
 		document.getElementById("loginMenuItem").style["display"] = "none";
 		document.getElementById("logoutMenuItem").style["display"] = "inline-block";
+	}
+});
+
+$(document).ready(function(){
+	var menu = document.getElementById("tbg-menu-edit");
+	if(document.body.clientWidth < 768){
+		menu.src = "";
+	}
+	else{
+		menu.src = "/account/new_article.html";
 	}
 });

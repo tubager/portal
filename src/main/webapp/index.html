@@ -40,7 +40,7 @@
 		}
 		.widget-wrap{
 			position: relative;
-			top: 150px;
+			top: 80px;
 			text-align: center;
 		}
 		.navbar-static-top{
@@ -73,26 +73,55 @@
         </div>
         <div id="content-area">
             <div id="front-page-1" class="front front-page front-page-1">
-				<div class="image-section" style="height: 449px;">
-					<div class="flexible-widgets widget-area widget-full">
-						<div class="wrap">
-							<section id="text-2">
-								<div class="widget-wrap">			
-									<div class="textwidget">
-										<h2 style="color:white;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">途八哥	有故事的旅行</h2>
-										<a class="button clear white" href="/about-us/" style="color: white;">精彩游记</a> 
+				<div class="image-section">
+					<div class="carousel slide" id="carousel1">
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <section id="text-1" style="height: 300px;">
+									<div class="widget-wrap">			
+										<div class="textwidget">
+											<h2 style="color:white;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">途八哥	有故事的旅行</h2>
+											<a class="button clear white" href="#" style="color: white;">精彩游记</a> 
+										</div>
 									</div>
-								</div>
-							</section>
-						</div>
-					</div>
+								</section>
+                            </div>
+							<div class="item">
+                                <section id="text-2" style="height: 300px;">
+									<div class="widget-wrap">			
+										<div class="textwidget">
+											<h2 style="color:white;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">旅行  	不走寻常路</h2>
+											<a class="button clear white" href="#" style="color: white;">创意线路</a> 
+										</div>
+									</div>
+								</section>
+                            </div>
+							<div class="item">
+                                <section id="text-2" style="height: 300px;">
+									<div class="widget-wrap">			
+										<div class="textwidget">
+											<h2 style="color:white;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">TRAVEL MORE, WORRY LESS</h2>
+											<a class="button clear white" href="#" style="color: white;">联系我们</a> 
+										</div>
+									</div>
+								</section>
+                            </div>
+                        </div>
+                        <a data-slide="prev" href="#carousel1" class="left carousel-control" style="background:transparent;">
+                            <span class="icon-prev"></span>
+                        </a>
+                        <a data-slide="next" href="#carousel1" class="right carousel-control" style="background:transparent;">
+                            <span class="icon-next"></span>
+                        </a>
+                    </div>
+					
 				</div>
 			</div>
-			<div id="front-page-2" class="front front-page front-page-2">
+			<div id="front-page-3" class="front front-page front-page-3">
 				<div class="solid-section" style="height: 469px;">
 					<div class="flexible-widgets widget-area widget-full">
 						<div class="wrap">
-							<section id="text-3" class="widget widget_text">
+							<section id="text-3" class="widget widget_text" style="margin: 0px;">
 								<div class="widget-wrap">			
 								<div class="textwidget">
 									<h2 style="color:#15D4B5;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">不走寻常路</h2>
@@ -104,11 +133,11 @@
 					</div>
 				</div>
 			</div>
-            <div id="front-page-3" class="front front-page front-page-3">
+            <div id="front-page-5" class="front front-page front-page-5">
 				<div class="image-section" style="height: 449px;">
 					<div class="flexible-widgets widget-area widget-full">
 						<div class="wrap">
-							<section id="text-2">
+							<section id="text-2" style="margin: 0px;">
 								<div class="widget-wrap">			
 									<div class="textwidget">
 										<h2 style="color:white;font-size:50px;font-weight:200;font-family: Microsoft YaHei;">TRAVEL MORE, WORRY LESS</h2>
@@ -138,6 +167,13 @@
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="js/tbg/header.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#carousel1").carousel({
+				  interval: 4000
+			});
+		});
+	</script>
 </body>
 
 </html>
