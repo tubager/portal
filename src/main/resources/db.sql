@@ -49,14 +49,15 @@ DROP TABLE IF EXISTS `item`;
 CREATE TABLE `item` (
   `uuid` varchar(32) NOT NULL,
   `book_uuid` varchar(32) DEFAULT NULL,
-  `status` varchar(1) DEFAULT NULL,
+  `status` varchar(1) NOT NULL,
   `index` int(11) DEFAULT NULL,
   `type` varchar(15) DEFAULT NULL,
-  `text` varchar(4096) DEFAULT NULL,
+  `text` varchar(255) DEFAULT NULL,
+  `content` mediumblob,
   `src` varchar(128) DEFAULT NULL,
   `location_id` bigint(20) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
-  PRIMARY KEY (`uuid`)
+  PRIMARY KEY (`uuid`,`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Article item';
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -2,6 +2,7 @@ package com.tubager.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class ArticleDao {
 													Utility.getSqlDate(article.getFinishDate())});
 		
 		List<Item> paraList = article.getItems();
-		insertSql="insert into item values(?,?,?,?,?,?,?,?,?)";
+		insertSql="insert into item values(?,?,?,?,?,?,?,?,?,?)";
 		jdbcTemplate.batchUpdate(insertSql, new BatchPreparedStatementSetter() {
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
@@ -49,9 +50,10 @@ public class ArticleDao {
 				ps.setInt(4, p.getIndex());
 				ps.setString(5, p.getType());
 				ps.setString(6, p.getText());
-				ps.setString(7, p.getSrc());
-				ps.setLong(8, p.getLocationId());
-				ps.setDate(9, Utility.getSqlDate(p.getDate()));
+				ps.setBytes(7, p.getContent());
+				ps.setString(8, p.getSrc());
+				ps.setLong(9, p.getLocationId());
+				ps.setDate(10, Utility.getSqlDate(p.getDate()));
 			}
 					
 			@Override
@@ -86,6 +88,7 @@ public class ArticleDao {
 					graph.setIndex(rs.getInt("index"));
 					graph.setType(rs.getString("type"));
 					graph.setText(rs.getString("text"));
+					graph.setContent(rs.getBytes("content"));
 					graph.setSrc(rs.getString("src"));
 					graph.setLocationId(rs.getLong("location_id"));
 					graph.setDate(rs.getDate("date"));
@@ -158,7 +161,8 @@ public class ArticleDao {
 	}
 	
 	public List<Article> listTop(){
-		List<Article> books = jdbcTemplate.query("select * from article order by date_created desc limit 5", new Object[] {},
+		//"select * from article where status='D' order by date_created desc limit 5"
+		List<Article> books = jdbcTemplate.query("select * from article where status=? order by date_created desc", new Object[] {Constants.STATUS_PUBLISHED},
 				(rs, rowNum) ->{
 					Article b = new Article();
 					b.setUuid(rs.getString("uuid"));
@@ -175,6 +179,42 @@ public class ArticleDao {
 				});
 		
 		return books;
+	}
+	
+	public List<Article> listMyArticles(String userName){
+		List<Article> list = new ArrayList<Article>();
+		List<String> draftList = new ArrayList<String>();
+		List<Article> books = jdbcTemplate.query("select * from article where user_name=? order by date_created desc", new Object[] {userName},
+				(rs, rowNum) ->{
+					Article b = new Article();
+					b.setUuid(rs.getString("uuid"));
+					b.setTitle(rs.getString("title"));
+					b.setDescription(rs.getString("description"));
+					b.setCoverImg(rs.getString("cover_img"));
+					b.setUserName(rs.getString("user_name"));
+					b.setLocationName(rs.getString("location_name"));
+					b.setStatus(rs.getString("status"));
+					b.setDateCreated(rs.getDate("date_created"));
+					b.setStartDate(rs.getDate("start_date"));
+					b.setFinishDate(rs.getDate("finish_date"));
+					return b;
+				});
+		for(Article a : books){
+			if(a.getStatus() == Constants.STATUS_DRAFT){
+				draftList.add(a.getUuid());
+			}
+		}
+		for(Article a : books){
+			String uuid = a.getUuid();
+			String status = a.getStatus();
+			if(status == Constants.STATUS_DRAFT){
+				list.add(a);
+			}
+			else if(status == Constants.STATUS_PUBLISHED && !draftList.contains(uuid)){
+				list.add(a);
+			}
+		}
+		return list;
 	}
 	
 	public List<Article> search(String text){

@@ -15,6 +15,7 @@ import com.tubager.domain.Article;
 import com.tubager.domain.TUser;
 import com.tubager.service.ArticleService;
 import com.tubager.service.UserService;
+import com.tubager.utility.Constants;
 
 @RestController
 public class ArticleController {
@@ -27,11 +28,21 @@ public class ArticleController {
 	private UserService userService;
 	
 	@RequestMapping(value="/upload/article", method=RequestMethod.POST, headers = {"content-type=application/json;charset=UTF-8"})
-	public String saveArticle(@RequestBody Article article){
+	public @ResponseBody String saveArticle(@RequestBody Article article){
 		TUser user = userService.getCurrentUser();
 		if(user != null){
 			article.setUserName(user.getName());
 		}
+		return articleService.saveArticle(article);
+	}
+
+	@RequestMapping(value="/upload/publisharticle", method=RequestMethod.POST, headers = {"content-type=application/json;charset=UTF-8"})
+	public @ResponseBody String publishArticle(@RequestBody Article article){
+		TUser user = userService.getCurrentUser();
+		if(user != null){
+			article.setUserName(user.getName());
+		}
+		article.setStatus(Constants.STATUS_PUBLISHED);
 		return articleService.saveArticle(article);
 	}
 	

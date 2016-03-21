@@ -1,5 +1,6 @@
 package com.tubager.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,19 @@ public class ArticleService {
 				if(item.getDate() == null){
 					item.setDate(date);
 				}
+				item.setStatus(status);
+				if(item.getType() == Constants.TYPE_TEXT || item.getType() == Constants.TYPE_TIP){
+					String text = item.getText();
+					if(text == null){
+						text = "";
+					}
+					try {
+						item.setContent(text.getBytes("UTF-8"));
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		
@@ -60,6 +74,7 @@ public class ArticleService {
 		articleDao.remove(uuid);
 	}
 	
+	//private
 	private String createArticle(Article article){
 		String uuid = articleDao.create(article);
 		return uuid;
@@ -67,11 +82,31 @@ public class ArticleService {
 	
 	public Article readActive(String uuid){
 		Article article = articleDao.readActive(uuid);
+		List<Item> items = article.getItems();
+		this.processItem(items);
 		return article;
 	}
 	
 	public Article readDraftOrActive(String uuid){
 		Article article = articleDao.readDraftOrActive(uuid);
+		List<Item> items = article.getItems();
+		this.processItem(items);
 		return article;
+	}
+	
+	//private
+	private void processItem(List<Item> items){
+		if(items == null){
+			return;
+		}
+		for(Item item : items){
+			if(item.getType() == Constants.TYPE_TEXT || item.getType() == Constants.TYPE_TIP){
+				byte[] content = item.getContent();
+				if(content == null){
+					content = new byte[]{};
+				}
+				item.setText(new String(content, java.nio.charset.StandardCharsets.UTF_8));
+			}
+		}
 	}
 }

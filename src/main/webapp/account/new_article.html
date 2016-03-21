@@ -204,7 +204,8 @@
         </div>
         <div id="content-area" class="row">
 			<div id="tbg-header-toolbar">
-				<button id="tbgSaveBtn" class="btn btn-primary btn-lg  pull-right" type="button"><i class="fa fa-save"></i></button>
+				<button id="tbgSaveBtn" class="btn btn-primary btn-outline  pull-right" type="button"><i class="fa fa-save" style="margin-right:5px;"></i>保存草稿</button>
+				<button id="tbgPublishBtn" class="btn btn-primary btn-outline  pull-right" type="button" style="margin-right:10px;"><i class="fa fa-send-o" style="margin-right:5px;"></i>发布游记</button>
 			</div>
         	<div class="row">
         		<div class="col-xs-2"></div>
@@ -416,8 +417,9 @@
 					if(!items){
 						return;
 					}
+					var root = document.getElementById("article-content");
+					root.innerHTML = "";
 					items.map(function(item){
-						var root = document.getElementById("article-content");
 						var node = document.createElement("div");
 						node.classList.add("article-item");
 						node.dataset["type"] = item.type;
@@ -428,15 +430,15 @@
 						switch(item.type){
 							case "title":
 								node.classList.add("tbg-p-title");
-								content.textContent = item.text;
+								content.innerHTML = item.text;
 								break;
 							case "text":
 								node.classList.add("tbg-p-text");
-								content.textContent = item.text;
+								content.innerHTML = item.text;
 								break;
 							case "tip":
 								node.classList.add("tbg-p-tip");
-								content.textContent = item.text;
+								content.innerHTML = item.text;
 								break;
 							case "image":
 								node.classList.add("tbg-p-image");
@@ -446,7 +448,7 @@
 								content.appendChild(img);
 								var p = document.createElement("p");
 								p.classList.add("tbg-article-img-text");
-								p.textContent = item.text;
+								p.innerHTML = item.text;
 								content.appendChild(p);
 								break;
 						}
@@ -483,7 +485,7 @@
 				var node = document.createElement("div");
 				node.classList.add("article-item");
 				node.dataset["type"] = type;
-				node.textContent = "";
+				node.innerHTML = "";
 				document.getElementById("article-content").appendChild(node);
 				addItem(type, node);
 			});
@@ -520,20 +522,20 @@
 				var type = node.dataset["type"];
 				switch(type){
 		    		case "text":
-		    			var text = node.firstElementChild.textContent;
+		    			var text = node.firstElementChild.innerHTML;
 		    			showText(node,text, "edit");
 		    			break;
 		    		case "title":
-		    			var title = node.firstElementChild.textContent;
+		    			var title = node.firstElementChild.innerHTML;
 		    			showTitle(node,title, "edit");
 		    			break;
 		    		case "image":
 		    			var img = node.firstElementChild.firstElementChild;
 		    			var p = img.nextSibling;
-		    			showImage(node, img.getAttribute("src"), p.textContent, "edit");
+		    			showImage(node, img.getAttribute("src"), p.innerHTML, "edit");
 		    			break;
 		    		case "tip":
-		    			var tip = node.firstElementChild.textContent;
+		    			var tip = node.firstElementChild.innerHTML;
 		    			showTip(node,tip, "edit");
 		    			break;
 		    	}
@@ -583,7 +585,7 @@
 				if(mode == "new"){
 					node.innerHTML = "";
 					var content = document.createElement("div");
-					content.textContent = title;
+					content.innerHTML = title;
 					content.classList.add("article-item-content");
 					content.dataset["type"] = "title";
 					node.appendChild(content);
@@ -591,7 +593,7 @@
 					node.classList.add("tbg-p-title");
 				}
 				else{
-					node.firstElementChild.textContent = title;
+					node.firstElementChild.innerHTML = title;
 				}
 				$("#titleModal").modal("hide");
 			});
@@ -610,7 +612,7 @@
 				if(mode == "new"){
 					node.innerHTML = "";
 					var content = document.createElement("div");
-					content.textContent = title;
+					content.innerHTML = title;
 					content.classList.add("article-item-content");
 					content.dataset["type"] = "text";
 					node.appendChild(content);
@@ -618,7 +620,7 @@
 					node.classList.add("tbg-p-text");
 				}
 				else{
-					node.firstElementChild.textContent = title;
+					node.firstElementChild.innerHTML = title;
 				}
 				$("#textModal").modal("hide");
 			});
@@ -637,7 +639,7 @@
 				if(mode == "new"){
 					node.innerHTML = "";
 					var content = document.createElement("div");
-					content.textContent = title;
+					content.innerHTML = title;
 					content.classList.add("article-item-content");
 					content.dataset["type"] = "tip";
 					node.appendChild(content);
@@ -645,7 +647,7 @@
 					node.classList.add("tbg-p-tip");
 				}
 				else{
-					node.firstElementChild.textContent = title;
+					node.firstElementChild.innerHTML = title;
 				}
 				$("#tipModal").modal("hide");
 			});
@@ -672,7 +674,7 @@
 					img.classList.add("tbg-article-img");
 					content.appendChild(img);
 					var p = document.createElement("p");
-					p.textContent = title;
+					p.innerHTML = title;
 					p.classList.add("tbg-article-img-text");
 					content.appendChild(p);
 					node.appendChild(content);
@@ -683,7 +685,7 @@
 					var img = node.firstElementChild.firstElementChild;
 					img.setAttribute("src", src);
 					var p = img.nextSibling;
-					p.textContent = title;
+					p.innerHTML = title;
 				}
 				$("#imageModal").modal("hide");
 			});
@@ -713,6 +715,18 @@
 			});
 			
 			$("#tbgSaveBtn").click(function(){
+				var article = beforeSave("D");
+				console.log(article);
+				saveArticle(article);
+			});
+			
+			$("#tbgPublishBtn").click(function(){
+				var article = beforeSave("P");
+				console.log(article);
+				saveArticle(article);
+			});
+			
+			function beforeSave(status){
 				if(articleUuid == null){
 					articleUuid = "A"+tbgUtil.getUuid();
 				}
@@ -731,10 +745,10 @@
 				    item.type = type;
 				    if(type == "image"){
 				    	item.src = this.children[0].src;
-				    	item.text = this.children[1].textContent;
+				    	item.text = this.children[1].innerHTML;
 				    }
 				    else{
-				    	item.text = this.textContent;
+				    	item.text = this.innerHTML;
 				    }
 				    items.push(item);
 				    idx++;
@@ -743,23 +757,22 @@
 					article.items = items;
 					article.title = document.getElementById("article-title-input").value;
 					article.coverImg = document.getElementById("coverImgPreview").src;
-					article.status = "D";
+					article.status = status;
 				}
 				else{
 					article = {
 							uuid: articleUuid,
 							title: document.getElementById("article-title-input").value,
 							coverImg: document.getElementById("coverImgPreview").src,
-							status: "D",
+							status: status,
 							items: items,
 							dateCreated: today,
 							startDate: today,
 							finishDate: today
 						};
 				}
-				console.log(article);
-				saveArticle(article);
-			});
+				return article;
+			}
 			
 			function saveArticle(article){
 				$.ajax({

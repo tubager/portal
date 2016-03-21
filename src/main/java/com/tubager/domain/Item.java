@@ -9,10 +9,17 @@ public class Item {
 	private int index;
 	private String type;
 	private String text;
+	private byte[] content;
 	private String src;
 	private long locationId;
 	private Date date;
-	
+
+	public byte[] getContent() {
+		return content;
+	}
+	public void setContent(byte[] content) {
+		this.content = content;
+	}
 	public String getUuid() {
 		return uuid;
 	}
