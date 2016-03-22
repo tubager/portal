@@ -89,3 +89,20 @@ nav{
 	float: right;
 	margin-right: 50px;
 }
+.tbg-article-tile{
+	margin-top: 20px;
+	padding: 0px;
+}
+.tbg-article-tile-img{
+	width: 100%;
+	height: 200px;
+}
+.tbg-article-tile-title{
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: nowrap;
+    color: #15D4B5;
+    font-size: 16px;
+}

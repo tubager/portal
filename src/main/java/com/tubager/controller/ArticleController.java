@@ -1,5 +1,7 @@
 package com.tubager.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +63,10 @@ public class ArticleController {
 		logger.info(article.getUserName());
 		logger.info(user.getName());
 		return null;
+	}
+
+	@RequestMapping(value="/toparticles", method=RequestMethod.GET)
+	public @ResponseBody List<Article> listTop(){
+		return articleService.listTop();
 	}
 }

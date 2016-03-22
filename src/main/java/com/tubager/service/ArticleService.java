@@ -52,13 +52,14 @@ public class ArticleService {
 					item.setDate(date);
 				}
 				item.setStatus(status);
-				if(item.getType() == Constants.TYPE_TEXT || item.getType() == Constants.TYPE_TIP){
+				if(Constants.TYPE_TEXT.equalsIgnoreCase(item.getType()) || Constants.TYPE_TIP.equalsIgnoreCase(item.getType())){
 					String text = item.getText();
 					if(text == null){
 						text = "";
 					}
 					try {
 						item.setContent(text.getBytes("UTF-8"));
+						item.setText("");
 					} catch (UnsupportedEncodingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -78,6 +79,10 @@ public class ArticleService {
 	private String createArticle(Article article){
 		String uuid = articleDao.create(article);
 		return uuid;
+	}
+	
+	public List<Article> listTop(){
+		return this.articleDao.listTop();
 	}
 	
 	public Article readActive(String uuid){

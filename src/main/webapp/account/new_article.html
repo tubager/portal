@@ -735,7 +735,7 @@
 				var idx = 1;
 				$(".article-item-content").each(function(){
 					var item = {
-						uuid: "P"+tbgUtil.getUuid(),
+						uuid: "P"+tbgUtil.getUuid() + idx,
 						status: "D",
 						index: idx,
 						bookUuid: articleUuid,

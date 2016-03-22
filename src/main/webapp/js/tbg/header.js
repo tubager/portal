@@ -10,7 +10,7 @@ if(header){
 <div class="navbar-collapse collapse" id="navbar">\
     <ul class="nav navbar-nav">\
         <li class="active">\
-            <a aria-expanded="false" role="button" href="#">首页</a>\
+            <a aria-expanded="false" role="button" href="/index.html">首页</a>\
         </li>\
         <li class="dropdown">\
             <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 精彩游记 <span class="caret"></span></a>\
@@ -82,9 +82,9 @@ $.ajax({
 $(document).ready(function(){
 	var menu = document.getElementById("tbg-menu-edit");
 	if(document.body.clientWidth < 768){
-		menu.src = "";
+		menu.href = "";
 	}
 	else{
-		menu.src = "/account/new_article.html";
+		menu.href = "/account/new_article.html";
 	}
 });

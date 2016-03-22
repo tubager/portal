@@ -98,3 +98,19 @@ nav{
 	color: white;
 	margin-top: 30px;
 }
+.tbg-article-tile{
+	margin-top: 20px;
+}
+.tbg-article-tile-img{
+	width: 100%;
+	height: 300px;
+}
+.tbg-article-tile-title{
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: nowrap;
+    color: #15D4B5;
+    font-size: 16px;
+}

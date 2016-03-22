@@ -67,7 +67,7 @@
 			</div>
 			<div id="front-page-3" class="front front-page front-page-3">
 				<section id="text-3" class="widget widget_text" style="margin: 0px;">
-					
+					<div id="tbg-articles" class="row"></div>
 				</section>
 			</div>
             <div id="front-page-5" class="front front-page front-page-5">
@@ -112,6 +112,40 @@
 			$("#carousel1").carousel({
 				  interval: 4000
 			});
+			
+			$.ajax({
+				url: "/toparticles",
+				type:'GET',
+				contentType:"application/json;charset=UTF-8",
+				success:function(d){
+					console.log(d);
+					var articlesNode = document.getElementById("tbg-articles");
+					d.map(function(article){
+						articlesNode.appendChild(createArticle(article));
+					});
+				},
+				error:function(){
+					console.log("list top failed");
+				}
+			});
+			
+			function createArticle(article){
+				var node = document.createElement("div");
+				node.classList.add("col-sm-4");
+				node.classList.add("tbg-article-tile");
+				var img = document.createElement("img");
+				img.src = article.coverImg;
+				img.classList.add("tbg-article-tile-img");
+				node.appendChild(img);
+				var a = document.createElement("a");
+				a.href="#";
+				var p = document.createElement("p");
+				p.innerHTML = article.title;
+				p.classList.add("tbg-article-tile-title");
+				a.appendChild(p);
+				node.appendChild(a);
+				return node;
+			}
 		});
 	</script>
 </body>

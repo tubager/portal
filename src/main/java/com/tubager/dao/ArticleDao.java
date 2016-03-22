@@ -44,6 +44,7 @@ public class ArticleDao {
 			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
 				Item p = paraList.get(i);
+				logger.info(p.getText());
 				ps.setString(1, p.getUuid());
 				ps.setString(2, p.getBookUuid());
 				ps.setString(3, p.getStatus());
