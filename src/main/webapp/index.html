@@ -12,57 +12,8 @@
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-	<style>
-		body{
-			font-family: Microsoft YaHei;
-			background-color: transparent;
-		}
-		.front{
-			position: relative;
-		}
-		.front-page{
-			background-attachment: fixed;
-			background-color: #fff;
-			background-position: 50% 0;
-			background-repeat: no-repeat;
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			background-size: cover;
-		}
-		.front-page-1 { background-image: url(img/landing/page1.jpg); }
-		.front-page-3 { background-image: url(img/landing/page2.jpg); }
-		.front-page-5 { background-image: url(img/landing/page3.jpg); }
-		nav{
-			padding: 0px 15px;
-		}
-		.footer{
-			position: relative;
-		}
-		.widget-wrap{
-			position: relative;
-			top: 80px;
-			text-align: center;
-		}
-		.navbar-static-top{
-			position: fixed;
-			top: 0px;
-			left: 0px;
-			right: 0px;
-		}
-		#content-area{
-			position: relative;
-			top: 54px;
-		}
-		.textwidget a{
-			border-radius: 5px;
-			border-width: 2px;
-			border-style: solid;
-			padding: 15px 25px;
-			font-size: 14px;
-			font-weight: 800;
-			display: inline-block;
-		}
-	</style>
+    <link rel="stylesheet" media="screen and (min-width: 768px)" href="/css/tbg/index.css" />
+    <link rel="stylesheet" media="screen and (max-width: 767px)" href="/css/tbg/index_m.css" />
 </head>
 
 <body class="top-navigation">
@@ -73,81 +24,70 @@
         </div>
         <div id="content-area">
             <div id="front-page-1" class="front front-page front-page-1">
-				<div class="image-section">
-					<div class="carousel slide" id="carousel1">
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <section id="text-1" style="height: 300px;">
+				<div class="carousel slide" id="carousel1">
+                       <div class="carousel-inner">
+                           <div class="item active">
+                               <section id="text-1" class="tbg-home-slider">
 									<div class="widget-wrap">			
 										<div class="textwidget">
-											<h2 style="color:white;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">途八哥	有故事的旅行</h2>
-											<a class="button clear white" href="#" style="color: white;">精彩游记</a> 
+											<h2>途八哥	有故事的旅行</h2>
+											<a class="button clear white" href="#">精彩游记</a> 
 										</div>
 									</div>
 								</section>
                             </div>
-							<div class="item">
-                                <section id="text-2" style="height: 300px;">
-									<div class="widget-wrap">			
-										<div class="textwidget">
-											<h2 style="color:white;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">旅行  	不走寻常路</h2>
-											<a class="button clear white" href="#" style="color: white;">创意线路</a> 
-										</div>
-									</div>
-								</section>
-                            </div>
-							<div class="item">
-                                <section id="text-2" style="height: 300px;">
-									<div class="widget-wrap">			
-										<div class="textwidget">
-											<h2 style="color:white;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">TRAVEL MORE, WORRY LESS</h2>
-											<a class="button clear white" href="#" style="color: white;">联系我们</a> 
-										</div>
-									</div>
-								</section>
-                            </div>
-                        </div>
-                        <a data-slide="prev" href="#carousel1" class="left carousel-control" style="background:transparent;">
-                            <span class="icon-prev"></span>
-                        </a>
-                        <a data-slide="next" href="#carousel1" class="right carousel-control" style="background:transparent;">
-                            <span class="icon-next"></span>
-                        </a>
-                    </div>
-					
-				</div>
-			</div>
-			<div id="front-page-3" class="front front-page front-page-3">
-				<div class="solid-section" style="height: 469px;">
-					<div class="flexible-widgets widget-area widget-full">
-						<div class="wrap">
-							<section id="text-3" class="widget widget_text" style="margin: 0px;">
-								<div class="widget-wrap">			
-								<div class="textwidget">
-									<h2 style="color:#15D4B5;font-size:40px;font-weight:200;font-family: Microsoft YaHei;">不走寻常路</h2>
-									<a class="button clear white" href="/collections/" style="color: #15D4B5;margin:20px">达人线路</a>
-								</div>
-								</div>
-							</section>
-						</div>
-					</div>
-				</div>
-			</div>
-            <div id="front-page-5" class="front front-page front-page-5">
-				<div class="image-section" style="height: 449px;">
-					<div class="flexible-widgets widget-area widget-full">
-						<div class="wrap">
-							<section id="text-2" style="margin: 0px;">
+						<div class="item">
+                               <section id="text-2" class="tbg-home-slider">
 								<div class="widget-wrap">			
 									<div class="textwidget">
-										<h2 style="color:white;font-size:50px;font-weight:200;font-family: Microsoft YaHei;">TRAVEL MORE, WORRY LESS</h2>
-										<a class="button clear white" href="/about-us/" style="color: white;">联系我们</a> 
+										<h2>旅行  	不走寻常路</h2>
+										<a class="button clear white" href="#">创意线路</a> 
 									</div>
 								</div>
 							</section>
+                           </div>
+						<div class="item">
+                               <section id="text-3" class="tbg-home-slider">
+								<div class="widget-wrap">			
+									<div class="textwidget">
+										<h2>TRAVEL MORE, WORRY LESS</h2>
+										<a class="button clear white" href="#">联系我们</a> 
+									</div>
+								</div>
+							</section>
+                           </div>
+                       </div>
+                       <a data-slide="prev" href="#carousel1" class="left carousel-control">
+                           <span class="icon-prev"></span>
+                       </a>
+                       <a data-slide="next" href="#carousel1" class="right carousel-control">
+                           <span class="icon-next"></span>
+                       </a>
+                   </div>
+			</div>
+			<div id="front-page-3" class="front front-page front-page-3">
+				<section id="text-3" class="widget widget_text" style="margin: 0px;">
+					
+				</section>
+			</div>
+            <div id="front-page-5" class="front front-page front-page-5">
+				<section id="text-2" style="margin: 0px;">
+					<h2>联系我们</h2>
+					<div class="row">
+						<div class="col-sm-6 tbg-contact-qrcode">
+							<p class="tbg-contact-qrcode-p">
+								<img class="tbg-qrcode" src="/img/qrcode.jpg"/>
+							</p>
+							<p class="tbg-contact-qrcode-p">
+								微信公众号
+							</p>
+						</div>
+						<div class="col-sm-6 tbg-contact-email">
+							<label>Email: </label>
+							<p>contact@witvan.com</p>
 						</div>
 					</div>
-				</div>
+				</section>
 			</div>
         </div>
         <div class="footer">

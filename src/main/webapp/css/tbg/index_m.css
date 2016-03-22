@@ -1,0 +1,91 @@
+body{
+	font-family: Microsoft YaHei;
+	background-color: transparent;
+}
+.front{
+	position: relative;
+}
+.front-page{
+	background-attachment: fixed;
+	background-color: #fff;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+#front-page-1 {
+	background-image: url(/img/landing/page1.jpg); 
+}
+#front-page-3 {
+	background-image: url(/img/landing/page2.jpg); 
+	min-height: 469px;
+}
+#front-page-5 {
+	min-height: 249px;
+}
+#front-page-5 h2 {
+	text-align: center;
+}
+nav{
+	padding: 0px 15px;
+}
+.footer{
+	position: relative;
+}
+.widget-wrap{
+	position: relative;
+	top: 20px;
+	text-align: center;
+}
+.navbar-static-top{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+}
+#content-area{
+	position: relative;
+	top: 54px;
+}
+.textwidget a{
+	border-radius: 5px;
+	border-width: 1px;
+	border-style: solid;
+	padding: 5px 15px;
+	font-size: 14px;
+	font-weight: 800;
+	display: inline-block;
+}
+.tbg-home-slider{
+	min-height: 150px;
+}
+.tbg-home-slider h2{
+	color:white;
+	font-size:30px;
+	font-weight:200;
+	font-family: Microsoft YaHei;
+}
+.tbg-home-slider a{
+	color:white;
+}
+.carousel-control{
+	background:transparent;
+}
+.footer{
+	display: none;
+}
+.tbg-qrcode{
+	max-width: 128px;
+}
+.tbg-contact-qrcode{
+	float: left;
+}
+.tbg-contact-qrcode-p{
+	text-align: center;
+}
+.tbg-contact-email{
+	margin-top: 30px;
+	float: right;
+	margin-right: 50px;
+}

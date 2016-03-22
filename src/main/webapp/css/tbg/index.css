@@ -1,0 +1,100 @@
+body{
+	font-family: Microsoft YaHei;
+	background-color: transparent;
+}
+.front{
+	position: relative;
+}
+.front-page{
+	background-attachment: fixed;
+	background-color: #fff;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+}
+#front-page-1 {
+	background-image: url(/img/landing/page1.jpg); 
+}
+#front-page-3 {
+	background-image: url(/img/landing/page2.jpg); 
+	min-height: 469px;
+}
+#front-page-5 {
+	background-image: url(/img/landing/page3.jpg); 
+	min-height: 449px;
+}
+#front-page-5 h2{
+	color:white;
+	font-size:40px;
+	font-weight:200;
+	font-family: Microsoft YaHei;
+	text-align: center;
+}
+#front-page-5 a{
+	border-radius: 5px;
+	border-width: 2px;
+	border-style: solid;
+	padding: 15px 25px;
+	font-size: 14px;
+	font-weight: 800;
+	display: inline-block;
+	color:white;
+}
+nav{
+	padding: 0px 15px;
+}
+.footer{
+	position: relative;
+}
+.widget-wrap{
+	position: relative;
+	top: 80px;
+	text-align: center;
+}
+.navbar-static-top{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+}
+#content-area{
+	position: relative;
+	top: 54px;
+}
+.textwidget a{
+	border-radius: 5px;
+	border-width: 2px;
+	border-style: solid;
+	padding: 15px 25px;
+	font-size: 14px;
+	font-weight: 800;
+	display: inline-block;
+}
+.tbg-home-slider{
+	min-height: 300px;
+}
+.tbg-home-slider h2{
+	color:white;
+	font-size:40px;
+	font-weight:200;
+	font-family: Microsoft YaHei;
+}
+.tbg-home-slider a{
+	color:white;
+}
+.carousel-control{
+	background:transparent;
+}
+.tbg-qrcode{
+	max-width: 208px;
+}
+.tbg-contact-qrcode-p{
+	text-align: center;
+	color: white;
+}
+.tbg-contact-email{
+	color: white;
+	margin-top: 30px;
+}
