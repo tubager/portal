@@ -15,7 +15,7 @@ body{
 	background-size: cover;
 }
 #front-page-1 {
-	background-image: url(/img/landing/page1.jpg); 
+	background-color: #0fa9ff;
 }
 #front-page-3 {
 	background-image: url(/img/landing/page2.jpg); 
