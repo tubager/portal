@@ -65,6 +65,16 @@ public class ArticleController {
 		return null;
 	}
 
+	@RequestMapping(value="/account/myarticle", method=RequestMethod.GET)
+	public @ResponseBody List<Article> myArticles(){
+		TUser user = userService.getCurrentUser();
+		if(user == null){
+			logger.info("user in null");
+			return null;
+		}
+		return articleService.myArticles(user);
+	}
+
 	@RequestMapping(value="/toparticles", method=RequestMethod.GET)
 	public @ResponseBody List<Article> listTop(){
 		return articleService.listTop();

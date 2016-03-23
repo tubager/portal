@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.tubager.dao.ArticleDao;
 import com.tubager.domain.Article;
 import com.tubager.domain.Item;
+import com.tubager.domain.TUser;
 import com.tubager.utility.Constants;
 
 @Service
@@ -87,6 +88,10 @@ public class ArticleService {
 	
 	public List<Article> listTop(){
 		return this.articleDao.listTop();
+	}
+	
+	public List<Article> myArticles(TUser user){
+		return articleDao.listMyArticles(user.getName());
 	}
 	
 	public Article readActive(String uuid){

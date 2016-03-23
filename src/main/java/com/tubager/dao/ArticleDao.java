@@ -211,7 +211,7 @@ public class ArticleDao {
 			if(status == Constants.STATUS_DRAFT){
 				list.add(a);
 			}
-			else if(status == Constants.STATUS_PUBLISHED && !draftList.contains(uuid)){
+			else if(Constants.STATUS_PUBLISHED.equalsIgnoreCase(status) && !draftList.contains(uuid)){
 				list.add(a);
 			}
 		}

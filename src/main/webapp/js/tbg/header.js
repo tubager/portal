@@ -32,7 +32,7 @@ if(header){
             <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 个人中心 <span class="caret"></span></a>\
             <ul role="menu" class="dropdown-menu">\
                 <li><a id="tbg-menu-edit" href="#">写游记</a></li>\
-                <li><a href="#">我的游记</a></li>\
+                <li><a href="/account/my_article.html">我的游记</a></li>\
                 <li><a href="#">我的线路</a></li>\
             </ul>\
         </li>\

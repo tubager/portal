@@ -1,0 +1,40 @@
+body{
+	background-color: #f9f9f9;
+}
+
+nav {
+    padding: 0px 15px;
+}
+.tbg-article-tile{
+	padding: 40px 20px;
+	position: relative;
+}
+
+.tbg-article-tile button{
+	margin-left: 10px;
+}
+.tbg-article-tile .tbg-boolbar{
+	position: absolute;
+	right: 20px;
+	top: 0px;
+	display: none;
+}
+.tbg-article-tile:hover .tbg-boolbar{
+	display: block;
+}
+.tbg-article-tile-img{
+	width: 100%;
+	height: 300px;
+}
+.tbg-article-tile-title{
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+    word-wrap: normal;
+    white-space: nowrap;
+    color: #15D4B5;
+    font-size: 16px;
+}
+#tbg-articles{
+	margin: 20px 40px;
+}
