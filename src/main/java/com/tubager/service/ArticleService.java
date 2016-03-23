@@ -52,7 +52,11 @@ public class ArticleService {
 					item.setDate(date);
 				}
 				item.setStatus(status);
-				if(Constants.TYPE_TEXT.equalsIgnoreCase(item.getType()) || Constants.TYPE_TIP.equalsIgnoreCase(item.getType())){
+				if( Constants.TYPE_TEXT.equalsIgnoreCase(item.getType()) ||
+					Constants.TYPE_TIP.equalsIgnoreCase(item.getType()) ||
+					Constants.TYPE_SHOP.equalsIgnoreCase(item.getType()) ||
+					Constants.TYPE_FOOD.equalsIgnoreCase(item.getType())
+				){
 					String text = item.getText();
 					if(text == null){
 						text = "";
@@ -105,7 +109,11 @@ public class ArticleService {
 			return;
 		}
 		for(Item item : items){
-			if(item.getType() == Constants.TYPE_TEXT || item.getType() == Constants.TYPE_TIP){
+			if( Constants.TYPE_TEXT.equalsIgnoreCase(item.getType()) ||
+				Constants.TYPE_TIP.equalsIgnoreCase(item.getType()) ||
+				Constants.TYPE_SHOP.equalsIgnoreCase(item.getType()) ||
+				Constants.TYPE_FOOD.equalsIgnoreCase(item.getType())
+			){
 				byte[] content = item.getContent();
 				if(content == null){
 					content = new byte[]{};
