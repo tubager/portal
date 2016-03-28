@@ -28,7 +28,7 @@ public class ArticleService {
 //			return this.createArticle(article);
 //		}
 		String status = article.getStatus();
-		if(status == Constants.STATUS_PUBLISHED){
+		if(Constants.STATUS_PUBLISHED.equalsIgnoreCase(status)){
 			articleDao.removeHard(article.getUuid());
 		}
 		else{
