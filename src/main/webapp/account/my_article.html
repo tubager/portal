@@ -12,6 +12,9 @@
     <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    
 	<link href="/css/tbg/my_article.css" rel="stylesheet">
 </head>
 
@@ -27,6 +30,10 @@
     <script src="/js/jquery-2.1.1.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    
 	<script src="/js/tbg/header.js"></script>
 	<script src="/js/tbg/utility.js"></script>
 	<script>
@@ -45,7 +52,23 @@
 					self.location.href = "new_article.html?articleid=" + uuid;
 				}
 				else if(action == "remove"){
-					
+					swal({
+                        title: "确定删除美好回忆?",
+                        text: "删除后将无法恢复!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "删除",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: true,
+                        closeOnCancel: false },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            console.log("deleted");
+                        } else {
+                            swal("Cancelled", "Your imaginary file is safe :)", "error");
+                        }
+                    });
 				}
 			});
 			

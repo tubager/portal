@@ -74,6 +74,12 @@ public class ArticleController {
 		}
 		return articleService.myArticles(user);
 	}
+	
+	@RequestMapping(value="/readarticle/{uuid}", method=RequestMethod.GET)
+	public @ResponseBody Article readArticle(@PathVariable String uuid){
+		Article article = articleService.readActive(uuid);
+		return article;
+	}
 
 	@RequestMapping(value="/toparticles", method=RequestMethod.GET)
 	public @ResponseBody List<Article> listTop(){
