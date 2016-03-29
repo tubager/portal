@@ -166,7 +166,8 @@ $(document).ready(function(){
 		});
 		
 		function onDrop(evt){
-	    	var ele = evt.toElement;
+	    	//var ele = evt.toElement;
+			var ele=evt.originalEvent.target;
 			while(!ele.classList.contains("article-item")){
 				ele = ele.parentNode;
 			}
@@ -414,7 +415,7 @@ $(document).ready(function(){
 		});
 		
 		$("#article-content").on("click", ".toolbar-button", function(evt){
-			var node = evt.originalEvent.srcElement;
+			var node = evt.originalEvent.target;
 			while(node && node.tagName != "A"){
 				node = node.parentNode;
 			}
@@ -426,9 +427,31 @@ $(document).ready(function(){
 				editItem(node);
 			}
 			else if(action == "delete"){
-				node.parentNode.removeChild(node);
+				removeParagraph(node);
 			}
 		});
+		
+		function removeParagraph(node){
+			swal({
+                title: "确定删除?",
+                text: "如果是手误，请取消哦!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "删除",
+                cancelButtonText: "取消",
+                closeOnConfirm: true,
+                closeOnCancel: false },
+            function (isConfirm) {
+                if (isConfirm) {
+                	node.parentNode.removeChild(node);
+                    tbgUtil.showMessage("success", "成功删除");
+                } else {
+                    //swal("Cancelled", "Your imaginary file is safe :)", "error");
+                	tbgUtil.showMessage("error", "抱歉，出错了！");
+                }
+            });
+		}
 		
 		$("#tbgSaveBtn").click(function(){
 			var article = beforeSave("D");
@@ -498,9 +521,11 @@ $(document).ready(function(){
 				contentType:"application/json;charset=UTF-8",
 				success:function(d){
 					console.log(d);
+					tbgUtil.showMessage("success", "您的美好回忆已经永久保存");
 				},
 				error:function(){
 					console.log("upload failed");
+					tbgUtil.showMessage("error", "抱歉，暂时无法保存");
 				}
 			});
 		}

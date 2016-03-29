@@ -130,15 +130,19 @@
 			});
 			
 			function createArticle(article){
+				var url = "/article/article.html?articleid="+article.uuid;
 				var node = document.createElement("div");
 				node.classList.add("col-sm-4");
 				node.classList.add("tbg-article-tile");
 				var img = document.createElement("img");
 				img.src = article.coverImg;
 				img.classList.add("tbg-article-tile-img");
-				node.appendChild(img);
 				var a = document.createElement("a");
-				a.href="/article/article.html?articleid="+article.uuid;
+				a.href = url;
+				a.appendChild(img);
+				node.appendChild(a);
+				a = document.createElement("a");
+				a.href= url;
 				var p = document.createElement("p");
 				p.innerHTML = article.title;
 				p.classList.add("tbg-article-tile-title");
