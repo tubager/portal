@@ -30,6 +30,7 @@ $(document).ready(function(){
 		$("#imageinputfile").change(function(){
 			var data = new FormData();
 			data.append('file', $('#imageinputfile')[0].files[0]);
+			alert($('#imageinputfile')[0].files[0]);
 			$.ajax({
 				url:'/upload/image',
 				type:'POST',
@@ -38,10 +39,12 @@ $(document).ready(function(){
 				contentType: false,
 				processData: false,
 				success:function(d){
+					alert("upload success");
 					var img = document.getElementById("newImg");
 					img.src = "/resource/file/" + d;
 				},
-				error:function(){
+				error:function(error){
+					alert(error);
 					console.log("upload failed");
 				}
 			});
