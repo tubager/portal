@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+	<link href="/css/tbg/new_article_m.css" rel="stylesheet">
+</head>
+
+<body class="top-navigation">
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area">
+			<div id="tbg-header-toolbar" style="display:none">
+				<button id="tbgSaveBtn" class="btn btn-primary btn-outline  pull-right" type="button"><i class="fa fa-save" style="margin-right:5px;"></i>保存草稿</button>
+				<button id="tbgPublishBtn" class="btn btn-primary btn-outline  pull-right" type="button" style="margin-right:10px;"><i class="fa fa-send-o" style="margin-right:5px;"></i>发布游记</button>
+			</div>
+        	<div id="article-content">
+        	</div>
+        </div>
+        <div id="footer-area">
+        	<div class="btn-group" style="width: 100%">
+                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="title"><i class="fa fa-list-ul"></i>标题</button>
+                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="text"><i class="fa fa-align-justify"></i>文字</button>
+                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="image"><i class="fa fa-picture-o"></i>图片</button>
+                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="tip"><i class="fa fa-info"></i>提示</button>
+                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="other"><i class="fa fa-ellipsis-h"></i></button>
+            </div>
+        </div>
+        <div class="modal inmodal fade" id="titleModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header" style="padding: 0px;margin-top: 10px;">
+                       <h2 class="modal-title" style="font-size: 16px">段落标题</h2>
+                   </div>
+                   <div class="modal-body">
+                       <input id="newTitleText" type="text" class="form-control" placeholder="段落标题" />
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="newTitleCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newTitleBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="tipModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header" style="padding: 0px;margin-top: 10px;">
+                       <h2 class="modal-title" id="tipModalTitle" style="font-size: 16px">旅行小贴士</h2>
+                   </div>
+                   <div class="modal-body" style="padding: 10px;">
+                       <textarea id="newTipArea" rows="10" class="form-control" placeholder="" ></textarea>
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="newTipCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newTipBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="imageModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header" style="padding: 0px;margin-top: 10px;">
+                       <h2 class="modal-title" style="font-size: 16px">图片</h2>
+                   </div>
+                   <div class="modal-body">
+                   		<label style="margin-bottom:10px;"></label>
+                   		<img id="newImg" src="/img/default.png "/>
+                   		<input id="newImageText" class="form-control" placeholder="给我一个描述" ></input>
+                   		<input type="file" id="imageinputfile" style="height:0;width:0;z-index: -1;"/>
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="newImageCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newImageBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+   </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    
+	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
+	<script src="/js/tbg/new_article_m.js"></script>
+	
+</body>
+
+</html>

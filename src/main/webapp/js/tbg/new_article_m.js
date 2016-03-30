@@ -1,25 +1,4 @@
 $(document).ready(function(){
-	$('#newTipArea').summernote({
-	    lang: 'zh-CN',
-	    height: 300,
-	    minHeight: null,
-	    maxHeight: null,
-	    focus: true,
-	    dialogsInBody: true,
-        fontNames: ['Microsoft YaHei', '微软雅黑', '宋体', '楷体', '黑体', '隶书', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
-	    toolbar: [
-	              ['fontname', ['fontname']],
-	              ['style', ['bold', 'italic', 'underline', 'clear']],
-	              ['fontsize', ['fontsize']],
-	              ['color', ['color']],
-	              ['para', ['ul', 'ol', 'paragraph']],
-	              ['height', ['height']],
-	              ['link', ['link']],
-	              ['picture', ['picture']],
-	              ['video', ['video']],
-	              ['table', ['table']]
-	             ],
-	});
 	
 	$("#coverImgPreview").click(function(){
 		document.getElementById('coverinputfile').click();
@@ -133,27 +112,9 @@ $(document).ready(function(){
 	        });
 		}
 		
-		$( "#tbg-toolbar .draggable" ).draggable({
-    		opacity: 0.7,
-    		connectWith: ".droppable",
-    		connectToSortable: ".droppable",
-    		zIndex:100000,
-    		cursor: "move",
-    		helper: function() {
-    			var type = this.dataset["type"];
-	            var img = $(this).clone();
-	            var div = $('<div class="article-item" data-type="'+type+'"></div>').append(img);
-	            return $(div);
-	        }
-		});
-		$( ".sortable" ).sortable({
-    		opacity: 0.7,
-    		connectWith: ".droppable",
-    		receive: onDrop
-		});
-		$(".toolbar-item").click(function(evt){
+		$(".tbg-footer-btn").click(function(evt){
 			var ele = evt.target;
-			while(!ele.classList.contains("toolbar-item")){
+			while(!ele.classList.contains("tbg-footer-btn")){
 				ele = ele.parentNode;
 			}
 			var type = ele.dataset["type"];
@@ -164,18 +125,6 @@ $(document).ready(function(){
 			document.getElementById("article-content").appendChild(node);
 			addItem(type, node);
 		});
-		
-		function onDrop(evt){
-	    	//var ele = evt.toElement;
-			var ele=evt.originalEvent.target;
-			while(!ele.classList.contains("article-item")){
-				ele = ele.parentNode;
-			}
-			ele.innerHTML = "";
-			ele.removeAttribute("style");
-	    	var type = ele.dataset["type"];
-	    	addItem(type, ele);
-		}
 		
 		function addItem(type, node){
 			switch(type){
@@ -239,8 +188,7 @@ $(document).ready(function(){
 		}
 		
 		function showText(node,val, mode){
-			//$("#newTipArea").val(val);
-			$('#newTipArea').summernote('code', val);
+			$("#newTipArea").val(val);
 			$("#tipModalTitle").html("文字段落");
 			$("#tipModal").modal("show");
 			$("#tipModal").data("node", node);
@@ -249,8 +197,7 @@ $(document).ready(function(){
 		}
 		
 		function showTip(node,val, mode){
-			//$("#newTipArea").val(val);
-			$('#newTipArea').summernote('code', val);
+			$("#newTipArea").val(val);
 			$("#tipModalTitle").html("旅行小贴士");
 			$("#tipModal").modal("show");
 			$("#tipModal").data("node", node);
@@ -259,8 +206,7 @@ $(document).ready(function(){
 		}
 		
 		function showShop(node,val, mode){
-			//$("#newTipArea").val(val);
-			$('#newTipArea').summernote('code', val);
+			$("#newTipArea").val(val);
 			$("#tipModalTitle").html("购物推荐");
 			$("#tipModal").modal("show");
 			$("#tipModal").data("node", node);
@@ -269,8 +215,7 @@ $(document).ready(function(){
 		}
 		
 		function showFood(node,val, mode){
-			//$("#newTipArea").val(val);
-			$('#newTipArea').summernote('code', val);
+			$("#newTipArea").val(val);
 			$("#tipModalTitle").html("美食推荐");
 			$("#tipModal").modal("show");
 			$("#tipModal").data("node", node);

@@ -82,7 +82,7 @@ $.ajax({
 $(document).ready(function(){
 	var menu = document.getElementById("tbg-menu-edit");
 	if(document.body.clientWidth < 768){
-		menu.href = "";
+		menu.href = "/account/new_article_m.html";
 	}
 	else{
 		menu.href = "/account/new_article.html";
