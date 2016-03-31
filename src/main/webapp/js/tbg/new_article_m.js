@@ -60,8 +60,14 @@ $(document).ready(function(){
 	            contentType:"application/json;charset=UTF-8"
 	        }).done(function(data){
 	        	article = data;
-	        	document.getElementById("article-title-input").value = article.title;
-				document.getElementById("coverImgPreview").src = article.coverImg;
+	        	var titleInput = document.getElementById("article-title-input");
+	        	if(titleInput){
+	        		titleInput.value = article.title;
+	        	}
+	        	var coverImg = document.getElementById("coverImgPreview");
+	        	if(coverImg){
+	        		coverImg.src = article.coverImg;
+	        	}
 				var items = article.items;
 				if(!items){
 					return;
@@ -115,9 +121,24 @@ $(document).ready(function(){
 	        });
 		}
 		
-		$(".tbg-footer-btn").click(function(evt){
+		$(".tbg-action-btn").click(function(evt){
 			var ele = evt.target;
-			while(!ele.classList.contains("tbg-footer-btn")){
+			while(!ele.classList.contains("tbg-action-btn")){
+				ele = ele.parentNode;
+			}
+			var action = ele.dataset["action"];
+			console.log(action);
+			hideActions();
+			switch(action){
+				case "other":
+					showActions();
+					break;
+			}
+		});
+		
+		$(".tbg-ele-btn").click(function(evt){
+			var ele = evt.target;
+			while(!ele.classList.contains("tbg-ele-btn")){
 				ele = ele.parentNode;
 			}
 			var type = ele.dataset["type"];
@@ -144,9 +165,11 @@ $(document).ready(function(){
 	    			showTip(node,"", "new");
 	    			break;
 	    		case "shop":
+	    			hideActions();
 	    			showShop(node,"", "new");
 	    			break;
 	    		case "food":
+	    			hideActions();
 	    			showFood(node,"", "new");
 	    			break;
 	    	}
@@ -181,6 +204,14 @@ $(document).ready(function(){
 	    			showFood(node,food, "edit");
 	    			break;
 	    	}
+		}
+		
+		function showActions(){
+			$("#actionModal").modal("show");
+		}
+		
+		function hideActions(){
+			$("#actionModal").modal("hide");
 		}
 		
 		function showTitle(node,val, mode){
@@ -238,7 +269,9 @@ $(document).ready(function(){
 			var bar = document.createElement("span");
 			bar.classList.add("article-item-toolbar");
 			bar.innerHTML = '<a class="toolbar-button" href="#" data-action="edit" title="编辑"><i class="fa fa-pencil"></i></a>' +
-							'<a class="toolbar-button" href="#" data-action="delete" title="删除"><i class="fa fa-trash-o"></i></a>';
+							'<a class="toolbar-button" href="#" data-action="delete" title="删除"><i class="fa fa-trash"></i></a>' +
+							'<a class="toolbar-button" href="#" data-action="up" title="上移"><i class="fa fa-arrow-up"></i></a>' +
+							'<a class="toolbar-button" href="#" data-action="down" title="下移"><i class="fa fa-arrow-down"></i></a>';
 			return bar;
 		}
 		
@@ -371,13 +404,40 @@ $(document).ready(function(){
 			while(!node.classList.contains("article-item")){
 				node = node.parentNode;
 			}
-			if(action == "edit"){
-				editItem(node);
-			}
-			else if(action == "delete"){
-				removeParagraph(node);
+			switch(action){
+				case "edit":
+					editItem(node);
+					break;
+				case "delete":
+					removeParagraph(node);
+					break;
+				case "up":
+					moveUp(node);
+					break;
+				case "down":
+					moveDown(node);
+					break;
 			}
 		});
+		
+		function moveUp(node){
+			var sibling = node.previousSibling;
+			if(sibling){
+				node.parentNode.insertBefore(node, sibling);
+			}
+		}
+		
+		function moveDown(node){
+			var sibling = node.nextSibling;
+			if(sibling){
+				if(sibling.nextSibling){
+					node.parentNode.insertBefore(node, sibling.nextSibling);
+				}
+				else{
+					node.parentNode.appendChild(node);
+				}
+			}
+		}
 		
 		function removeParagraph(node){
 			swal({

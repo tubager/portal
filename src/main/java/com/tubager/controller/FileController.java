@@ -47,9 +47,9 @@ public class FileController {
         	metaData.put("Content-Type", file.getContentType());
         	metaData.put("length", file.getSize());
         	metaData.put("user", userName);
-        	metaData.put("for", "profile");
-        	String id = fileService.storeProfileImg(name, file, metaData);
-        	System.out.println("Profile image uploaded: " + id);
+        	//metaData.put("for", "profile");
+        	String id = fileService.storeFile(name, file, metaData);
+        	System.out.println("image uploaded: " + id);
         	return id;
         } catch (Exception e) {
             throw e;
@@ -60,6 +60,9 @@ public class FileController {
 	public void getById(@PathVariable String id, HttpServletResponse response) throws IOException{
 		OutputStream stream = response.getOutputStream();
 		GridFSDBFile file = fileService.getById(id);
+		if(file == null){
+			throw new FileNotFound(id + " not found");
+		}
 		DBObject meta = file.getMetaData();
 		response.setHeader("Content-Type", meta.get("Content-Type").toString());
 		file.writeTo(stream);
@@ -72,6 +75,9 @@ public class FileController {
 										HttpServletResponse response) throws IOException{
 		OutputStream stream = response.getOutputStream();
 		GridFSDBFile file =  fileService.getByUserAndParagraphAndFilename(username, paragraph, filename);
+		if(file == null){
+			throw new FileNotFound(filename + " not found");
+		}
 		DBObject meta = file.getMetaData();
 		response.setHeader("Content-Type", meta.get("Content-Type").toString());
 		file.writeTo(stream);

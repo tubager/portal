@@ -48,11 +48,11 @@ public class FileService {
 	}
 	
 	public String storeFile(String fileName, MultipartFile file, DBObject metaData) throws IOException{
-		GridFSFile _file = this.getByUserAndParagraphAndFilename(metaData.get("user").toString(), metaData.get("paragraphid").toString(), fileName);
-		if(_file != null){
-			System.out.println(_file.getFilename());
-			return _file.getId().toString();
-		}
+//		GridFSFile _file = this.getByUserAndParagraphAndFilename(metaData.get("user").toString(), metaData.get("paragraphid").toString(), fileName);
+//		if(_file != null){
+//			System.out.println(_file.getFilename());
+//			return _file.getId().toString();
+//		}
 		InputStream inputStream = file.getInputStream();
 		String contentType = metaData.get("Content-Type").toString();//"image/jpeg";
 		

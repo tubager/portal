@@ -108,6 +108,10 @@ public class ArticleService {
 		return article;
 	}
 	
+	public void removeLogically(String uuid){
+		articleDao.remove(uuid);
+	}
+	
 	//private
 	private void processItem(List<Item> items){
 		if(items == null){

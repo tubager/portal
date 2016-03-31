@@ -64,6 +64,18 @@ public class ArticleController {
 		logger.info(user.getName());
 		return null;
 	}
+	
+	@RequestMapping(value="/account/article/{uuid}", method=RequestMethod.DELETE)
+	public @ResponseBody Article removeMyArticle(@PathVariable String uuid){
+		TUser user = userService.getCurrentUser();
+		if(user == null){
+			logger.info("user in null");
+			return null;
+		}
+		articleService.removeLogically(uuid);
+		logger.info(uuid + " deleted!");
+		return null;
+	}
 
 	@RequestMapping(value="/account/myarticle", method=RequestMethod.GET)
 	public @ResponseBody List<Article> myArticles(){

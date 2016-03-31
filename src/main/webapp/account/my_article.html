@@ -51,7 +51,12 @@
 				}
 				var uuid = target.dataset["uuid"];
 				if(action == "edit"){
-					self.location.href = "new_article.html?articleid=" + uuid;
+					if(document.body.clientWidth < 768){
+						self.location.href = "new_article_m.html?articleid=" + uuid;
+					}
+					else{
+						self.location.href = "new_article.html?articleid=" + uuid;
+					}
 				}
 				else if(action == "remove"){
 					swal({
@@ -63,32 +68,50 @@
                         confirmButtonText: "删除",
                         cancelButtonText: "取消",
                         closeOnConfirm: true,
-                        closeOnCancel: false },
+                        closeOnCancel: true },
                     function (isConfirm) {
                         if (isConfirm) {
-                            console.log("deleted");
-                            tbgUtil.showMessage("success", "成功清除回忆");
+                            deleteArticle(uuid);
                         } else {
                             //swal("Cancelled", "Your imaginary file is safe :)", "error");
                         }
                     });
 				}
 			});
+		
+			listArticle();
+		
+			function listArticle(){
+				$.ajax({
+					url: "/account/myarticle",
+					type: "GET",
+					success: function(data){
+						console.log(data);
+						var articlesNode = document.getElementById("tbg-articles");
+						articlesNode.innerHTML = "";
+						data.map(function(article){
+							articlesNode.appendChild(createArticle(article));
+						});
+					},
+					fail: function(error){
+						console.log(error);
+					}
+				});
+			}
 			
-			$.ajax({
-				url: "/account/myarticle",
-				type: "GET",
-				success: function(data){
-					console.log(data);
-					var articlesNode = document.getElementById("tbg-articles");
-					data.map(function(article){
-						articlesNode.appendChild(createArticle(article));
-					});
-				},
-				fail: function(error){
-					console.log(error);
-				}
-			});
+			function deleteArticle(uuid){
+				$.ajax({
+					url: "/account/article/" + uuid,
+					type: "DELETE",
+					success: function(data){
+						tbgUtil.showMessage("success", "成功清除回忆");
+						listArticle();
+					},
+					fail: function(error){
+						tbgUtil.showMessage("error", "抱歉，暂时无法删除");
+					}
+				});
+			}
 			
 			function createArticle(article){
 				var url = "/article/article.html?articleid="+article.uuid;

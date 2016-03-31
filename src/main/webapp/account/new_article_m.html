@@ -24,20 +24,16 @@
         <div id="header-area" class="row border-bottom">
         </div>
         <div id="content-area">
-			<div id="tbg-header-toolbar" style="display:none">
-				<button id="tbgSaveBtn" class="btn btn-primary btn-outline  pull-right" type="button"><i class="fa fa-save" style="margin-right:5px;"></i>保存草稿</button>
-				<button id="tbgPublishBtn" class="btn btn-primary btn-outline  pull-right" type="button" style="margin-right:10px;"><i class="fa fa-send-o" style="margin-right:5px;"></i>发布游记</button>
-			</div>
         	<div id="article-content">
         	</div>
         </div>
         <div id="footer-area">
         	<div class="btn-group" style="width: 100%">
-                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="title"><i class="fa fa-list-ul"></i>标题</button>
-                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="text"><i class="fa fa-align-justify"></i>文字</button>
-                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="image"><i class="fa fa-picture-o"></i>图片</button>
-                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="tip"><i class="fa fa-info"></i>提示</button>
-                <button class="btn btn-primary tbg-footer-btn" type="button" data-type="other"><i class="fa fa-ellipsis-h"></i></button>
+                <button class="btn btn-primary tbg-footer-btn tbg-ele-btn" type="button" data-type="title"><i class="fa fa-list-ul"></i>标题</button>
+                <button class="btn btn-primary tbg-footer-btn tbg-ele-btn" type="button" data-type="text"><i class="fa fa-align-justify"></i>文字</button>
+                <button class="btn btn-primary tbg-footer-btn tbg-ele-btn" type="button" data-type="image"><i class="fa fa-picture-o"></i>图片</button>
+                <button class="btn btn-primary tbg-footer-btn tbg-ele-btn" type="button" data-type="tip"><i class="fa fa-info"></i>提示</button>
+                <button class="btn btn-primary tbg-footer-btn tbg-action-btn" type="button" data-action="other"><i class="fa fa-ellipsis-h"></i></button>
             </div>
         </div>
         <div class="modal inmodal fade" id="titleModal" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -90,6 +86,20 @@
                    <div class="modal-footer">
                        <button type="button" class="btn btn-white" id="newImageCancelBtn" data-dismiss="modal">取消</button>
                        <button type="button" class="btn btn-primary" id="newImageBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="actionModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-sm">
+               <div class="modal-content">
+                   <div class="modal-body">
+                   		<button type="button" class="btn btn-block btn-primary tbg-ele-btn" data-type="food"><i class="fa fa-cutlery"></i>美食推荐</button>
+                   		<button type="button" class="btn btn-block btn-primary tbg-ele-btn" data-type="shop"><i class="fa fa-shopping-cart"></i>购物推荐</button>
+                   		<div style="border-top: 1px solid lightgrey;margin:10px 0px;"></div>
+                   		<button type="button" class="btn btn-block btn-outline btn-primary tbg-action-btn" data-action="cover"><i class="fa fa-book"></i>设置封面</button>
+                   		<button type="button" class="btn btn-block btn-outline btn-primary tbg-action-btn" data-action="save"><i class="fa fa-save"></i>保存游记</button>
+                   		<button type="button" class="btn btn-block btn-outline btn-primary tbg-action-btn" data-action="publish"><i class="fa fa-send"></i>发布游记</button>
                    </div>
                </div>
            </div>
