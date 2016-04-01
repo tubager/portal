@@ -70,6 +70,7 @@ $(document).ready(function(){
 	            contentType:"application/json;charset=UTF-8"
 	        }).done(function(data){
 	        	article = data;
+	        	alert(article);
 	        	var titleInput = document.getElementById("article-title-input");
 	        	if(titleInput){
 	        		titleInput.value = article.title;
