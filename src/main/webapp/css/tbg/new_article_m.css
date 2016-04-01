@@ -97,5 +97,19 @@ nav{
 .article-item{
 	position: relative;
 	margin-top: 30px;
+}
+
+.tbg-p-title, .tbg-p-text{
 	border-top: 1px solid #f9f9f9;
+}
+
+#tbg-cover-title{
+	text-align: center;
+	color: grey;
+}
+
+#tbg-cover-img, #coverImgPreview{
+	max-width: 100%;
+	margin: 10px auto;
+	display: block;
 }

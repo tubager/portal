@@ -24,6 +24,12 @@
         <div id="header-area" class="row border-bottom">
         </div>
         <div id="content-area">
+        	<div id="article-cover">
+        		<a id="tbg-cover" href="#">
+        			<h3 id="tbg-cover-title">请更改游记标题和封面图片</h3>
+        			<img id="tbg-cover-img" src="/img/default.png"/>
+        		</a>
+        	</div>
         	<div id="article-content">
         	</div>
         </div>
@@ -86,6 +92,26 @@
                    <div class="modal-footer">
                        <button type="button" class="btn btn-white" id="newImageCancelBtn" data-dismiss="modal">取消</button>
                        <button type="button" class="btn btn-primary" id="newImageBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="coverModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header" style="padding: 0px;margin-top: 10px;">
+                       <h2 class="modal-title" style="font-size: 16px">设置游记标题和封面图片</h2>
+                   </div>
+                   <div class="modal-body">
+                   		<label style="margin-top:10px;">游记标题</label>
+                   		<input id="article-title-input" class="form-control" placeholder="游记标题" ></input>
+                   		<label style="margin-top:10px;">封面图片</label>
+                   		<img id="coverImgPreview" src="/img/default.png "/>
+                   		<input type="file" id="coverinputfile" style="height:0;width:0;z-index: -1;"/>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="coverCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="coverBtn">确定</button>
                    </div>
                </div>
            </div>

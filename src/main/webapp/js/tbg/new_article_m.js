@@ -24,6 +24,16 @@ $(document).ready(function(){
 		});
 	});
 	
+	$("#tbg-cover").click(function(){
+		$("#coverModal").modal("show");
+	});
+	
+	$("#coverBtn").click(function(){
+		$("#coverModal").modal("hide");
+		document.getElementById("tbg-cover-title").innerHTML = document.getElementById("article-title-input").value;
+		document.getElementById("tbg-cover-img").src= document.getElementById("coverImgPreview").src;
+	});
+	
 	$("#newImg").click(function(){
 		document.getElementById('imageinputfile').click();
 		
@@ -50,7 +60,7 @@ $(document).ready(function(){
 			});
 		});
 	});
-	
+
 	$(document).ready(function(){
 		var articleUuid = tbgUtil.getUrlParam("articleid");
 		var article = null;
@@ -64,10 +74,12 @@ $(document).ready(function(){
 	        	if(titleInput){
 	        		titleInput.value = article.title;
 	        	}
+	        	document.getElementById("tbg-cover-title").innerHTML = article.title;
 	        	var coverImg = document.getElementById("coverImgPreview");
 	        	if(coverImg){
 	        		coverImg.src = article.coverImg;
 	        	}
+	        	document.getElementById("tbg-cover-img").src = article.coverImg;
 				var items = article.items;
 				if(!items){
 					return;
@@ -132,6 +144,17 @@ $(document).ready(function(){
 			switch(action){
 				case "other":
 					showActions();
+					break;
+				case "save":
+					var article = beforeSave("D");
+					saveArticle(article);
+					break;
+				case "publish":
+					var article = beforeSave("P");
+					saveArticle(article);
+					break;
+				case "cover":
+					$("#coverModal").modal("show");
 					break;
 			}
 		});
