@@ -74,12 +74,18 @@ $(document).ready(function(){
 	        	if(titleInput){
 	        		titleInput.value = article.title;
 	        	}
-	        	document.getElementById("tbg-cover-title").innerHTML = article.title;
+	        	if(document.getElementById("tbg-cover-title")){
+	        		document.getElementById("tbg-cover-title").innerHTML = article.title;
+	        	}
+	        	
 	        	var coverImg = document.getElementById("coverImgPreview");
 	        	if(coverImg){
 	        		coverImg.src = article.coverImg;
 	        	}
-	        	document.getElementById("tbg-cover-img").src = article.coverImg;
+	        	if(document.getElementById("tbg-cover-img")){
+	        		document.getElementById("tbg-cover-img").src = article.coverImg;
+	        	}
+	        	
 				var items = article.items;
 				if(!items){
 					return;
@@ -154,8 +160,7 @@ $(document).ready(function(){
 					saveArticle(article);
 					break;
 				case "cover":
-					//$("#coverModal").modal("show");
-					$("#actionModal").modal("show");
+					$("#coverModal").modal("show");
 					break;
 			}
 		});
