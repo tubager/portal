@@ -74,12 +74,17 @@ $(document).ready(function(){
 	        	if(titleInput){
 	        		titleInput.value = article.title;
 	        	}
+	        	alert(article.title);
+	        	alert(document.getElementById("tbg-cover-title").innerHTML);
 	        	document.getElementById("tbg-cover-title").innerHTML = article.title;
+	        	alert(document.getElementById("tbg-cover-title").innerHTML);
 	        	var coverImg = document.getElementById("coverImgPreview");
 	        	if(coverImg){
 	        		coverImg.src = article.coverImg;
 	        	}
+	        	alert(document.getElementById("tbg-cover-img").src);
 	        	document.getElementById("tbg-cover-img").src = article.coverImg;
+	        	alert(document.getElementById("tbg-cover-img").src);
 				var items = article.items;
 				if(!items){
 					return;
