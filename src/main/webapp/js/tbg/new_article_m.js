@@ -154,7 +154,8 @@ $(document).ready(function(){
 					saveArticle(article);
 					break;
 				case "cover":
-					$("#coverModal").modal("show");
+					//$("#coverModal").modal("show");
+					$("#actionModal").modal("show");
 					break;
 			}
 		});
