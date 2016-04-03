@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥 | 重置密码</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <!-- Toastr style -->
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+	<style>
+		body{
+			font-family: Microsoft YaHei;
+		}
+	</style>
+</head>
+
+<body class="gray-bg">
+
+    <div class="passwordBox animated fadeInDown">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="ibox-content">
+
+                    <h2 class="font-bold">重置密码</h2>
+
+                    <p>
+                       请输入新密码。
+                    </p>
+
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <form class="m-t" role="form" action="">
+                                <div class="form-group">
+				                    <input type="password" id="password" name="password" class="form-control" placeholder="密码" required="">
+				                </div>
+				                <div class="form-group">
+				                    <input type="password" id="passwordrepeat" name="passwordrepeat" class="form-control" placeholder="重复密码" required="">
+				                </div>
+
+                                <button id="submit" type="button" class="btn btn-primary block full-width m-b">重置密码</button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                
+            </div>
+            <div class="col-md-6 text-right">
+               <small></small>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <!-- Toastr script -->
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+    <script src="/js/tbg/utility.js"></script>
+	<script>
+		function showMessage(fun, message){
+			tbgUtil.showMessage(fun, message);
+		}
+        
+        $("#password").on("blur", function(){
+        	var password = $("#password").val();
+        	
+        });
+        $("#password").on("change", function(){
+        	document.getElementById("password").parentNode.classList.remove("has-error");
+        });
+        
+        $("#passwordrepeat").on("blur", function(){
+        	var passwordrepeat = $("#passwordrepeat").val();
+        	var password = $("#password").val();
+        	if(password != passwordrepeat){
+        		document.getElementById("passwordrepeat").parentNode.classList.add("has-error");
+        		showMessage("error", "两次输入的密码不一致！");
+        		return;
+        	}
+        });
+        $("#passwordrepeat").on("change", function(){
+        	document.getElementById("passwordrepeat").parentNode.classList.remove("has-error");
+        });
+	    
+	    $("#submit").click(function(){
+	    	var data = {
+           		password: $("#password").val()
+           	};
+           	console.log(data);
+           	var token = tbgUtil.getUrlParam("resetid");
+           	$.ajax({
+           		url: "/resetpassword?token=" + token,
+				type:'POST',
+				data: JSON.stringify(data),
+				contentType:"application/json;charset=UTF-8",
+				success:function(d){
+					showMessage("success", "密码重置成功，请登录！");
+					setTimeout(function(){
+						self.location.href = "login.html";
+		    		}.bind(this),1100);
+				},
+				error:function(e){
+					showMessage("error", e.responseJSON.message);
+				}
+           	});
+        });
+	</script>
+</body>
+
+</html>

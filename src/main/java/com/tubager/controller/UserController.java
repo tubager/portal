@@ -31,9 +31,20 @@ public class UserController {
 		return userService.checkExistence(name);
 	}
 	
+	@RequestMapping(value="/checkmailexistence", method=RequestMethod.GET)
+	public @ResponseBody boolean checkMailExistence(@RequestParam("email") String email){
+		return userService.checkMailExistence(email);
+	}
+	
 	@RequestMapping(value="/signup", method = RequestMethod.POST)
 	public @ResponseBody void signup(@RequestBody SignUpData data, HttpServletResponse response){
 		userService.signup(data.getName(), data.getPassword(), data.getMobile(), data.getEmail());
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
+
+	@RequestMapping(value="/resetpassword", method = RequestMethod.POST)
+	public @ResponseBody void restPassword(@RequestParam("token") String token, @RequestBody SignUpData data, HttpServletResponse response){
+		userService.resetPassword(token, data.getPassword());
 		response.setStatus(HttpServletResponse.SC_OK);
 	}
 }

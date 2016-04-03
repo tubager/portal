@@ -2,6 +2,8 @@ package com.tubager.service;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,13 +17,18 @@ import com.tubager.dao.UserDao;
 import com.tubager.domain.CurrentUser;
 import com.tubager.domain.TAuth;
 import com.tubager.domain.TUser;
+import com.tubager.exception.InvalidEmail;
+import com.tubager.exception.InvalidToken;
 import com.tubager.exception.UserExistException;
+import com.tubager.utility.TokenCache;
 
 @Service
 public class UserService implements UserDetailsService{
     @Autowired
 	private UserDao userDao;
-
+    
+    private final static Logger logger = LoggerFactory.getLogger(UserService.class);
+    
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
@@ -37,6 +44,14 @@ public class UserService implements UserDetailsService{
 	
 	public boolean checkExistence(String name){
 		TUser user = userDao.getUser(name);
+		if(user != null){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkMailExistence(String email){
+		TUser user = userDao.getUserByMail(email);
 		if(user != null){
 			return true;
 		}
@@ -79,4 +94,18 @@ public class UserService implements UserDetailsService{
 		userDao.register(auth, mobile, email);
 	}
 	
+	public void resetPassword(String token, String password){
+		String email = TokenCache.getInstance().get(token);
+		if(email == null){
+			throw new InvalidToken("token not found");
+		}
+		logger.info("email for reset is: " + email);
+		TUser user = userDao.getUserByMail(email);
+		if(user == null){
+			throw new InvalidEmail("email not found");
+		}
+		String encoded = new BCryptPasswordEncoder().encode(password);
+		userDao.changePassword(user.getName(), encoded);
+		TokenCache.getInstance().remove(token);
+	}
 }

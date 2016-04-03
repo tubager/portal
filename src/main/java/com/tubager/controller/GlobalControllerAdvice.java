@@ -33,4 +33,16 @@ public class GlobalControllerAdvice {
 	public void fileNotFound(){
 		
 	}
+	
+	@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="INVALID_TOKEN")
+	@ExceptionHandler(InvalidToken.class)
+	public void invalidToken(){
+		
+	}
+	
+	@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="INVALID_EMAIL")
+	@ExceptionHandler(InvalidEmail.class)
+	public void invalidEmail(){
+		
+	}
 }

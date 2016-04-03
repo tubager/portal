@@ -128,9 +128,23 @@
             		showMessage("warning", "强烈建议请输入正确的邮箱，以便找回密码和接受通知！");
             		return;
             	}
+            	$.ajax({
+            		url: "/checkmailexistence?email=" + email,
+            		type:'GET',
+            		success: function(data){
+            			if(data){
+            				document.getElementById("email").parentNode.classList.add("has-error");
+                    		showMessage("error", "该邮箱已被使用！");
+            			}
+            		},
+            		error: function(error){
+            			console.log(error);
+            		}
+            	});
             });
             $("#email").on("change", function(){
             	document.getElementById("email").parentNode.classList.remove("has-warning");
+            	document.getElementById("email").parentNode.classList.remove("has-error");
             });
             
             $("#password").on("blur", function(){

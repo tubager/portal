@@ -72,7 +72,7 @@ $.ajax({
 	if(data && data.name != "anonymousUser"){
 		var name = document.getElementById("loginUserName");
 		if(name){
-			name.textContent = data.name;
+			name.textContent = data.nickName || data.name;
 		}
 		document.getElementById("loginMenuItem").style["display"] = "none";
 		document.getElementById("logoutMenuItem").style["display"] = "inline-block";
