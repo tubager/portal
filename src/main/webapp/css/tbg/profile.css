@@ -1,0 +1,61 @@
+.profile-img{
+	display: block;
+	margin: 0px auto;
+	width: 110px;
+	height: 110px;
+}
+.profile-img-p{
+	text-align: center;
+}
+
+.tbg-info-header{
+	width: 100%;
+	text-align: center;
+}
+
+.profile-name{
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.profile-container{
+	padding: 10px;
+}
+
+.profile-level-container{
+	margin-top: 10px;
+}
+
+#editProfileBtn{
+	display: block;
+	margin: 20px auto;
+}
+
+.profile-divider{
+	border-top: 1px solid lightgrey;
+	margin: 10px 0px;
+}
+
+.tbg-profile-noverify{
+	margin-left: 10px;
+	color: white;
+	background-color: #c9c9c9;
+	padding: 4px;
+	border-radius: 3px;
+}
+
+.tbg-profile-verify{
+	margin-left: 10px;
+	color: white;
+	background-color: #15D4B5;
+	padding: 4px;
+	border-radius: 3px;
+}
+
+#profile-edit-img{
+	cursor: pointer;
+}
+
+#profile-female, #profile-male{
+	display: none;
+}

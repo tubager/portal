@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/tbg/profile.css" rel="stylesheet">
+    <link href="/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+</head>
+
+<body class="top-navigation gray-bg">
+
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area">
+            <div class="wrapper wrapper-content">
+            	<div class="row">
+            		<div class="col-md-4">
+            			<div class="ibox float-e-margins">
+            				<div class="ibox-title">
+	                            <h5 class="tbg-info-header">个人中心</h5>
+	                        </div>
+	                        <div class="ibox-content border-left-right profile-container">
+	                        	<div class="row">
+		                        	<div class="col-sm-5">
+		                                <img id="profile-img" alt="image" class="profile-img" src="/img/default.png">
+		                                <p class="profile-img-p"></p>
+		                            </div>
+			                        <div class="col-sm-7">
+			                        	<div>
+				                        	<span id="profile-nick" class="profile-name"></span>
+				                        	<i id="profile-female" class="fa fa-lg fa-female"></i>
+				                        	<i id="profile-male" class="fa fa-lg fa-male"></i>
+			                        	</div>
+			                        	<div class="profile-level-container">
+			                        		<span>等级：<span id="profile-level"></span></span>
+			                        	</div>
+			                        </div>
+	                        	</div>
+	                        	<div class="profile-divider"></div>
+	                        	<div class="row">
+	                        		<div class="col-sm-3">
+	                        			<p>电子邮件：</p>
+	                        		</div>
+	                        		<div class="col-sm-9">
+	                        			<span>
+	                        				<span id="profile-email">ericshh@gmail.com</span>
+	                        				<span id="profile-mail-verify" class="tbg-profile-verify">已验证</span>
+	                        				<span id="profile-mail-noverify" class="tbg-profile-noverify">未验证</span>
+	                        				<button id="profile-mail-verify-btn" class="btn btn-primary btn-outline btn-xs">现在验证</button>
+	                        			</span>
+	                        		</div>
+	                        	</div>
+	                        	<div class="row">
+	                        		<div class="col-sm-3">
+	                        			<p>手机号：</p>
+	                        		</div>
+	                        		<div class="col-sm-9">
+	                        			<span>
+	                        				<span id="profile-mobile">13917779097</span>
+	                        				<span id="profile-mobile-verify" class="tbg-profile-verify">已验证</span>
+	                        				<span id="profile-mobile-noverify" class="tbg-profile-noverify">未验证</span>
+	                        				<button id="profile-mobile-verify-btn" class="btn btn-primary btn-outline btn-xs">现在验证</button>
+	                        			</span>
+	                        		</div>
+	                        	</div>
+	                        	<div class="row">
+	                        		<div class="col-sm-3">
+	                        			<p>居住城市：</p>
+	                        		</div>
+	                        		<div class="col-sm-9">
+	                        			<span id="profile-city"></span>
+	                        		</div>
+	                        	</div>
+	                        	<div class="row">
+	                        		<div class="col-sm-3">
+	                        			<p>个性签名：</p>
+	                        		</div>
+	                        		<div class="col-sm-9">
+	                        			<p id="profile-word"></p>
+	                        		</div>
+	                        	</div>
+	                        	<div>
+	                        		<button id="editProfileBtn" class="btn btn-outline btn-primary " type="button"><i class="fa fa-check"></i>&nbsp;修改资料</button>
+	                        	</div>
+	                        </div>
+            			</div>
+            		</div>
+            		<div class="col-md-8">
+            		</div>
+            	</div>
+            </div>
+        </div>
+        
+       <div class="modal inmodal fade" id="profileModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-md">
+               <div class="modal-content">
+                   <div class="modal-header" style="padding: 0px;margin-top: 10px;">
+                       <h2 class="modal-title" style="font-size: 16px">修改个人资料</h2>
+                   </div>
+                   <div class="modal-body">
+                   		<div class="row" style="margin-top: 10px;">
+                   			<div class="col-sm-2">
+                   				<label>头像</label>
+                   			</div>
+                   			<div class="col-sm-8">
+                   				<img id="profile-edit-img" alt="image" class="profile-img" src="/img/default.png">
+                   				<input type="file" id="imageinputfile" style="height:0;width:0;z-index: -1;"/>
+                   			</div>
+                   		</div>
+                   		<div class="row" style="margin-top: 10px;">
+                   			<div class="col-sm-2">
+                   				<label>昵称</label>
+                   			</div>
+                   			<div class="col-sm-8">
+                   				<input class="form-control" id="profile-edit-nick" />
+                   			</div>
+                   		</div>
+                   		<div class="row" style="margin-top: 10px;">
+                   			<div class="col-sm-2">
+                   				<label>性别</label>
+                   			</div>
+                   			<div class="col-sm-8">
+                   				<div class="i-checks">
+                   					<label><input id="profile-edit-male" type="radio" value="male" name="profile-gender" checked="true"> <i></i> 王子 </label>
+                   				</div>
+                                <div class="i-checks">
+                                	<label><input id="profile-edit-female" type="radio" value="female" name="profile-gender"> <i></i> 公主 </label>
+                                </div>
+                   			</div>
+                   		</div>
+                   		<div class="row" style="margin-top: 10px;">
+                   			<div class="col-sm-2">
+                   				<label>邮箱</label>
+                   			</div>
+                   			<div class="col-sm-8">
+                   				<input type="email" class="form-control" id="profile-edit-email" />
+                   			</div>
+                   		</div>
+                   		<div class="row" style="margin-top: 10px;">
+                   			<div class="col-sm-2">
+                   				<label>手机</label>
+                   			</div>
+                   			<div class="col-sm-8">
+                   				<input type="tel" class="form-control" id="profile-edit-mobile" />
+                   			</div>
+                   		</div>
+                   		<div class="row" style="margin-top: 10px;">
+                   			<div class="col-sm-2">
+                   				<label>城市</label>
+                   			</div>
+                   			<div class="col-sm-8">
+                   				<input type="text" class="form-control" id="profile-edit-city" />
+                   			</div>
+                   		</div>
+                   		<div class="row" style="margin-top: 10px;">
+                   			<div class="col-sm-2">
+                   				<label>签名</label>
+                   			</div>
+                   			<div class="col-sm-8">
+                   				<textarea rows="3" class="form-control" id="profile-edit-word"></textarea>
+                   			</div>
+                   		</div>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="profileCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="profileBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+        <div class="footer">
+            <div>
+                <strong>版权所有</strong> 上海慧言信息科技有限公司 &copy; 2015-2016 &nbsp;&nbsp;&nbsp;&nbsp;沪ICP备 16004059号
+            </div>
+        </div>
+
+       </div>
+      </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/js/tbg/header.js"></script>
+	
+	<!-- iCheck -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    
+	<script>
+		$(document).ready(function(){
+			var user = null;
+			
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+
+			$("#editProfileBtn").click(function(){
+				$("#profileModal").modal("show");
+				editUser();
+			});
+			
+			$("#profile-edit-img").click(function(){
+				document.getElementById('imageinputfile').click();
+				
+				$("#imageinputfile").change(function(){
+					var data = new FormData();
+					data.append('file', $('#imageinputfile')[0].files[0]);
+					$.ajax({
+						url:'/upload/image',
+						type:'POST',
+						data:data,
+						cache: false,
+						contentType: false,
+						processData: false,
+						success:function(d){
+							var img = document.getElementById("newImg");
+							img.src = "/resource/file/" + d;
+						},
+						error:function(){
+							console.log("upload failed");
+						}
+					});
+				});
+			});
+			
+			$.ajax({
+				url:'/currentuser',
+			    type:'GET',
+			    headers:{
+			        Accept:"application/json",
+			        "Content-Type": "application/json;charset=UTF-8"
+			    }
+			}).done(function(data){
+				if(data && data.name != "anonymousUser"){
+					user = data;
+					setUser();
+				}
+			});
+			
+			function setUser(user){
+				if(!user){
+					return;
+				}
+				if(user.img){
+					$("#profile-edit-img").attr("src", user.img);
+				}
+				
+				if(user.nickName){
+					$("#profile-edit-nick").text(user.nickName);
+				}
+				
+				if(user.gender == "M"){
+					document.getElementById("profile-edit-male").setAttribute("checked", "true");
+					document.getElementById("profile-edit-female").removeAttribute("checked");
+				}
+				else if(user.gender == "F"){
+					document.getElementById("profile-edit-female").setAttribute("checked", "true");
+					document.getElementById("profile-edit-male").removeAttribute("checked");
+				}
+				
+				if(user.email){
+					$("#profile-edit-email").text(user.email);
+				}
+				
+				if(user.mobile){
+					$("#profile-edit-mobile").text(user.mobile);
+				}
+				
+				if(user.region){
+					$("#profile-edit-city").text(user.region);
+				}
+				
+				if(user.lastWord){
+					$("#profile-edit-word").text(user.lastWord);
+				}
+			}
+			
+			function setUser(user){
+				if(!user){
+					return;
+				}
+				if(user.img){
+					$("#profile-img").attr("src", user.img);
+				}
+				
+				if(user.nickName){
+					$("#profile-nick").text(user.nickName);
+				}
+				
+				if(user.gender == "M"){
+					$("#profile-male").css("display", "inline-block");
+				}
+				else if(user.gender == "F"){
+					$("#profile-female").css("display", "inline-block");
+				}
+				else{
+					$("#profile-male").css("display", "none");
+					$("#profile-female").css("display", "none");
+				}
+				
+				if(user.email){
+					$("#profile-email").text(user.email);
+				}
+				
+				if(user.emailVerified){
+					$("#profile-mail-verify").css("display", "inline-block");
+					$("#profile-mail-noverify").css("display", "none");
+					$("#profile-mail-verify-btn").css("display", "none");
+				}
+				else{
+					$("#profile-mail-verify").css("display", "none");
+					$("#profile-mail-noverify").css("display", "inline-block");
+					$("#profile-mail-verify-btn").css("display", "inline-block");
+				}
+				
+				if(user.mobile){
+					$("#profile-mobile").text(user.mobile);
+				}
+				
+				if(user.mobileVerified){
+					$("#profile-mobile-verify").css("display", "inline-block");
+					$("#profile-mobile-noverify").css("display", "none");
+					$("#profile-mobile-verify-btn").css("display", "none");
+				}
+				else{
+					$("#profile-mobile-verify").css("display", "none");
+					$("#profile-mobile-noverify").css("display", "inline-block");
+					$("#profile-mobile-verify-btn").css("display", "inline-block");
+				}
+				
+				if(user.region){
+					$("#profile-city").text(user.region);
+				}
+				
+				if(user.lastWord){
+					$("#profile-word").text(user.lastWord);
+				}
+			}
+			
+		});
+	</script>
+</body>
+
+</html>
