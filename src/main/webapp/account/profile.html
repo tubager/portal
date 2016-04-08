@@ -212,7 +212,7 @@
 
 			$("#editProfileBtn").click(function(){
 				$("#profileModal").modal("show");
-				editUser();
+				editUser(user);
 			});
 			
 			$("#profile-edit-img").click(function(){
@@ -249,11 +249,11 @@
 			}).done(function(data){
 				if(data && data.name != "anonymousUser"){
 					user = data;
-					setUser();
+					setUser(user);
 				}
 			});
 			
-			function setUser(user){
+			function editUser(user){
 				if(!user){
 					return;
 				}
@@ -262,7 +262,7 @@
 				}
 				
 				if(user.nickName){
-					$("#profile-edit-nick").text(user.nickName);
+					$("#profile-edit-nick").val(user.nickName);
 				}
 				
 				if(user.gender == "M"){
@@ -275,19 +275,19 @@
 				}
 				
 				if(user.email){
-					$("#profile-edit-email").text(user.email);
+					$("#profile-edit-email").val(user.email);
 				}
 				
 				if(user.mobile){
-					$("#profile-edit-mobile").text(user.mobile);
+					$("#profile-edit-mobile").val(user.mobile);
 				}
 				
 				if(user.region){
-					$("#profile-edit-city").text(user.region);
+					$("#profile-edit-city").val(user.region);
 				}
 				
 				if(user.lastWord){
-					$("#profile-edit-word").text(user.lastWord);
+					$("#profile-edit-word").val(user.lastWord);
 				}
 			}
 			
