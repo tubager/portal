@@ -20,6 +20,11 @@ public class UserDao {
 		jdbcTemplate.update(sql, new Object[]{password,userName});
 	}
 	
+	public void verifyEmail(String userName){
+		String sql = "update auth set email_verified='V' where user_name=?";
+		jdbcTemplate.update(sql, new Object[]{userName});
+	}
+	
 	public TUser getUser(String userName){
 		try{
 			TUser user = (TUser)jdbcTemplate.queryForObject("select * from user where name = ?", new Object[] {userName},

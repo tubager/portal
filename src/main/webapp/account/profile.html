@@ -10,6 +10,7 @@
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
@@ -196,7 +197,9 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
 	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
 	
 	<!-- iCheck -->
     <script src="/js/plugins/iCheck/icheck.min.js"></script>
@@ -215,6 +218,37 @@
 				editUser(user);
 			});
 			
+			$("#profile-mail-verify-btn").click(function(){
+				$.ajax({
+					url: "/verifyemailrequest?email=" + user.email,
+					type: "GET",
+					success: function(){
+						tbgUtil.showMessage("success", "验证邮件已发送，请登录邮箱验证");
+					},
+					error: function(e){
+						console.log(e);
+					}
+				});
+			});
+
+			$("#profileBtn").click(function(){
+				$("#profileModal").modal("hide");
+				var data = {
+						"name": user.name,
+						"img": $("#profile-edit-img").attr("src"),
+						"nickName": $("#profile-edit-nick").val(),
+						"gender": document.getElementById("profile-edit-male").hasAttribute("checked") ? "M" : "F",
+						"email": $("#profile-edit-email").val(),
+						"mobile": $("#profile-edit-mobile").val(),
+						"region": $("#profile-edit-city").val(),
+						"lastWord": $("#profile-edit-word").val(),
+						"address": user.address,
+						"mobileVerified": user.mobileVerified,
+						"emailVerified": user.emailVerified
+				};
+				saveUser(data);
+			});
+			
 			$("#profile-edit-img").click(function(){
 				document.getElementById('imageinputfile').click();
 				
@@ -229,7 +263,7 @@
 						contentType: false,
 						processData: false,
 						success:function(d){
-							var img = document.getElementById("newImg");
+							var img = document.getElementById("profile-edit-img");
 							img.src = "/resource/file/" + d;
 						},
 						error:function(){
@@ -252,6 +286,23 @@
 					setUser(user);
 				}
 			});
+			
+			function saveUser(user){
+				$.ajax({
+					url: "/account/user",
+					type:'POST',
+					data: JSON.stringify(user),
+					contentType: "application/json;charset=UTF-8",
+					success:function(d){
+						console.log(d);
+						tbgUtil.showMessage("success", "资料更新成功");
+					},
+					error:function(){
+						console.log("upload failed");
+						tbgUtil.showMessage("error", "抱歉，暂时无法更新");
+					}
+				});
+			}
 			
 			function editUser(user){
 				if(!user){

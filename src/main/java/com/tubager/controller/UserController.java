@@ -47,6 +47,18 @@ public class UserController {
 		userService.resetPassword(token, data.getPassword());
 		response.setStatus(HttpServletResponse.SC_OK);
 	}
+
+	@RequestMapping(value="/verifyemail", method = RequestMethod.GET)
+	public @ResponseBody void verifyEmail(@RequestParam("token") String token, HttpServletResponse response){
+		userService.verifyEmail(token);
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
+	
+	@RequestMapping(value="/account/user", method = RequestMethod.POST)
+	public void updateUser(@RequestBody TUser user, HttpServletResponse response){
+		userService.updateUser(user);
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
 }
 
 class SignUpData{

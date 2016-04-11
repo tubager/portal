@@ -64,11 +64,10 @@ public class UserService implements UserDetailsService{
 		if(obj  instanceof CurrentUser){
 			current = (CurrentUser) obj;
 			if(current != null){
-				return current.getUser();
+				return userDao.getUser(current.getUser().getName());
 			}
 		}
-		TUser user = new TUser();
-		user.setName((String) obj);
+		TUser user = userDao.getUser((String) obj);
 		return user;
 	}
 	
@@ -94,6 +93,10 @@ public class UserService implements UserDetailsService{
 		userDao.register(auth, mobile, email);
 	}
 	
+	public void updateUser(TUser user){
+		userDao.updateUser(user);
+	}
+	
 	public void resetPassword(String token, String password){
 		String email = TokenCache.getInstance().get(token);
 		if(email == null){
@@ -106,6 +109,20 @@ public class UserService implements UserDetailsService{
 		}
 		String encoded = new BCryptPasswordEncoder().encode(password);
 		userDao.changePassword(user.getName(), encoded);
+		TokenCache.getInstance().remove(token);
+	}
+	
+	public void verifyEmail(String token){
+		String email = TokenCache.getInstance().get(token);
+		if(email == null){
+			throw new InvalidToken("token not found");
+		}
+		logger.info("email for verify is: " + email);
+		TUser user = userDao.getUserByMail(email);
+		if(user == null){
+			throw new InvalidEmail("email not found");
+		}
+		userDao.verifyEmail(user.getName());
 		TokenCache.getInstance().remove(token);
 	}
 }

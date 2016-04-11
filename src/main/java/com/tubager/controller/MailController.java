@@ -20,4 +20,10 @@ public class MailController {
 		mailService.restPassword(email);
 		response.setStatus(HttpServletResponse.SC_OK);
 	}
+
+	@RequestMapping(value="/verifyemailrequest", method=RequestMethod.GET)
+	public void verifyEmail(@RequestParam("email") String email, HttpServletResponse response){
+		mailService.verifyMail(email);
+		response.setStatus(HttpServletResponse.SC_OK);
+	}
 }

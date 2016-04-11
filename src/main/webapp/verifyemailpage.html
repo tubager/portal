@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <title>途八哥 | 验证邮箱</title>
+	</head>
+	<body>
+		<div id="message">正在验证，请稍候</div>
+		
+    	<script src="/js/jquery-2.1.1.js"></script>
+		<script>
+			var token = tbgUtil.getUrlParam("resetid");
+			$.ajax({
+				url: "/verifyemail?token=" + token,
+				type:'GET',
+				success: function(d){
+					
+				},
+				error: function(d){
+					
+				}
+			});
+		</script>
+	</body>
+</html>
