@@ -15,10 +15,13 @@
 				url: "/verifyemail?token=" + token,
 				type:'GET',
 				success: function(d){
-					
+					$("#message").text("验证成功，正在跳转");
+					setTimeout(function(){
+						self.location.href = "/account/profile.html";
+					}, 1000);
 				},
 				error: function(d){
-					
+					$("#message").text("验证失败，请重新申请验证");
 				}
 			});
 		</script>
