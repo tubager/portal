@@ -17,7 +17,7 @@
 		<!--==== All Stylesheet ==-->
 		
 		<!-- default bootstrap css -->
-        <link rel="stylesheet" type="text/css" href="/home/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
 		
 		<!-- global custom css -->
         <link rel="stylesheet" type="text/css" href="/home/css/style.css" />
@@ -46,6 +46,9 @@
 					font-size: 58px;
 			    	font-weight: 400;
 				}
+				.tbg-home-slider .widget-wrap{
+					top: 30%;
+				}
 			}
 			.tbg-home-slider h2{
 			    letter-spacing: 5px;
@@ -62,6 +65,24 @@
 			    top: 0px;
 			    left: 10px;
 			    right: 10px;
+			}
+			
+			.tbg-home-slider{
+				height: 100vh;
+				background-color: rgba(15, 15, 15, 0.55) !important;
+			}
+			
+			.home-subscription{
+				background: transparent;
+			}
+			#carousel-item-1{
+				background: url(/home/images/background/background-image-6.jpg);
+			}
+			#carousel-item-2{
+				background: url(/home/images/background/background-image-7.jpg);
+			}
+			#carousel-item-3{
+				background: url(/home/images/background/background-image-8.jpg);
 			}
 		</style>
     </head>
@@ -80,7 +101,7 @@
 				<div class="carousel slide scroll" id="carousel1" style="width:100%;">
 					
                        <div class="carousel-inner">
-                           <div class="item active">
+                           <div id="carousel-item-1" class="item active">
                                <section id="text-1" class="tbg-home-slider">
 									<div class="widget-wrap">			
 										<div class="textwidget">
@@ -90,7 +111,7 @@
 									</div>
 								</section>
                             </div>
-						<div class="item">
+						<div id="carousel-item-2" class="item">
                                <section id="text-2" class="tbg-home-slider">
 								<div class="widget-wrap">			
 									<div class="textwidget">
@@ -100,7 +121,7 @@
 								</div>
 							</section>
                            </div>
-						<div class="item">
+						<div id="carousel-item-3" class="item">
                                <section id="text-3" class="tbg-home-slider">
 								<div class="widget-wrap">			
 									<div class="textwidget">
@@ -591,16 +612,16 @@
 						<!-- footer logo -->
 						<div class="col-md-3 col-sm-6 col-xs-12 wow fadeInDown" data-wow-delay="0ms" data-wow-duration="1000ms">
 						
-							<div class="about-site"><a href="#"> CORDOVA </a></div>							
-							<p>Lorem Ipsum adalah contoh, quis nostrud lobortis nisl ut aliquip...</p>
-							<a href="#" class="btn btn-success"> More Info </a>
+							<h5>关于途八哥 </h5>						
+							<p>途八哥是一个专注于为深度自由行爱好者提供全方位服务的网站</p>
+							<a href="#" class="btn btn-primary btn-outline"> 了解更多 </a>
 							
 						</div>
 						
 						<!-- privacy links -->
 						<div class="col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1000ms">
 						
-							<h5>Privacy</h5>
+							<h5>隐私声明</h5>
 							<ul>
 								<li><a href="#"><i class="fa fa-arrow-circle-right"></i> Terms & Conditions</a></li>
 								<li><a href="#"><i class="fa fa-arrow-circle-right"></i> Privacy Statement</a></li>
@@ -616,15 +637,15 @@
 						
 							<div class="text-holder">
 							
-								<h5>Address</h5>
+								<h5>联系地址</h5>
 								
 								<strong>New York, NY</strong>
 								
 								<address>560 Judah St &amp; 15th Ave, Apt 5 San Francisco, CA, 230903</address>
 								
 								<strong class="phone"><a href="tel:+5475677890"><i class="fa fa-phone"></i> +547 567 78 90</a></strong>
-								
-								<strong class="email"><a href="#"><i class="fa fa-envelope-o"></i> example@gmail.com</a></strong>
+								<br>
+								<strong class="email"><a href="#"><i class="fa fa-envelope-o" style="margin-right: 5px;"></i>contact@witvan.com</a></strong>
 								
 							</div>
 						</div>
@@ -634,10 +655,13 @@
 						
 							<div class="text-frame">
 							
-								<h5>Experience</h5>
-								<p>
-								Lorem Ipsum adalah contoh, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex commodo consequat. Autem vel hendrerit iriure dolor in hendrerit, ut aliquip ex commodo consequat. Autem vel hendrerit iriure dolor.<a href="#">Read More</a></p>
-								
+								<h5>关注我们</h5>
+								<p class="tbg-contact-qrcode-p" style="margin: 0px;">
+									<img class="tbg-qrcode" src="/img/qrcode.jpg"/>
+								</p>
+								<p class="tbg-contact-qrcode-p" style="color:#333; margin:0px;">
+									途八哥微信公众号
+								</p>
 							</div>
 							
 						</div>
