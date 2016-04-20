@@ -434,7 +434,7 @@
 									
 									    <label class="sr-only" for="name">您的称呼</label>									
 										
-									    <input type="text" placeholder="您的称呼" name="name" class="form-control input-lg" required />										
+									    <input type="text" placeholder="您的称呼" id="msgName" name="name" class="form-control input-lg" required />										
 									                                                                      
 								    </div>
 
@@ -442,7 +442,7 @@
                                     
 									    <label class="sr-only" for="tel">联系电话</label>
 									
-									    <input type="tel" placeholder="联系电话" name="tel"  class="form-control input-lg" />
+									    <input type="tel" placeholder="联系电话" id="msgTel" name="tel"  class="form-control input-lg" />
 									
 								    </div>
 								
@@ -454,7 +454,7 @@
                                     
 									    <label class="sr-only">电子邮件</label>
 
-									    <input type="email" placeholder="电子邮件" name="email" class="form-control input-lg"  required/>                                         
+									    <input type="email" placeholder="电子邮件" id="msgEmail" name="email" class="form-control input-lg"  required/>                                         
                                
 								    </div>
 								
@@ -466,16 +466,19 @@
 								
                                         <label class="sr-only" for="message">留言内容</label>
 													
-										    <textarea rows="6" name="message" id="message" class="form-control input-lg " placeholder="留言内容" required></textarea>
+										    <textarea rows="6" name="message" id="msgMessage" class="form-control input-lg " placeholder="留言内容" required></textarea>
 																			
                                     </div>
 								
                                 </div>
 							
 							    <!-- submit button -->
-                                <button class="btn btn-success btn-lg btn-block wow fadeInDown" data-wow-delay="1200ms" data-wow-duration="1000ms" type="submit">发送留言</button>
+                                <button id="msgBtn" class="btn btn-success btn-lg btn-block wow fadeInDown" data-wow-delay="1200ms" data-wow-duration="1000ms" type="button">发送留言</button>
                        
 						    </form>
+						    <div id="msgSuccessDiv" style="display:none;">
+						    	<p style="text-align:center;font-size:1.1em;">感谢您的留言，我们会在第一时间与您联系！</p>
+						    </div>
 
                         </div>
 						
@@ -662,6 +665,30 @@
 				
 				return node;
 			}
+			
+			$("#msgBtn").click(function(evt){
+				var data = {
+						name: $("#msgName").val(),
+						phone: $("#msgTel").val(),
+						email: $("#msgEmail").val(),
+						message: $("#msgMessage").val()
+				};
+				
+				$.ajax({
+					url:'/message',
+					type:'POST',
+					data: JSON.stringify(data),
+					contentType:"application/json;charset=UTF-8",
+					success:function(d){
+						$("#messageForm").css("display","none");
+						$("#msgSuccessDiv").css("display","block");
+					},
+					error:function(){
+						console.log("leave message failed");
+					}
+				});
+				
+			});
 		});
 		</script>
 		
