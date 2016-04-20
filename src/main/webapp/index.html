@@ -1,52 +1,130 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>途八哥创意旅行网</title>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link rel="stylesheet" media="screen and (min-width: 768px)" href="/css/tbg/index.css" />
-    <link rel="stylesheet" media="screen and (max-width: 767px)" href="/css/tbg/index_m.css" />
-</head>
-
-<body class="top-navigation">
-
-    <div id="wrapper">
-      <div style="overflow: hidden;">
-        <div id="header-area" class="row border-bottom">
+<html lang="en"><!--<![endif]-->
+    <head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />	
+		
+		<!-- title -->
+        <title> 途八哥创意旅行网 </title>
+		
+		<meta name="description" content="途八哥创意旅行网" />
+		<meta name="keywords" content="自由行 旅行 旅游 途八哥" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+        
+		<!-- favicon -->
+		<link rel="shortcut icon" type="image/x-icon" href="/home/images/favicon.ico"  />
+		
+		<!--==== All Stylesheet ==-->
+		
+		<!-- default bootstrap css -->
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+		
+		<!-- global custom css -->
+        <link rel="stylesheet" type="text/css" href="/home/css/style.css" />
+        <link rel="stylesheet" type="text/css" href="/home/css/style-2.css" />
+		
+		<!-- font-awesome css -->
+        <link rel="stylesheet" type="text/css" href="/home/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="/home/css/ionicons.min.css" />
+		
+		<!-- portfolio css -->
+		<link rel="stylesheet" type="text/css" href="/home/css/portfolio.css" />
+		
+		<!-- wow animation css -->
+		<link rel="stylesheet" type="text/css" href="/home/css/animate.css" />
+		
+		<!-- page preloader -->
+		<link rel="stylesheet" type="text/css" href="/home/css/preloader.css" />
+		
+		<script src="/home/js/modernizr.custom.js"></script>	
+		
+	    <link rel="stylesheet" media="screen and (min-width: 768px)" href="/css/tbg/index.css" />
+	    <link rel="stylesheet" media="screen and (max-width: 767px)" href="/css/tbg/index_m.css" />
+		<style>
+			@media (min-width: 768px){
+				.tbg-home-slider h2{
+					font-size: 58px;
+			    	font-weight: 400;
+				}
+			}
+			.tbg-home-slider .widget-wrap{
+				top: 30%;
+			}
+			.tbg-home-slider h2{
+			    letter-spacing: 5px;
+			    line-height: 1.5;
+			    margin-bottom: 20px;
+			}
+			
+			h2{
+				font-family: "Microsoft YaHei", 'Open Sans', sans-serif;
+			}
+			
+			.navbar-static-top {
+			    position: absolute;
+			    top: 0px;
+			    left: 10px;
+			    right: 10px;
+			}
+			
+			.tbg-home-slider{
+				height: 100vh;
+				background-color: rgba(15, 15, 15, 0.55) !important;
+			}
+			
+			.home-subscription{
+				background: transparent;
+			}
+			#carousel-item-1{
+				background: url(/home/images/background/background-image-7.jpg);
+			}
+			#carousel-item-2{
+				background: url(/home/images/background/background-image-2.jpg);
+			}
+			#carousel-item-3{
+				background: url(/home/images/background/background-image-3.jpg);
+			}
+			#carousel1 .item{
+				background-size: cover;
+			}
+		</style>
+    </head>
+	
+    <body data-spy="scroll" data-target=".sidebar">
+		<div id="header-area" class="row border-bottom">
         </div>
-        <div id="content-area">
-            <div id="front-page-1" class="front front-page front-page-1">
-				<div class="carousel slide" id="carousel1">
+		<!-- =================================
+		Home Section
+		================================== -->		
+		<header id="home-section" class="home home-subscription" data-stellar-background-ratio="0.3"><!-- background image -->
+			
+			<!-- intro area -->
+            <div class="intro">
+				
+				<div class="carousel slide scroll" id="carousel1" style="width:100%;">
+					
                        <div class="carousel-inner">
-                           <div class="item active">
+                           <div id="carousel-item-1" class="item active">
                                <section id="text-1" class="tbg-home-slider">
 									<div class="widget-wrap">			
 										<div class="textwidget">
 											<h2>途八哥	有故事的旅行</h2>
-											<a class="button clear white" href="#">精彩游记</a> 
+											<a class="button clear white" href="#service-section">精彩游记</a> 
 										</div>
 									</div>
 								</section>
                             </div>
-						<div class="item">
+						<div id="carousel-item-2" class="item">
                                <section id="text-2" class="tbg-home-slider">
 								<div class="widget-wrap">			
 									<div class="textwidget">
-										<h2>旅行  	不走寻常路</h2>
-										<a class="button clear white" href="#">创意线路</a> 
+										<h2>旅行  	不是到此一游</h2>
+										<a class="button clear white" href="#feature-section">创意线路</a> 
 									</div>
 								</div>
 							</section>
                            </div>
-						<div class="item">
+						<div id="carousel-item-3" class="item">
                                <section id="text-3" class="tbg-home-slider">
 								<div class="widget-wrap">			
 									<div class="textwidget">
@@ -57,60 +135,470 @@
 							</section>
                            </div>
                        </div>
-                       <a data-slide="prev" href="#carousel1" class="left carousel-control">
+                       <a data-slide="prev" href="#carousel1" class="left carousel-control" style="background-image: none;">
                            <span class="icon-prev"></span>
                        </a>
-                       <a data-slide="next" href="#carousel1" class="right carousel-control">
+                       <a data-slide="next" href="#carousel1" class="right carousel-control" style="background-image: none;">
                            <span class="icon-next"></span>
                        </a>
                    </div>
-			</div>
-			<div id="front-page-3" class="front front-page front-page-3">
-				<section id="text-3" class="widget widget_text" style="margin: 0px;">
-					<div id="tbg-articles" class="row"></div>
-				</section>
-			</div>
-            <div id="front-page-5" class="front front-page front-page-5">
-				<section id="text-2" style="margin: 0px;">
-					<h2>联系我们</h2>
-					<div class="row">
-						<div class="col-sm-6 tbg-contact-qrcode">
-							<p class="tbg-contact-qrcode-p">
-								<img class="tbg-qrcode" src="/img/qrcode.jpg"/>
-							</p>
-							<p class="tbg-contact-qrcode-p">
-								微信公众号
-							</p>
-						</div>
-						<div class="col-sm-6 tbg-contact-email">
-							<label>Email: </label>
-							<p>contact@witvan.com</p>
-						</div>
+                        
+            </div>    
+			
+		</header>
+		
+		<!-- =================================
+		Service Section
+		================================== -->		
+		<section id="service-section" class="service">
+		
+			<div class="container">
+			
+				<div class="row">
+					
+					<div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 text-center">
+					
+						<!-- section title -->
+						<h2 class="wow fadeInDown" data-wow-duration="1000ms">精彩游记</h2>
+						<div class="dividing-border wow bounceIn" data-wow-delay="500ms" data-wow-duration="1000ms"></div>
+						
 					</div>
-				</section>
+					
+				</div>
+				
+				<div class="row service-row" id="tbg-articles">
+					
+					
+				</div>
+				
 			</div>
-        </div>
-        <div class="footer">
-            <div>
-                <strong>版权所有</strong> 上海慧言信息科技有限公司 &copy; 2015-2016 &nbsp;&nbsp;&nbsp;&nbsp;沪ICP备 16004059号
-            </div>
-        </div>
+			
+		</section>	
+		
+		<!-- =================================
+		feature Section
+		================================== -->		
+		<section id="feature-section" class="feature">
+		
+			<div class="container">
+			
+				<div class="row">
+					
+					<div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 text-center">
+					
+						<!-- section title -->
+						<h2 class="wow fadeInDown" data-wow-duration="1000ms">创意线路</h2>
+						<div class="dividing-border wow bounceIn" data-wow-delay="500ms" data-wow-duration="1000ms"></div>
+					
+					</div>
+					
+				</div>
+			
+			</div>
+		
+			<div class="container">
+			
+			
+			</div>	
+			
+		</section>
+		
+		<!-- =================================
+		Testimonial-Section
+		================================== -->		
+		<section class="testimonial-Background" data-stellar-background-ratio="0.3"><!-- background image -->
+		
+			<div class="testimonial">
+			
+				<div class="container">
+				
+					<div class="row">
+						
+						<!-- carousel -->
+						<div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+						
+						<h2 class="text-center wow fadeInDown" data-wow-delay="0ms" data-wow-duration="1000ms">我们的特色</h2>
+						<div class="dividing-border wow bounceIn" data-wow-delay="500ms" data-wow-duration="1000ms"></div>
+						
+                            <div class="carousel-content">
 
-       </div>
-      </div>
+							    <!-- carousel wrapper -->
+							    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+							
+								    <!-- indicators -->
+								    <ol class="carousel-indicators wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1000ms">
+									    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+									    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+									    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+								    </ol>
 
+								    <!-- item wrapper -->
+								    <div class="carousel-inner  wow bounceIn" data-wow-delay="0ms" data-wow-duration="1500ms" role="listbox">
+								
+									    <!-- carousel item 1 -->
+									    <div class="item active item-inner">
+									
+										    <div class="carousel-caption">
+											
+											    <!-- icon 1 -->
+											    <button type="button" class="btn btn-default rotate-square" disabled="disabled"><i class="fa fa-quote-left fa-3x quote"></i></button>
+											
+											    <p>我们提供高度的定制化服务，入驻平台的众多达人时刻为您效劳。</p>
+											
+										    </div>
+										
+									    </div>
+									
+									    <!-- carousel item 2 -->
+									    <div class="item item-inner">
+									
+										    <div class="carousel-caption">
+										
+										    <!-- icon 2 -->
+										    <button type="button" class="btn btn-default rotate-square" disabled="disabled"><i class="fa fa-quote-right fa-3x quote"></i></button>
+											
+											    <p>加入我们成为旅行达人，分享您的经历，赚取丰厚回报</p>
+											
+										    </div>
+										
+									    </div>
+									
+									    <!-- carousel item 3 -->
+									    <div class="item  item-inner">
+									
+										    <div class="carousel-caption">
+										
+										    <!-- icon 3 -->
+										    <button type="button" class="btn btn-default rotate-square" disabled="disabled"><i class="fa fa-quote-left fa-3x quote"></i></button>
+											
+											    <p>多种贴心的在线工具供您使用。</p>
+											
+										    </div>
+										
+									    </div>
+									
+								    </div>
+								
+								    <!-- carousel arrows -->
+								    <div class="nav-roundslide">
+								
+									    <!-- left arrow -->
+									    <a class="hidden-xs prev wow slideInLeft" data-wow-delay="500ms" data-wow-duration="1000ms" href="#carousel-example-generic" role="button" data-slide="prev"><span class="icon-wrap"><i class="icon ion-ios-arrow-left fa-2x"></i></span><h3></h3></a>
+									
+									    <!-- right arrow -->
+									    <a class="hidden-xs next wow slideInRight" data-wow-delay="500ms" data-wow-duration="1000ms" href="#carousel-example-generic" role="button" data-slide="next"><span class="icon-wrap"><i class="icon ion-ios-arrow-right fa-2x"></i></span><h3></h3></a>
+									
+								    </div> 
+								
+							    </div>	
 
+                            </div>
+							
+						</div>	
+						
+					</div>
+					
+				</div>
+				
+			</div>	
+			
+		</section>
+		
+		<!-- =================================
+		faq-Section
+		================================== -->	
+		<section id="faq-section" class="faq overlap-pattern"><!-- background pattern -->
+		
+			<div class="container">
+				
+				<div class="row">
+				
+					<div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 text-center">
+						
+						<!-- section title -->
+						<h2 class="wow fadeInDown" data-wow-duration="1000ms"> 常见问题</h2>
+						<div class="dividing-border wow bounceIn" data-wow-delay="500ms" data-wow-duration="1000ms"></div>
+						
+						<!-- big paragraph -->						
+						<p class="big-para wow fadeInDown" data-wow-delay="600ms" data-wow-duration="1000ms">这里列出了一些常见的问题，如果这些问题仍然不能解决您的疑虑，请给我们留言。</p>
+						
+					</div>
+					
+				</div>
+				
+			</div>	
+			
+			<div class="container">
+			
+				<div class="row">
+				
+					<!-- faq left side -->
+					<div class="col-md-6 col-sm-12 col-xs-12">
+						
+						<!-- faq box 1 -->
+						<div class="faq-box faq-box-default">
+						
+							<div class="wow zoomIn" data-wow-delay="700ms" data-wow-duration="1000ms">
+									
+								<h5><i class="fa fa-info-circle message-quote"></i> What's lorem ipsum adalah contoh teks?</h5>
+								
+								<p>Lorem Ipsum adalah contoh teks atau dummy dalam industri percetakan dan penataan huruf atau. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah buku contoh huruf. Lectus primis rhoncus Commodo molestie velit habitasse enim curabitur velit.</p>
+								
+								<!-- rating icons -->
+								<footer class="text-right">
+									<i class="fa fa-star rating-icons"></i> 
+									<i class="fa fa-star rating-icons"></i> 
+									<i class="fa fa-star rating-icons"></i> 
+									<i class="fa fa-star rating-icons"></i> 
+									<i class="fa fa-star rating-icons"></i> 
+								</footer>
+						
+							</div>
+							
+						</div>
+						
+					</div>
+					
+					<!-- faq right -->
+					<div class="col-md-6 col-sm-12 col-xs-12">
+					
+						<!-- faq box 1 -->
+						<div class="faq-box faq-box-default">
+						
+							<div class="wow zoomIn" data-wow-delay="700ms" data-wow-duration="1000ms">
+										
+								<h5><i class="fa fa-info-circle message-quote"></i> When are lorem ipsum adalah teks atau dalam?</h5>
+								
+								<p>Lorem Ipsum adalah contoh teks atau dummy dalam dan penataan huruf atau typesetting. Lorem Ipsum telah menjadi standar contoh teks sejak tahun 1500an, saat seorang tukang cetak yang tidak dikenal mengambil sebuah kumpulan teks dan mengacaknya untuk menjadi sebuah buku contoh huruf.</p>
+								
+								<!-- rating icons -->
+								<footer class="text-right">
+									<i class="fa fa-star rating-icons"></i> 
+									<i class="fa fa-star rating-icons"></i> 
+									<i class="fa fa-star rating-icons"></i> 
+									<i class="fa fa-star rating-icons"></i> 
+									<i class="fa fa-star-o rating-icons"></i> 
+								</footer>
+								
+							</div>
+						
+						</div>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</section>
+		
+		<!-- =================================
+		Contact-Section
+		================================== -->		
+		<section id="contact-section" class="feature " style="padding: 10px;"><!-- background pattern -->
+			
+			<div class="container">
+				
+				<div class="row">
+				
+					<div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12 text-center">
+						
+						<!-- section title -->
+						<h2 class="wow fadeInDown" data-wow-duration="1000ms">给我们留言</h2>
+						
+						<!-- big paragraph -->
+						<p class="big-para wow fadeInDown" data-wow-delay="500ms" data-wow-duration="1000ms">如果您有任何疑问，或者有合作意向，敬请给我们留言，我们会在第一时间给您回复。</p>
+						
+				    </div>
+					
+				</div>
+				
+				<div class="row">
+				
+					<div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12 ">
+					
+						<!-- contact form -->
+                        <div class="contact-form">
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="js/tbg/header.js"></script>
-	<script>
+						    <form id="messageForm" class="clearfix" accept-charset="utf-8" method="get" action="#">
+						
+                                <div class="row">
+							
+                                    <div class="col-sm-6 form-group wow fadeInDown" data-wow-delay="700ms" data-wow-duration="1000ms">
+									
+									    <label class="sr-only" for="name">您的称呼</label>									
+										
+									    <input type="text" placeholder="您的称呼" name="name" class="form-control input-lg" required />										
+									                                                                      
+								    </div>
+
+                                    <div class="col-sm-6 form-group wow fadeInDown" data-wow-delay="700ms" data-wow-duration="1000ms">
+                                    
+									    <label class="sr-only" for="tel">联系电话</label>
+									
+									    <input type="tel" placeholder="联系电话" name="tel"  class="form-control input-lg" />
+									
+								    </div>
+								
+                                </div>
+							
+							    <div class="row">
+							
+                                    <div class="col-sm-12 form-group wow fadeInDown" data-wow-delay="900ms" data-wow-duration="1000ms">
+                                    
+									    <label class="sr-only">电子邮件</label>
+
+									    <input type="email" placeholder="电子邮件" name="email" class="form-control input-lg"  required/>                                         
+                               
+								    </div>
+								
+                                </div>
+							
+                                <div class="row">
+							
+                                    <div class="col-sm-12 form-group wow fadeInDown" data-wow-delay="1000ms" data-wow-duration="1000ms">
+								
+                                        <label class="sr-only" for="message">留言内容</label>
+													
+										    <textarea rows="6" name="message" id="message" class="form-control input-lg " placeholder="留言内容" required></textarea>
+																			
+                                    </div>
+								
+                                </div>
+							
+							    <!-- submit button -->
+                                <button class="btn btn-success btn-lg btn-block wow fadeInDown" data-wow-delay="1200ms" data-wow-duration="1000ms" type="submit">发送留言</button>
+                       
+						    </form>
+
+                        </div>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+	    	
+		</section>
+		
+		<!-- =================================
+		Footer-Section
+		================================== -->		
+		<footer class="footer">
+		
+			<div class="service">
+			
+				<div class="container">
+				
+					<div class="row">
+						
+						<!-- footer logo -->
+						<div class="col-md-3 col-sm-6 col-xs-12 wow fadeInDown" data-wow-delay="0ms" data-wow-duration="1000ms">
+						
+							<h5>关于途八哥 </h5>						
+							<p>途八哥是一个专注于为深度自由行爱好者提供全方位服务的网站</p>
+							<a href="#" class="btn btn-primary btn-outline"> 了解更多 </a>
+							
+						</div>
+						
+						<!-- privacy links -->
+						<div class="col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1000ms">
+						
+							<h5>隐私声明</h5>
+							<ul>
+								<li><a href="#"><i class="fa fa-arrow-circle-right"></i> 隐私条款</a></li>
+								<li><a href="#"><i class="fa fa-arrow-circle-right"></i> 免责声明</a></li>
+								<li><a href="#"><i class="fa fa-arrow-circle-right"></i> 更多帮助</a></li>
+							</ul>
+							
+						</div>
+						
+						<!-- address -->
+						<div class="col-md-3 col-sm-6 col-xs-12 wow fadeInDown" data-wow-delay="0ms" data-wow-duration="1000ms">
+						
+							<div class="text-holder">
+							
+								<h5>联系地址</h5>
+								
+								<address>上海市奉贤区神州路580号4幢5174室</address>
+								
+								<strong class="phone" style="display:none;"><a href=""><i class="fa fa-phone"></i></a></strong>
+								<br>
+								<strong class="email"><a href="#"><i class="fa fa-envelope-o" style="margin-right: 5px;"></i>contact@witvan.com</a></strong>
+								
+							</div>
+						</div>
+						
+						<!-- experience -->
+						<div class="col-md-3 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1000ms">
+						
+							<div class="text-frame">
+							
+								<h5>关注我们</h5>
+								<p class="tbg-contact-qrcode-p" style="margin: 0px;">
+									<img class="tbg-qrcode" src="/img/qrcode.jpg"/>
+								</p>
+								<p class="tbg-contact-qrcode-p" style="color:#333; margin:0px;">
+									途八哥微信公众号
+								</p>
+							</div>
+							
+						</div>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			
+			<!-- last footer -->
+			<div class="last-footer">
+				
+				<div class="row">
+					
+					<div class="col-md-12 col-sm-12 col-xs-12 text-left">
+						
+						<p class="footer-line text-center wow fadeInDown" data-wow-delay="0ms" data-wow-duration="1000ms">@2016 版权所有  上海慧言信息科技有限公司 &copy; 2015-2016 &nbsp;&nbsp;&nbsp;&nbsp;沪ICP备 16004059号</p>
+					
+					</div>
+				
+				</div>
+			
+			</div>
+		
+		</footer>
+		
+		<!-- Scroll to top -->
+		<div class="scroll-up scroll">
+			<a href="#home-section" class=""><i class="fa fa-angle-up"></i></a>
+		</div>
+		
+		<!-- ====================================================
+		/////////////// End All Of The Section //////////////////
+		===================================================== -->
+			
+        <!--=== All Javascript ====-->
+        
+		<script type="text/javascript" src="/home/js/jquery-1.11.1.min.js"></script>		
+        <script type="text/javascript" src="/home/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/home/js/jquery.stellar.min.js"></script>	
+		<script type="text/javascript" src="/home/js/jquery.waypoints.min.js"></script>
+		<script type="text/javascript" src="/home/js/jquery.counterup.min.js"></script>	
+		<script type="text/javascript" src="/home/js/wow.min.js"></script>		
+        <script type="text/javascript" src="/home/js/respond.min.js"></script>
+		<script type="text/javascript" src="/home/js/jquery.fitvids.min.js"></script>		
+		<script type="text/javascript" src="/home/js/classie.js"></script>	
+		<script type="text/javascript" src="/home/js/custom-script.js"></script>
+		<script src="/js/tbg/header.js"></script>
+		
+		<script>
 		$(document).ready(function(){
 			$("#carousel1").carousel({
 				  interval: 4000
+			});
+			
+			$("#header-area").on("click", "a", function(a){
+				self.location.href = this.href;
 			});
 			
 			$.ajax({
@@ -120,8 +608,16 @@
 				success:function(d){
 					console.log(d);
 					var articlesNode = document.getElementById("tbg-articles");
+					var i = 0;
+					var row = null;
 					d.map(function(article){
-						articlesNode.appendChild(createArticle(article));
+						if(i % 3 == 0){
+							row = document.createElement("div");
+							row.classList.add("row");
+							articlesNode.appendChild(row);
+						}
+						row.appendChild(createArticle(article));
+						i++;
 					});
 				},
 				error:function(){
@@ -132,26 +628,37 @@
 			function createArticle(article){
 				var url = "/article/article.html?articleid="+article.uuid;
 				var node = document.createElement("div");
-				node.classList.add("col-sm-4");
-				node.classList.add("tbg-article-tile");
+				node.classList.add("col-md-4");
+				node.classList.add("col-sm-12");
+				node.classList.add("col-xs-12");
+				var box = document.createElement("div");
+				node.appendChild(box);
+				box.classList.add("service-box");
+				var wow = document.createElement("div");
+				box.appendChild(wow);
+				wow.classList.add("wow");
+				wow.classList.add("zoomIn");
+				wow.dataset["wowDelay"] = "1500ms";
+				wow.dataset["wowDuration"] = "2000ms";
 				var img = document.createElement("img");
 				img.src = article.coverImg;
 				img.classList.add("tbg-article-tile-img");
 				var a = document.createElement("a");
 				a.href = url;
 				a.appendChild(img);
-				node.appendChild(a);
-				a = document.createElement("a");
+				wow.appendChild(a);
 				a.href= url;
 				var p = document.createElement("p");
 				p.innerHTML = article.title;
 				p.classList.add("tbg-article-tile-title");
 				a.appendChild(p);
-				node.appendChild(a);
+				wow.appendChild(a);
+				
 				return node;
 			}
 		});
-	</script>
-</body>
-
-</html>
+		</script>
+		
+    </body>
+	
+</html>		

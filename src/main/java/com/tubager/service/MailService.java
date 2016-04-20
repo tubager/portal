@@ -43,7 +43,7 @@ public class MailService {
             helper.setTo(email);
             helper.setFrom("shihui8262@163.com");
             helper.setSubject("邮箱验证");
-            helper.setText("<html><body><div>您已申请验证邮箱，如果不是本人操作，请忽略该邮件。请在24小时之内点击下面链接重置密码：</div><a href='http://www.tubager.com/verifyemailpage.html?resetid="+uuid+"'>验证邮箱</a><div>该邮件为自动生成，请勿直接回复。</div></body></html>", true);
+            helper.setText("<html><body><div>您已申请验证邮箱，如果不是本人操作，请忽略该邮件。请在24小时之内点击下面链接验证邮箱：</div><a href='http://www.tubager.com/verifyemailpage.html?resetid="+uuid+"'>验证邮箱</a><div>该邮件为自动生成，请勿直接回复。</div></body></html>", true);
 		}catch (MessagingException e) {
             e.printStackTrace();
             throw new UserExistException(e.getMessage());

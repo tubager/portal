@@ -4,7 +4,7 @@ body{
 #content-area{
 	max-width: 700px;
 	display: block;
-	margin: 10px;
+	margin: 10px auto;
 }
 #article-title{
 	text-align: center;	

@@ -1196,7 +1196,7 @@ iframe{
 }
 
 .testimonial-Background{
-	background: url(../images/background/background-image-2.jpg);
+	background: url(/img/landing/page1.jpg);
 	/*background-attachment: fixed;*/
 	background-repeat: no-repeat;
 	background-position: center top;
@@ -1909,7 +1909,6 @@ iframe{
 
 .contact-form .form-control{
 	background-color: #fff;
-	border: 1px solid transparent;	
 }	
 
  .contact-form .form-control:focus{

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" media="screen and (min-width: 768px)" href="/css/tbg/index.css" />
+    <link rel="stylesheet" media="screen and (max-width: 767px)" href="/css/tbg/index_m.css" />
+</head>
+
+<body class="top-navigation">
+
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area">
+            <div id="front-page-1" class="front front-page front-page-1">
+				<div class="carousel slide" id="carousel1">
+                       <div class="carousel-inner">
+                           <div class="item active">
+                               <section id="text-1" class="tbg-home-slider">
+									<div class="widget-wrap">			
+										<div class="textwidget">
+											<h2>途八哥	有故事的旅行</h2>
+											<a class="button clear white" href="#">精彩游记</a> 
+										</div>
+									</div>
+								</section>
+                            </div>
+						<div class="item">
+                               <section id="text-2" class="tbg-home-slider">
+								<div class="widget-wrap">			
+									<div class="textwidget">
+										<h2>旅行  	不走寻常路</h2>
+										<a class="button clear white" href="#">创意线路</a> 
+									</div>
+								</div>
+							</section>
+                           </div>
+						<div class="item">
+                               <section id="text-3" class="tbg-home-slider">
+								<div class="widget-wrap">			
+									<div class="textwidget">
+										<h2>TRAVEL MORE, WORRY LESS</h2>
+										<a class="button clear white" href="#">联系我们</a> 
+									</div>
+								</div>
+							</section>
+                           </div>
+                       </div>
+                       <a data-slide="prev" href="#carousel1" class="left carousel-control">
+                           <span class="icon-prev"></span>
+                       </a>
+                       <a data-slide="next" href="#carousel1" class="right carousel-control">
+                           <span class="icon-next"></span>
+                       </a>
+                   </div>
+			</div>
+			<div id="front-page-3" class="front front-page front-page-3">
+				<section id="text-3" class="widget widget_text" style="margin: 0px;">
+					<div id="tbg-articles" class="row"></div>
+				</section>
+			</div>
+            <div id="front-page-5" class="front front-page front-page-5">
+				<section id="text-2" style="margin: 0px;">
+					<h2>联系我们</h2>
+					<div class="row">
+						<div class="col-sm-6 tbg-contact-qrcode">
+							<p class="tbg-contact-qrcode-p">
+								<img class="tbg-qrcode" src="/img/qrcode.jpg"/>
+							</p>
+							<p class="tbg-contact-qrcode-p">
+								微信公众号
+							</p>
+						</div>
+						<div class="col-sm-6 tbg-contact-email">
+							<label>Email: </label>
+							<p>contact@witvan.com</p>
+						</div>
+					</div>
+				</section>
+			</div>
+        </div>
+        <div class="footer">
+            <div>
+                <strong>版权所有</strong> 上海慧言信息科技有限公司 &copy; 2015-2016 &nbsp;&nbsp;&nbsp;&nbsp;沪ICP备 16004059号
+            </div>
+        </div>
+
+       </div>
+      </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="js/tbg/header.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#carousel1").carousel({
+				  interval: 4000
+			});
+			
+			$.ajax({
+				url: "/toparticles",
+				type:'GET',
+				contentType:"application/json;charset=UTF-8",
+				success:function(d){
+					console.log(d);
+					var articlesNode = document.getElementById("tbg-articles");
+					d.map(function(article){
+						articlesNode.appendChild(createArticle(article));
+					});
+				},
+				error:function(){
+					console.log("list top failed");
+				}
+			});
+			
+			function createArticle(article){
+				var url = "/article/article.html?articleid="+article.uuid;
+				var node = document.createElement("div");
+				node.classList.add("col-sm-4");
+				node.classList.add("tbg-article-tile");
+				var img = document.createElement("img");
+				img.src = article.coverImg;
+				img.classList.add("tbg-article-tile-img");
+				var a = document.createElement("a");
+				a.href = url;
+				a.appendChild(img);
+				node.appendChild(a);
+				a = document.createElement("a");
+				a.href= url;
+				var p = document.createElement("p");
+				p.innerHTML = article.title;
+				p.classList.add("tbg-article-tile-title");
+				a.appendChild(p);
+				node.appendChild(a);
+				return node;
+			}
+		});
+	</script>
+</body>
+
+</html>
