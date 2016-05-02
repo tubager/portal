@@ -227,5 +227,7 @@ CREATE TABLE `test`.`message` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+ALTER TABLE `test`.`user` 
+ADD COLUMN `role` VARCHAR(45) NULL AFTER `last_word`;
 
 -- Dump completed on 2015-11-18 13:57:29

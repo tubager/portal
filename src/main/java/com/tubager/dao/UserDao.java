@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.tubager.domain.RoleEnum;
 import com.tubager.domain.TAuth;
 import com.tubager.domain.TUser;
 
@@ -43,6 +44,13 @@ public class UserDao {
 						b.setMobileVerified(rs.getString("mobile_verified"));
 						b.setEmailVerified(rs.getString("email_verified"));
 						b.setLastWord(rs.getString("last_word"));
+						String role = rs.getString("role");
+						if(role == null || role.equals("")){
+							b.setRole(RoleEnum.USER);
+						}
+						else{
+							b.setRole(RoleEnum.valueOf(role));
+						}
 						return b;
 					});
 			return user;
@@ -69,6 +77,13 @@ public class UserDao {
 						b.setMobileVerified(rs.getString("mobile_verified"));
 						b.setEmailVerified(rs.getString("email_verified"));
 						b.setLastWord(rs.getString("last_word"));
+						String role = rs.getString("role");
+						if(role == null || role.equals("")){
+							b.setRole(RoleEnum.USER);
+						}
+						else{
+							b.setRole(RoleEnum.valueOf(role));
+						}
 						return b;
 					});
 			return user;
@@ -94,8 +109,8 @@ public class UserDao {
 		String insertSql="insert into auth values(?,?,?,?)";
 		jdbcTemplate.update(insertSql, new Object[]{auth.getUserName(),auth.getPassword(),today,today});
 		
-		insertSql = "INSERT INTO user (name, mobile, email, date_created, last_updated, tech_id) values(?,?,?,?,?,?)";
-		jdbcTemplate.update(insertSql, new Object[]{auth.getUserName(),mobile, email,today,today,null});
+		insertSql = "INSERT INTO user (name, role, mobile, email, date_created, last_updated, tech_id) values(?,?,?,?,?,?)";
+		jdbcTemplate.update(insertSql, new Object[]{auth.getUserName(),"USER",mobile, email,today,today,null});
 	}
 	
 	public TAuth getAuth(String userName){

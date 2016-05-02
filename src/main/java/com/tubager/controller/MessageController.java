@@ -25,12 +25,12 @@ public class MessageController {
 		response.setStatus(HttpServletResponse.SC_OK);
 	}
 
-	@RequestMapping(value="/account/newmessages", method = RequestMethod.GET)
+	@RequestMapping(value="/account/admin/newmessages", method = RequestMethod.GET)
 	public @ResponseBody List<TMessage> listNewMessages(){
 		return this.messageService.listNewMessage();
 	}
 
-	@RequestMapping(value="/account/allmessages", method = RequestMethod.GET)
+	@RequestMapping(value="/account/admin/allmessages", method = RequestMethod.GET)
 	public @ResponseBody List<TMessage> listAllMessages(){
 		return this.messageService.listAllMessage();
 	}
