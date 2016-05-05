@@ -40,8 +40,8 @@ if(header){
         <li class="dropdown">\
             <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 关于我们 <span class="caret"></span></a>\
             <ul role="menu" class="dropdown-menu">\
-                <li><a href="#">关于我们</a></li>\
-                <li><a href="#">联系我们</a></li>\
+                <li><a href="/about.html">关于我们</a></li>\
+                <li><a href="#contact-section">联系我们</a></li>\
             </ul>\
         </li>\
     </ul>\

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网 | 关于我们</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <!-- Toastr style -->
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<style>
+		body{
+			font-family: Microsoft YaHei;
+			background-color: white !important;
+		}
+		.nav > li.active {
+			background: transparent;
+			border-width: 0px;
+		}
+		.nav > li.active > a {
+			color: #a7b1c2;
+		}
+		nav{
+			padding: 0px 10px;
+		}
+		.navbar-right {
+			margin-right: 0px; 
+		}
+	</style>
+</head>
+
+<body class="gray-bg">
+	<div id="header-area" class="row border-bottom">
+    </div>
+    <div class="animated fadeInDown">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="ibox">
+					<div class="ibox-content">
+						<div class="text-center article-title">
+							<h2>关于我们</h2>
+						</div>
+						<p>
+						2015年10月26日，在英国坎布里亚郡卡莱尔市区上空出现成千上万只八哥集体迁徙的自然景象，它们成全结队地在天空中飞上扑下，不断变化着队形，时而像海豚，时而像飞鸟，它们享受着归途的欣喜，憧憬着目的地的归宿。每年秋冬之际，八哥始终在旅途中寻找自己喜爱的温暖的港湾。
+						</p>
+						<img src="/img/about.jpg" style="display: block; margin: 10px auto;"/>
+						<p>途八哥创意旅行网自创立之初就秉承着用心服务每一个造访途八哥的访客的理念，为广大自由行爱好者提供一个交流的平台，希望大家都能在此找到自己志同道合的旅伴，也真诚的祝福每一位踏上旅途的人，都能享受和寻找到自己心中的归宿。</p>
+					</div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                
+            </div>
+            <div class="col-md-6 text-right">
+               <small></small>
+            </div>
+        </div>
+    </div>
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <!-- Toastr script -->
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+	<script src="/js/tbg/header.js"></script>
+	<script>
+		function showMessage(fun, message){
+			toastr.options = {
+				  "closeButton": true,
+				  "positionClass": "toast-bottom-right",
+				  "showDuration": "400",
+				  "hideDuration": "1000",
+				  "timeOut": "3000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut"
+				};
+			toastr[fun](message);
+		}
+		
+		$("#email").on("blur", function(){
+	    	var email = $("#email").val();
+	    	var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	    	if(!filter.test(email)){
+	    		document.getElementById("email").parentNode.classList.add("has-error");
+	    		showMessage("error", "电子邮件格式不正确！");
+	    		return;
+	    	}
+	    	$.ajax({
+	    		url: "/checkmailexistence?email=" + email,
+	    		type:'GET',
+	    		success: function(data){
+	    			if(!data){
+	    				document.getElementById("email").parentNode.classList.add("has-error");
+	            		showMessage("error", "输入的电子邮件不存在！");
+	    			}
+	    		},
+	    		error: function(error){
+	    			console.log(error);
+	    		}
+	    	});
+	    });
+	    $("#email").on("change", function(){
+	    	document.getElementById("email").parentNode.classList.remove("has-warning");
+	    	document.getElementById("email").parentNode.classList.remove("has-error");
+	    });
+	    
+	    $("#submit").click(function(){
+        	var data = {
+        		email: $("#email").val()
+        	};
+        	console.log(data);
+        	$.ajax({
+        		url: "/resetrequest?email="+$("#email").val(),
+				type:'GET',
+				contentType:"application/json;charset=UTF-8",
+				success:function(d){
+					showMessage("success", "重置链接已发送到您的邮箱，请登录邮箱重置密码！");
+				},
+				error:function(e){
+					showMessage("error", e.responseJSON.message);
+				}
+        	});
+        });
+	</script>
+</body>
+
+</html>
