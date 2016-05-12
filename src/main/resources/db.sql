@@ -231,3 +231,36 @@ ALTER TABLE `test`.`user`
 ADD COLUMN `role` VARCHAR(45) NULL AFTER `last_word`;
 
 -- Dump completed on 2015-11-18 13:57:29
+
+CREATE TABLE `test`.`spot` (
+  `uuid` VARCHAR(32) NOT NULL,
+  `name` VARCHAR(256) NULL,
+  `days` INT NULL,
+  `cost` DOUBLE NULL,
+  `content` BLOB NULL,
+  `shopping` VARCHAR(512) NULL,
+  `food` VARCHAR(512) NULL,
+  `created_by` VARCHAR(45) NULL,
+  `date_created` DATETIME NULL,
+  PRIMARY KEY (`uuid`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE `test`.`itinerary` (
+  `uuid` VARCHAR(32) NOT NULL,
+  `name` VARCHAR(128) NULL,
+  `description` VARCHAR(256) NULL,
+  `created_by` VARCHAR(45) NULL,
+  `date_created` DATETIME NULL,
+  `last_updated` DATETIME NULL,
+  PRIMARY KEY (`uuid`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE `test`.`itinerary_spot` (
+  `itinerary_uuid` VARCHAR(32) NOT NULL,
+  `spot_uuid` VARCHAR(32) NOT NULL,
+  `idx` INT NULL,
+  PRIMARY KEY (`itinerary_uuid`, `spot_uuid`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
