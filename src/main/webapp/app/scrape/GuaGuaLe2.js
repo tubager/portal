@@ -12,7 +12,7 @@ function GuaGuaLe(idFront, idBack)
 GuaGuaLe.prototype = {  
     constructor: GuaGuaLe,  
     /** 
-     * ½«ÓÃ»§µÄ´«ÈëµÄ²ÎÊıºÍÄ¬ÈÏ²ÎÊı×öºÏ²¢ 
+     * å°†ç”¨æˆ·çš„ä¼ å…¥çš„å‚æ•°å’Œé»˜è®¤å‚æ•°åšåˆå¹¶ 
      * @param desAttr 
      * @returns {{frontFillColor: string, backFillColor: string, backFontColor: string, backFontSize: number, msg: string}} 
      */  
@@ -23,7 +23,7 @@ GuaGuaLe.prototype = {
             backFillColor: "gold",  
             backFontColor: "red",  
             backFontSize: 24,  
-            msg: "Ğ»Ğ»»İ¹Ë"  
+            msg: "è°¢è°¢æƒ é¡¾"  
         };  
         for (var p in  desAttr)  
         {  
@@ -40,28 +40,37 @@ GuaGuaLe.prototype = {
   
         var attr = this.mergeAttr(desAttr);  
   
-        //³õÊ¼»¯canvas  
+        //åˆå§‹åŒ–canvas  
         this.backCanvas.penColor(attr.backFillColor);  
         this.backCanvas.fontSize(attr.backFontSize);  
         this.backCanvas.drawRect({x: 0, y: 0}, {x: this.backCanvas.width(), y: this.backCanvas.height()}, true);  
         this.backCanvas.penColor(attr.backFontColor);  
         this.backCanvas.drawTextInCenter(attr.msg, true);  
-        //³õÊ¼»¯canvas  
+        //åˆå§‹åŒ–canvas  
         this.frontCanvas.penColor(attr.frontFillColor);  
         this.frontCanvas.drawRect({x: 0, y: 0}, {x: this.frontCanvas.width(), y: this.frontCanvas.height()}, true);  
   
         var _this = this;  
-        //ÉèÖÃÊÂ¼ş  
+        //è®¾ç½®äº‹ä»¶  
         this.$eleFront.mousedown(function (event)  
         {  
             _this.mouseDown(event);  
         }).mousemove(function (event)  
-            {  
-                _this.mouseMove(event);  
-            }).mouseup(function (event)  
-            {  
-                _this.mouseUp(event);  
-            });  
+		{  
+			_this.mouseMove(event);  
+		}).mouseup(function (event)  
+		{  
+			_this.mouseUp(event);  
+		}).touchstart(function (event)  
+        {  
+            _this.mouseDown(event);  
+        }).touchmove(function (event)  
+		{  
+			_this.mouseMove(event);  
+		}).touchend(function (event)  
+		{  
+			_this.mouseUp(event);  
+		});  
     },  
     mouseDown: function (event)  
     {  
