@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width; initial-scale=1.0">
 <title></title>
 <style type="text/css">
-.demo{width:320px; margin:10px auto 20px auto; min-height:300px;}
+.demo{width:320px; margin:100px auto 20px auto; min-height:200px;}
 .msg{text-align:center; height:32px; line-height:32px; font-weight:bold; margin-top:50px}
 </style>
+<script type="text/javascript" src="/js/jquery-2.1.1.js"></script>  
 </head>
 
 <body>
@@ -15,81 +16,109 @@
 </div>
 
 <div id="main">
-   <div class="demo">
+	<div id="input" class="demo" style="position:absolute;width:100%">
+		<input id="name" type="text" placeholder="请输入名字" style="line-height: 30px;font-size: 20px;display: block;margin: 10px auto;"/>
+		<button id="btn" style="display:block;margin:20px auto;min-height: 40px;background: transparent;">查看分组</button>
+	</div>
+   <div id="result" class="demo" style="display:none;">
+   		<div id="group" style="position:absolute;font-size: 60px;width: 320px;text-align: center;margin-top: 60px;">6</div>
    		<canvas></canvas>
    </div>
 </div>
 
+<script>
+function initCanvas(){
+	var bodyStyle = document.body.style;
+
+	bodyStyle.mozUserSelect = 'none';
+	bodyStyle.webkitUserSelect = 'none';
+
+	var img = new Image();
+	var canvas = document.querySelector('canvas');
+	canvas.style.backgroundColor='transparent';
+	canvas.style.position = 'absolute';
+	img.src = 'p_0.jpg';
+
+	img.addEventListener('load', function(e) {
+		var ctx;
+	    var w = img.width,
+	    	h = img.height;
+	    var offsetX = canvas.offsetLeft,
+	    	offsetY = canvas.offsetTop;
+	    var mousedown = false;
+
+	    function layer(ctx) {
+	        ctx.fillStyle = 'gray';
+	        ctx.fillRect(0, 0, 320, 160);
+	    }
+
+	    function eventDown(e){
+	        e.preventDefault();
+	        mousedown=true;
+	    }
+
+	    function eventUp(e){
+	        e.preventDefault();
+	        mousedown=false;
+	    }
+
+	    function eventMove(e){
+	        e.preventDefault();
+	        if(mousedown) {
+	             if(e.changedTouches){
+	                 e=e.changedTouches[e.changedTouches.length-1];
+	             }
+	             var x = (e.clientX + document.body.scrollLeft || e.pageX) - offsetX || 0,
+	                 y = (e.clientY + document.body.scrollTop || e.pageY) - offsetY || 0;
+	             with(ctx) {
+	                 beginPath()
+	                 arc(x, y, 10, 0, Math.PI * 2);
+	                 fill();
+	             }
+	        }
+	    }
+
+	    canvas.width=w;
+	    canvas.height=h;
+	    canvas.style.backgroundImage='url('+')';
+	    ctx=canvas.getContext('2d');
+	    ctx.fillStyle='transparent';
+	    ctx.fillRect(0, 0, w, h);
+	    layer(ctx);
+
+	    ctx.globalCompositeOperation = 'destination-out';
+
+	    canvas.addEventListener('touchstart', eventDown);
+	    canvas.addEventListener('touchend', eventUp);
+	    canvas.addEventListener('touchmove', eventMove);
+	    canvas.addEventListener('mousedown', eventDown);
+	    canvas.addEventListener('mouseup', eventUp);
+	    canvas.addEventListener('mousemove', eventMove);
+	});
+}
+
+	$(document).ready(function(){
+		$("#btn").click(function(){
+			var name = $("#name").val();
+			if(!name){
+				return;
+			}
+			$.ajax({
+				url: "/group/get?name=" + name,
+				type: "GET",
+				success: function(data){
+					$("#input").css("display","none");
+					$("#result").css("display","block");
+					$("#group").text(data);
+					initCanvas();
+				}
+			});
+		});
+	});
+</script>
+
 <script type="text/javascript">
-var bodyStyle = document.body.style;
 
-bodyStyle.mozUserSelect = 'none';
-bodyStyle.webkitUserSelect = 'none';
-
-var img = new Image();
-var canvas = document.querySelector('canvas');
-canvas.style.backgroundColor='transparent';
-canvas.style.position = 'absolute';
-var imgs = ['p_0.jpg','p_1.jpg'];
-var num = Math.floor(Math.random()*2);
-img.src = imgs[num];
-
-img.addEventListener('load', function(e) {
-	var ctx;
-    var w = img.width,
-    	h = img.height;
-    var offsetX = canvas.offsetLeft,
-    	offsetY = canvas.offsetTop;
-    var mousedown = false;
-
-    function layer(ctx) {
-        ctx.fillStyle = 'gray';
-        ctx.fillRect(0, 0, w, h);
-    }
-
-    function eventDown(e){
-        e.preventDefault();
-        mousedown=true;
-    }
-
-    function eventUp(e){
-        e.preventDefault();
-        mousedown=false;
-    }
-
-    function eventMove(e){
-        e.preventDefault();
-        if(mousedown) {
-             if(e.changedTouches){
-                 e=e.changedTouches[e.changedTouches.length-1];
-             }
-             var x = (e.clientX + document.body.scrollLeft || e.pageX) - offsetX || 0,
-                 y = (e.clientY + document.body.scrollTop || e.pageY) - offsetY || 0;
-             with(ctx) {
-                 beginPath()
-                 arc(x, y, 10, 0, Math.PI * 2);
-                 fill();
-             }
-        }
-    }
-
-    canvas.width=w;
-    canvas.height=h;
-    canvas.style.backgroundImage='url('+img.src+')';
-    ctx=canvas.getContext('2d');
-    ctx.fillStyle='transparent';
-    ctx.fillRect(0, 0, w, h);
-    layer(ctx);
-
-    ctx.globalCompositeOperation = 'destination-out';
-
-    canvas.addEventListener('touchstart', eventDown);
-    canvas.addEventListener('touchend', eventUp);
-    canvas.addEventListener('touchmove', eventMove);
-    canvas.addEventListener('mousedown', eventDown);
-    canvas.addEventListener('mouseup', eventUp);
-    canvas.addEventListener('mousemove', eventMove);
-});
 </script>
 <div id="footer">
 </div>
