@@ -21,7 +21,7 @@
 		<button id="btn" style="display:block;margin:20px auto;min-height: 40px;background: transparent;">查看分组</button>
 	</div>
    <div id="result" class="demo" style="display:none;">
-   		<div id="group" style="position:absolute;font-size: 60px;width: 320px;text-align: center;margin-top: 60px;">6</div>
+   		<div id="group" style="display:none;position:absolute;font-size: 60px;width: 320px;text-align: center;margin-top: 60px;">6</div>
    		<canvas></canvas>
    </div>
 </div>
@@ -94,6 +94,7 @@ function initCanvas(){
 	    canvas.addEventListener('mousedown', eventDown);
 	    canvas.addEventListener('mouseup', eventUp);
 	    canvas.addEventListener('mousemove', eventMove);
+		$("#group").css("display","block");
 	});
 }
 
