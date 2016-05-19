@@ -167,6 +167,14 @@ function initCanvas(){
 				}
 			});
 		});
+		
+		$("#name").on("focus", function(){
+			$("#footer").css("display", "none");
+		});
+		
+		$("#name").on("blur", function(){
+			$("#footer").css("display", "block");
+		});
 	});
 </script>
 
