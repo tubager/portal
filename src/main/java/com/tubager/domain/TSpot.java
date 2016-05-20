@@ -1,19 +1,27 @@
 package com.tubager.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class TSpot {
 	private String uuid;
 	private String name;
-	private int days;
+	private double days;
 	private double cost;
 	private String text;
 	private byte[] content;
 	private String shopping;
 	private String food;
+	private List<Item> items;
 	private String createdBy;
 	private Date dateCreated;
 
+	public List<Item> getItems() {
+		return items;
+	}
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
 	public byte[] getContent() {
 		return content;
 	}
@@ -38,10 +46,10 @@ public class TSpot {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getDays() {
+	public double getDays() {
 		return days;
 	}
-	public void setDays(int days) {
+	public void setDays(double days) {
 		this.days = days;
 	}
 	public String getText() {

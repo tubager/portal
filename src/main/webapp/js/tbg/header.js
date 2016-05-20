@@ -34,6 +34,9 @@ if(header){
         		<li><a id="tbg-menu-profile" href="/account/profile.html">我的信息</a></li>\
                 <li><a id="tbg-menu-edit" href="#">写游记</a></li>\
                 <li><a href="/account/my_article.html">我的游记</a></li>\
+        		<li><a href="/account/new_spot.html">创建景点</a></li>\
+				<li><a href="/account/my_spots.html">我的景点</a></li>\
+        		<li><a href="#">创建线路</a></li>\
                 <li><a href="#">我的线路</a></li>\
             </ul>\
         </li>\

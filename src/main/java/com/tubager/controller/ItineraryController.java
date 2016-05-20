@@ -1,5 +1,7 @@
 package com.tubager.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,53 @@ public class ItineraryController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value="/expert/spot/create", method=RequestMethod.POST, headers = {"content-type=application/json;charset=UTF-8"})
+	@RequestMapping(value="/expert/spot/save", method=RequestMethod.POST, headers = {"content-type=application/json;charset=UTF-8"})
 	public @ResponseBody TSpot createSpot(@RequestBody TSpot spot){
 		TUser user = userService.getCurrentUser();
 		if(user != null){
 			spot.setCreatedBy(user.getName());
 		}
-		return this.itineraryService.create(spot);
+		if(spot.getUuid() != null){
+			return this.itineraryService.saveSpot(spot);
+		}
+		return this.itineraryService.createSpot(spot);
+	}
+	
+	@RequestMapping(value="/expert/spot/{uuid}", method=RequestMethod.DELETE)
+	public @ResponseBody String deleteSpot(@PathVariable String uuid){
+		TUser user = userService.getCurrentUser();
+		if(user == null){
+			logger.info("user in null");
+			return null;
+		}
+		return this.itineraryService.deleteSpot(uuid, user.getName());
+	}
+
+	@RequestMapping(value="/expert/spots", method=RequestMethod.GET)
+	public @ResponseBody List<TSpot> listMySpots(){
+		TUser user = userService.getCurrentUser();
+		if(user == null){
+			logger.info("user in null");
+			return null;
+		}
+		return this.itineraryService.listMySpot(user.getName());
+	}
+	
+	@RequestMapping(value="/expert/spot/{uuid}", method=RequestMethod.GET)
+	public @ResponseBody TSpot readSpot(@PathVariable String uuid){
+		TUser user = userService.getCurrentUser();
+		if(user == null){
+			logger.info("user in null");
+			return null;
+		}
+		TSpot spot = this.itineraryService.readSpot(uuid);
+		if(spot == null){
+			return null;
+		}
+		if(!user.getName().equalsIgnoreCase(spot.getCreatedBy())){
+			return null;
+		}
+		return spot;
 	}
 	
 	@RequestMapping(value="/expert/itinerary/create", method=RequestMethod.POST, headers = {"content-type=application/json;charset=UTF-8"})

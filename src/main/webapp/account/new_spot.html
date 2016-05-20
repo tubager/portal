@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    
+	<link href="/css/tbg/new_spot.css" rel="stylesheet">
+	<link href="/libs/summernote/summernote.css" rel="stylesheet">
+</head>
+
+<body class="top-navigation">
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area" class="row">
+			<div id="tbg-header-toolbar">
+				<button id="tbgSaveBtn" class="btn btn-primary btn-outline  pull-right" type="button"><i class="fa fa-save" style="margin-right:5px;"></i>保存行程</button>
+			</div>
+        	<div class="row">
+        		<div class="col-xs-2"></div>
+	        	<div id="article-area" class="col-xs-7">
+	        		<div id="article-content" class="sortable droppable">
+	        			<div class="article-item tbg-p-image" data-type="image">
+	        				<div class="article-item-content" data-type="image">
+	        					<img src="/img/instruction.png" class="tbg-article-img">
+	        					<p class="tbg-article-img-text"></p>
+	        				</div>
+	        				<span class="article-item-toolbar">
+	        					<a class="toolbar-button" href="#" data-action="edit" title="编辑"><i class="fa fa-pencil"></i></a>
+	        					<a class="toolbar-button" href="#" data-action="delete" title="删除"><i class="fa fa-trash-o"></i></a>
+	        				</span>
+	        			</div>
+	        		</div>
+	        	</div>
+        		<div class="col-xs-3">
+        			<div id="title-area">
+        				<input id="spot-title-input" type="text" class="form-control" placeholder="行程名称" />
+        				<label style="margin-top:20px;">预计天数</label>
+        				<input id="spot-days-input" type="number" class="form-control" placeholder="" />
+        				<label style="margin-top:20px;">人均花费(元)</label>
+        				<input id="spot-cost-input" type="number" class="form-control" placeholder="" />
+        			</div>
+        		</div>
+        	</div>
+        	<div id="tbg-toolbar">
+        		<div class="toolbar-item draggable" data-type="text">
+        			<p class="toolbar-icon" data-type="text">
+        				<i class="fa fa-align-justify"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="text">文字</p>
+        		</div>
+        		<div class="toolbar-divider">
+        		</div>
+        		<div class="toolbar-item draggable" data-type="image">
+        			<p class="toolbar-icon" data-type="image">
+        				<i class="fa fa-picture-o"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="image">照片</p>
+        		</div>
+        		<div class="toolbar-divider"></div>
+        		<div class="toolbar-item draggable" data-type="tip">
+        			<p class="toolbar-icon" data-type="tip">
+        				<i class="fa fa-info"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="tip">小贴士</p>
+        		</div>
+        		<div class="toolbar-divider"></div>
+        		<div class="toolbar-item draggable" data-type="shop">
+        			<p class="toolbar-icon" data-type="shop">
+        				<i class="fa fa-shopping-cart"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="shop">买什么</p>
+        		</div>
+        		<div class="toolbar-divider"></div>
+        		<div class="toolbar-item draggable" data-type="food">
+        			<p class="toolbar-icon" data-type="food">
+        				<i class="fa fa-cutlery"></i>
+        			</p>
+        			<p class="toolbar-title" data-type="food">吃什么</p>
+        		</div>
+        	</div>
+        </div>
+        <div class="modal inmodal fade" id="titleModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h2 class="modal-title">段落标题</h2>
+                   </div>
+                   <div class="modal-body">
+                       <input id="newTitleText" type="text" class="form-control" placeholder="段落标题" />
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="newTitleCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newTitleBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="textModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h2 class="modal-title">文字段落</h2>
+                   </div>
+                   <div class="modal-body">
+                       <textarea id="newTextArea" class="form-control" placeholder="书写故事..." ></textarea>
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="newTextCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newTextBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="tipModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h2 class="modal-title" id="tipModalTitle">旅行小贴士</h2>
+                   </div>
+                   <div class="modal-body">
+                       <textarea id="newTipArea" class="form-control" placeholder="" ></textarea>
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="newTipCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newTipBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="modal inmodal fade" id="imageModal" tabindex="-1" role="dialog"  aria-hidden="true">
+           <div class="modal-dialog modal-lg">
+               <div class="modal-content">
+                   <div class="modal-header">
+                       <h2 class="modal-title">图片</h2>
+                   </div>
+                   <div class="modal-body">
+                   		<label style="margin-bottom:10px;"></label>
+                   		<img id="newImg" src="/img/default.png "/>
+                   		<input id="newImageText" class="form-control" placeholder="给我一个描述" ></input>
+                   		<input type="file" id="imageinputfile" style="height:0;width:0;z-index: -1;"/>
+                   </div>
+
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-white" id="newImageCancelBtn" data-dismiss="modal">取消</button>
+                       <button type="button" class="btn btn-primary" id="newImageBtn">确定</button>
+                   </div>
+               </div>
+           </div>
+       </div>
+    </div>
+   </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/libs/summernote/summernote.min.js"></script>
+	<script src="/libs/summernote/lang/summernote-zh-CN.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    
+	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
+	<script src="/js/tbg/new_spot.js"></script>
+	
+</body>
+
+</html>

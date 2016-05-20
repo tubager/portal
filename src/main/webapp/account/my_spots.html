@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <style>
+    	.contact-box a{
+    		margin: 3px;
+    		display: none;
+    	}
+    	.contact-box:hover a{
+    		display: block;
+    	}
+    </style>
+</head>
+
+<body class="top-navigation" style="background-color: #f9f9f9;">
+	<div id="wrapper">
+		<div style="overflow: hidden;">
+			<div id="header-area" class="row border-bottom">
+        	</div>
+        	<div class="wrapper wrapper-content animated container">
+        		<div id="tbg-articles" class="row card-lg">
+        			<div class="col-md-4">
+					    <div class="contact-box">
+					        <div class="col-sm-12">
+					            <h3><strong>空白模版</strong></h3>
+					            <p><i class="fa fa-bookmark"></i>&nbsp;空白模版，可以添加任意内容。该模版为默认模版。</p>
+                                <p style="min-height: 38px;">
+                                	<a href="#" data-action="remove" class="btn btn-white pull-right" type="button"><i class="fa fa-trash"></i></a>
+                                	<a href="#" class="btn btn-white pull-right" type="button"><i class="fa fa-pencil"></i></a>
+                                </p>
+					        </div>
+					        <div class="clearfix"></div>
+					    </div>
+					</div>
+        		</div>
+        	</div>
+		</div>
+	</div>
+	<!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    
+    <!-- Custom and plugin javascript -->
+    <script src="/js/inspinia.js"></script>
+    <script src="/js/plugins/pace/pace.min.js"></script>
+    
+	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#tbg-articles").on("click", "a", function(evt){
+				var target = evt.target;
+				while(target && target.tagName != "A"){
+					target = target.parentNode;
+				}
+				var action = target.dataset["action"];
+				var uuid = target.dataset["uuid"];
+				if(action == "remove"){
+					swal({
+                        title: "确定删除行程?",
+                        text: "行程删除，将会不留痕迹!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "删除",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: true,
+                        closeOnCancel: true },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            deleteArticle(uuid);
+                        } else {
+                            //swal("Cancelled", "Your imaginary file is safe :)", "error");
+                        }
+                    });
+				}
+			});
+		
+			listArticle();
+			
+			function addAnimation(){
+				$('.contact-box').each(function () {
+	                animationHover(this, 'pulse');
+	            });
+			}
+			
+			function createArticle(spot){
+				var node = document.createElement("div");
+				node.classList.add("col-md-4");
+				var arr = [];
+				arr.push('<div class="contact-box">');
+				arr.push('<div class="col-sm-12">');
+				arr.push('<h3><strong>' + spot.name + '</strong></h3>');
+				arr.push('<p><i class="fa fa-calendar"></i>&nbsp;预计天数： ' + (spot.days||0) + '</p>');
+				arr.push('<p><i class="fa fa-cny"></i>&nbsp;人均预算： ' + (spot.cost||0) + '</p>');
+				arr.push('<p style="min-height: 38px;">');
+				arr.push('<a href="#" data-action="remove" data-uuid="'+spot.uuid+'" class="btn btn-white pull-right" type="button"><i class="fa fa-trash"></i></a>');
+				arr.push('<a href="/account/new_spot.html?spotid='+spot.uuid+'" class="btn btn-white pull-right" type="button"><i class="fa fa-pencil"></i></a>');
+				arr.push('</p>');
+				arr.push('</div>');
+				arr.push('<div class="clearfix"></div>');
+				arr.push('</div>');
+				node.innerHTML = arr.join("");
+				return node;
+			}
+		
+			function listArticle(){
+				$.ajax({
+					url: "/expert/spots",
+					type: "GET",
+					success: function(data){
+						console.log(data);
+						var articlesNode = document.getElementById("tbg-articles");
+						articlesNode.innerHTML = "";
+						data.map(function(article){
+							articlesNode.appendChild(createArticle(article));
+						});
+						addAnimation();
+					},
+					fail: function(error){
+						console.log(error);
+					}
+				});
+			}
+			
+			function deleteArticle(uuid){
+				$.ajax({
+					url: "/expert/spot/" + uuid,
+					type: "DELETE",
+					success: function(data){
+						console.log(data);
+						tbgUtil.showMessage("success", "成功删除行程");
+						listArticle();
+					},
+					fail: function(error){
+						console.log(error);
+						tbgUtil.showMessage("error", "抱歉，暂时无法删除");
+					}
+				});
+			}
+		});
+	</script>
+</body>
+</html>
