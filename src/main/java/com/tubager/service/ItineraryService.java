@@ -116,6 +116,7 @@ public class ItineraryService {
 					content = new byte[]{};
 				}
 				item.setText(new String(content, java.nio.charset.StandardCharsets.UTF_8));
+				item.setContent(null);
 			}
 		}
 		return items;
