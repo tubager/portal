@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网 - 编辑行程</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <style>
+    	.timeline-item .ibox-tools{
+    		display: none;
+    	}
+    	.timeline-item:hover .ibox-tools{
+    		display: block;
+    	}
+    </style>
+</head>
+
+<body class="top-navigation" style="background-color: #f9f9f9;">
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area">
+        	<div class="wrapper wrapper-content">
+            <div class="row animated fadeInRight">
+                <div class="col-lg-12">
+			<div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5 id="itineraryTitle">新建旅行线路</h5>
+                        <div id="itinerary-tools" class="ibox-tools">
+                            <a data-action="edit" style="margin:5px;" title="修改线路名称">
+                                <i class="fa fa-pencil" style="color:#1ab394;margin-right:5px;"></i>
+                            </a>
+                            <a data-action="add" style="margin:5px;" title="添加景点">
+                                <i class="fa fa-plus" style="color:#1ab394;"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content inspinia-timeline">
+                        <div class="timeline-item">
+                            <div class="row">
+                                <div class="col-xs-3 date">
+                                    <i class="fa fa-calendar"></i>
+                                    <small class="">2天</small>
+                                    <br>
+                                    <small class="">￥1000</small>
+                                </div>
+                                <div class="col-xs-7 content no-top-border">
+                                	<div>
+                                    	<h3 class="m-b-xs" style="float:left;">Meeting</h3>
+                                	</div>
+									<div id="" class="ibox-tools">
+			                            <a data-action="edit" style="margin:5px;" title="上移">
+			                                <i class="fa fa-arrow-up text-navy" style="margin-right:5px;"></i>
+			                            </a>
+			                            <a data-action="edit" style="margin:5px;" title="下移">
+			                                <i class="fa fa-arrow-down text-navy" style="margin-right:5px;"></i>
+			                            </a>
+			                            <a data-action="add" style="margin:5px;" title="移除景点">
+			                                <i class="fa fa-times text-navy" style=""></i>
+			                            </a>
+			                        </div>
+			                        <div style="clear:both;margin:20px;"></div>
+                                    <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the
+                                        sale.</p>
+
+                                    <p><span data-diameter="40" class="updating-chart">5,3,9,6,5,9,7,3,5,2,5,3,9,6,5,9,4,7,3,2,9,8,7,4,5,1,2,9,5,4,7,2,7,7,3,5,2</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="row">
+                                <div class="col-xs-3 date">
+                                    <i class="fa fa-file-text"></i>
+                                    7:00 am
+                                    <br/>
+                                    <small class="text-navy">3 hour ago</small>
+                                </div>
+                                <div class="col-xs-7 content">
+                                    <p class="m-b-xs"><strong>Send documents to Mike</strong></p>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+        </div>
+    </div>
+   </div>
+   
+   <div class="modal inmodal fade" id="titleModal" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title">线路名称</h2>
+              </div>
+              <div class="modal-body">
+                  <input id="newTitleText" type="text" class="form-control" placeholder="线路名称" />
+              </div>
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-white" id="newTitleCancelBtn" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-primary" id="newTitleBtn">确定</button>
+              </div>
+          </div>
+      </div>
+    </div>
+   <div class="modal inmodal fade" id="spotModal" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h2 class="modal-title">选择景点</h2>
+              </div>
+              <div id="spotsList" class="modal-body">
+              </div>
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-white" id="newSpotCancelBtn" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-primary" id="newSpotBtn">确定</button>
+              </div>
+          </div>
+      </div>
+    </div>
+   
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- iCheck -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    
+	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			var itinerary = {
+					name: "新建旅行线路"
+			};
+			var spots = [];
+			$("#itinerary-tools").on("click", "a", function(evt){
+				var a = evt.target;
+				while(a.tagName != "A"){
+					a = a.parentNode;
+				}
+				var action = a.dataset["action"];
+				if(action == "edit"){
+					$("#newTitleText").val(itinerary.name);
+					showTitle();
+				}
+				else if(action == "add"){
+					initCheckbox();
+					showSpot();
+				}
+			});
+			
+			function showSpot(){
+				clearCheck();
+				$("#spotModal").modal("show");
+			}
+			
+			$("#newSpotBtn").click(function(){
+				var boxes = $("#spotModal input[type=checkbox]");
+				boxes.each(function(cb){
+					var box = boxes[cb];
+					console.log(box.value);
+				});
+				$("#spotModal").modal("hide");
+			});
+			
+			function showTitle(){
+				$("#titleModal").modal("show");
+			}
+			
+			$("#newTitleBtn").click(function(){
+				var title = $("#newTitleText").val();
+				itinerary.name = title;
+				$("#itineraryTitle").text(title);
+				$("#titleModal").modal("hide");
+			});
+			
+			function clearCheck(){
+				var boxes = $("#spotModal input[type=checkbox]");
+				boxes.each(function(cb){
+					var box = boxes[cb];
+					if(box.checked){
+						box.removeAttribute("checked");
+						box.checked = false;
+					}
+					box.parentNode.classList.remove("checked");
+				});
+			}
+			
+			function initCheckbox(){
+				var arr = [];
+				spots.map(function(spot){
+					arr.push('<div class="i-checks"><label> <input type="checkbox" value="');
+					arr.push(spot.uuid);
+					arr.push('"> <i></i> ');
+					arr.push(spot.name);
+					arr.push('</label></div>');
+				});
+				document.getElementById("spotsList").innerHTML = arr.join("");
+				
+				$('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
+			}
+		});
+	</script>
+	
+</body>
+
+</html>

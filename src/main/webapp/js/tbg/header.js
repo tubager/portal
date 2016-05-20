@@ -36,7 +36,7 @@ if(header){
                 <li><a href="/account/my_article.html">我的游记</a></li>\
         		<li><a href="/account/new_spot.html">创建景点</a></li>\
 				<li><a href="/account/my_spots.html">我的景点</a></li>\
-        		<li><a href="#">创建线路</a></li>\
+        		<li><a href="/account/new_itinerary.html">创建线路</a></li>\
                 <li><a href="#">我的线路</a></li>\
             </ul>\
         </li>\
