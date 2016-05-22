@@ -241,9 +241,6 @@ public class ItineraryDao {
 					b.setName(rs.getString("name"));
 					b.setDays(rs.getInt("days"));
 					b.setCost(rs.getDouble("cost"));
-					b.setContent(rs.getBytes("content"));
-					b.setShopping(rs.getString("shopping"));
-					b.setFood(rs.getString("food"));
 					b.setCreatedBy(rs.getString("created_by"));
 					b.setDateCreated(rs.getDate("date_created"));
 					

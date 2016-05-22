@@ -49,6 +49,10 @@ public class ItineraryService {
 		return this.itineraryDao.listMySpot(createdBy);
 	}
 	
+	public List<TItinerary> listMyItinerary(String createdBy){
+		return this.itineraryDao.listMyItinerary(createdBy);
+	}
+	
 	public TSpot createSpot(TSpot spot){
 		String uuid = Utility.getUuid();
 		spot.setUuid(uuid);
@@ -87,8 +91,13 @@ public class ItineraryService {
 		return obj;
 	}
 	
+	public TItinerary saveItinerary(TItinerary itinerary){
+		TItinerary obj = this.itineraryDao.updateItinerary(itinerary);
+		return obj;
+	}
+	
 	public void removeItinerary(String uuid){
-		this.itineraryDao.read(uuid);
+		this.itineraryDao.removeItinerary(uuid);
 	}
 	
 	public TItinerary updateItinerary(TItinerary itinerary){
@@ -98,6 +107,10 @@ public class ItineraryService {
 	
 	public TItinerary read(String uuid){
 		TItinerary obj = this.itineraryDao.read(uuid);
+		for(TSpot spot : obj.getSpots()){
+			TSpot s = this.readSpot(spot.getUuid());
+			spot.setItems(s.getItems());
+		}
 		return obj;
 	}
 	

@@ -31,13 +31,12 @@ if(header){
         <li class="dropdown">\
             <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 个人中心 <span class="caret"></span></a>\
             <ul role="menu" class="dropdown-menu">\
-        		<li><a id="tbg-menu-profile" href="/account/profile.html">我的信息</a></li>\
                 <li><a id="tbg-menu-edit" href="#">写游记</a></li>\
                 <li><a href="/account/my_article.html">我的游记</a></li>\
         		<li><a href="/account/new_spot.html">创建景点</a></li>\
 				<li><a href="/account/my_spots.html">我的景点</a></li>\
         		<li><a href="/account/new_itinerary.html">创建线路</a></li>\
-                <li><a href="#">我的线路</a></li>\
+				<li><a href="/account/my_itinerary.html">我的线路</a></li>\
             </ul>\
         </li>\
         <li class="dropdown">\
@@ -57,6 +56,7 @@ if(header){
 		<li id="logoutMenuItem" class="dropdown" style="display:none;">\
 			<a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"><span id="loginUserName"></span><span class="caret"></span></a>\
 			<ul role="menu" class="dropdown-menu">\
+				<li><a id="tbg-menu-profile" href="/account/profile.html">我的信息</a></li>\
 		        <li><a href="/logout">退出登录</a></li>\
 		    </ul>\
 	    </li>\

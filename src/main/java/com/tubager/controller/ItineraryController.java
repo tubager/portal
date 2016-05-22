@@ -58,6 +58,16 @@ public class ItineraryController {
 		}
 		return this.itineraryService.listMySpot(user.getName());
 	}
+
+	@RequestMapping(value="/expert/itineraries", method=RequestMethod.GET)
+	public @ResponseBody List<TItinerary> listMyItineraries(){
+		TUser user = userService.getCurrentUser();
+		if(user == null){
+			logger.info("user in null");
+			return null;
+		}
+		return this.itineraryService.listMyItinerary(user.getName());
+	}
 	
 	@RequestMapping(value="/expert/spot/{uuid}", method=RequestMethod.GET)
 	public @ResponseBody TSpot readSpot(@PathVariable String uuid){
@@ -76,13 +86,18 @@ public class ItineraryController {
 		return spot;
 	}
 	
-	@RequestMapping(value="/expert/itinerary/create", method=RequestMethod.POST, headers = {"content-type=application/json;charset=UTF-8"})
-	public @ResponseBody TItinerary createItinerary(@RequestBody TItinerary itinerary){
-		TUser user = userService.getCurrentUser();
-		if(user != null){
-			itinerary.setCreatedBy(user.getName());
+	@RequestMapping(value="/expert/itinerary/save", method=RequestMethod.POST, headers = {"content-type=application/json;charset=UTF-8"})
+	public @ResponseBody TItinerary saveItinerary(@RequestBody TItinerary itinerary){
+		if(itinerary.getUuid() == null){
+			TUser user = userService.getCurrentUser();
+			if(user != null){
+				itinerary.setCreatedBy(user.getName());
+			}
+			return this.itineraryService.createItinerary(itinerary);
 		}
-		return this.itineraryService.createItinerary(itinerary);
+		else{
+			return this.itineraryService.saveItinerary(itinerary);
+		}
 	}
 	
 	@RequestMapping(value="/expert/itinerary/update", method=RequestMethod.POST, headers = {"content-type=application/json;charset=UTF-8"})

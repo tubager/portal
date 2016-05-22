@@ -45,6 +45,9 @@
                             <a data-action="add" style="margin:5px;" title="添加景点">
                                 <i class="fa fa-plus" style="color:#1ab394;"></i>
                             </a>
+                            <a data-action="save" style="margin:5px;" title="保存线路">
+                                <i class="fa fa-save" style="color:#1ab394;"></i>
+                            </a>
                         </div>
                     </div>
 
@@ -117,15 +120,52 @@
 		$(document).ready(function(){
 			var itinerary = {
 					name: "新建旅行线路",
+					spotIds: [],
 					spots: []
 			};
-			var spots = [];
+			var spotIds = [];
 			$.ajax({
 				url: "/expert/spots",
 				type: "GET",
 				success: function(data){
-					spots = data;
+					spotIds = data;
 					initCheckbox();
+				}
+			});
+			
+			var itineraryUuid = tbgUtil.getUrlParam("itineraryid");
+			if(itineraryUuid){
+				$.ajax({
+					url: "/expert/itinerary/" + itineraryUuid,
+					type: "GET",
+					contentType:"application/json;charset=UTF-8",
+					success: function(data){
+						itinerary = data;
+						itinerary.spotIds = [];
+						itinerary.spots.map(function(s){
+							itinerary.spotIds.push(s.uuid);
+							addSpotToTimeline(s);
+						});
+						$("#itineraryTitle").text(itinerary.name);
+						
+					}
+				});
+			}
+			
+			$("#itinerary-timeline").on("click", "a", function(evt){
+				var a = evt.target;
+				while(a.tagName != "A"){
+					a = a.parentNode;
+				}
+				var action = a.dataset["action"];
+				if(action == "up"){
+					moveUp(a);
+				}
+				else if(action == "down"){
+					moveDown(a);
+				}
+				else if(action == "remove"){
+					removeSpot(a);
 				}
 			});
 			
@@ -142,11 +182,115 @@
 				else if(action == "add"){
 					showSpot();
 				}
+				else if(action == "save"){
+					saveItinerary();
+				}
 			});
+			
+			function saveItinerary(){
+				var spots = [];
+				itinerary.spotIds.map(function(id){
+					spots.push({uuid: id});
+				});
+				itinerary.spots = spots;
+				$.ajax({
+					url: "/expert/itinerary/save",
+					type: "POST",
+					contentType: "application/json;charset=UTF-8",
+					data: JSON.stringify(itinerary),
+					success:function(d){
+						console.log(d);
+						itinerary.uuid = d.uuid;
+						tbgUtil.showMessage("success", "您的行程已经永久保存");
+					},
+					error:function(e){
+						console.log("upload failed");
+						tbgUtil.showMessage("error", "抱歉，暂时无法保存");
+					}
+				});
+			}
+			
+			function moveUp(node){
+				while(node && !node.classList.contains("timeline-item")){
+					node = node.parentNode;
+				}
+				if(!node){
+					return;
+				}
+				var uuid = node.dataset["uuid"];
+				if(!uuid){
+					return;
+				}
+				if(node.previousElementSibling){
+					node.parentNode.insertBefore(node, node.previousElementSibling);
+				}
+				var idx = itinerary.spotIds.indexOf(uuid);
+				if(idx > 0){
+					itinerary.spotIds[idx] = itinerary.spotIds[idx -1];
+					itinerary.spotIds[idx - 1] = uuid;
+				}
+			}
+			
+			function moveDown(node){
+				while(node && !node.classList.contains("timeline-item")){
+					node = node.parentNode;
+				}
+				if(!node){
+					return;
+				}
+				var uuid = node.dataset["uuid"];
+				if(!uuid){
+					return;
+				}
+				if(node.nextElementSibling){
+					if(node.nextElementSibling.nextElementSibling){
+						node.parentNode.insertBefore(node, node.nextElementSibling.nextElementSibling);
+					}
+					else{
+						node.parentNode.appendChild(node);
+					}
+				}
+				var idx = itinerary.spotIds.indexOf(uuid);
+				if(idx < itinerary.spotIds.length - 1){
+					itinerary.spotIds[idx] = itinerary.spotIds[idx + 1];
+					itinerary.spotIds[idx + 1] = uuid;
+				}
+			}
+			
+			function removeSpot(node){
+				while(node && !node.classList.contains("timeline-item")){
+					node = node.parentNode;
+				}
+				if(!node){
+					return;
+				}
+				var uuid = node.dataset["uuid"];
+				if(!uuid){
+					return;
+				}
+				swal({
+	                title: "确定删除?",
+	                text: "如果是手误，请取消哦!",
+	                type: "warning",
+	                showCancelButton: true,
+	                confirmButtonColor: "#DD6B55",
+	                confirmButtonText: "删除",
+	                cancelButtonText: "取消",
+	                closeOnConfirm: true,
+	                closeOnCancel: true },
+	            function (isConfirm) {
+	                if (isConfirm) {
+	                	node.parentNode.removeChild(node);
+	                } else {
+	                    //swal("Cancelled", "Your imaginary file is safe :)", "error");
+	                	//tbgUtil.showMessage("error", "抱歉，出错了！");
+	                }
+	            });
+			}
 			
 			function showSpot(){
 				clearCheck();
-				if(spots.length == 0){
+				if(spotIds.length == 0){
 					$("#emptyDiv").css("display", "block");
 				}
 				else{
@@ -178,7 +322,7 @@
 			}
 			
 			function addSpotToTimeline(spot){
-				itinerary.spots.push(spot.uuid);
+				itinerary.spotIds.push(spot.uuid);
 				var arr = [];
 				var node = document.createElement("div");
 				node.classList.add("timeline-item");
@@ -194,9 +338,9 @@
 				arr.push(spot.name||"");
 				arr.push('</h3></div>');
 				arr.push('<div id="" class="ibox-tools">');
-				arr.push('<a data-action="edit" style="margin:5px;" title="上移"><i class="fa fa-arrow-up text-navy" style="margin-right:5px;"></i></a>');
-				arr.push('<a data-action="edit" style="margin:5px;" title="下移"><i class="fa fa-arrow-down text-navy" style="margin-right:5px;"></i></a>');
-				arr.push('<a data-action="add" style="margin:5px;" title="移除景点"><i class="fa fa-times text-navy" style=""></i></a>');
+				arr.push('<a data-action="up" style="margin:5px;" title="上移"><i class="fa fa-arrow-up text-navy" style="margin-right:5px;"></i></a>');
+				arr.push('<a data-action="down" style="margin:5px;" title="下移"><i class="fa fa-arrow-down text-navy" style="margin-right:5px;"></i></a>');
+				arr.push('<a data-action="remove" style="margin:5px;" title="移除景点"><i class="fa fa-times text-navy" style=""></i></a>');
 				arr.push('</div><div style="clear:both;margin:20px;"></div>');
 				arr.push(initSpotItems(spot.items));
 				arr.push('</div></div>');
@@ -278,7 +422,7 @@
 			
 			function initCheckbox(){
 				var arr = [];
-				spots.map(function(spot){
+				spotIds.map(function(spot){
 					arr.push('<div class="i-checks"><label> <input type="checkbox" value="');
 					arr.push(spot.uuid);
 					arr.push('"> <i></i> ');
