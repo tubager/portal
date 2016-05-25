@@ -23,9 +23,9 @@ if(header){
         <li class="dropdown">\
             <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 创意线路 <span class="caret"></span></a>\
             <ul role="menu" class="dropdown-menu">\
-                <li><a href="#">最新</a></li>\
-                <li><a href="#">经典</a></li>\
-                <li><a href="#">热门</a></li>\
+                <li><a href="/public/itineraryList.html">最新</a></li>\
+                <li><a href="/public/itineraryList.html">经典</a></li>\
+                <li><a href="/public/itineraryList.html">热门</a></li>\
             </ul>\
         </li>\
         <li class="dropdown">\

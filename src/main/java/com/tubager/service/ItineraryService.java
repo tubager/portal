@@ -53,6 +53,10 @@ public class ItineraryService {
 		return this.itineraryDao.listMyItinerary(createdBy);
 	}
 	
+	public List<TItinerary> listItinerary(){
+		return this.itineraryDao.listItinerary();
+	}
+	
 	public TSpot createSpot(TSpot spot){
 		String uuid = Utility.getUuid();
 		spot.setUuid(uuid);

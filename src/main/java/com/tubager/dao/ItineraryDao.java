@@ -177,6 +177,21 @@ public class ItineraryDao {
 		return books;
 	}
 	
+	public List<TItinerary> listItinerary(){
+		List<TItinerary> books = jdbcTemplate.query("select * from itinerary order by date_created desc", new Object[] {},
+				(rs, rowNum) ->{
+					TItinerary b = new TItinerary();
+					b.setUuid(rs.getString("uuid"));
+					b.setName(rs.getString("name"));
+					b.setDescription(rs.getString("description"));
+					b.setCreatedBy(rs.getString("created_by"));
+					b.setDateCreated(rs.getDate("date_created"));
+					return b;
+				});
+		
+		return books;
+	}
+	
 	public TSpot readSpot(String uuid){
 		TSpot spot = null;
 		List<TSpot> list = jdbcTemplate.query("select * from spot where uuid = ?", new Object[] {uuid},
@@ -196,6 +211,7 @@ public class ItineraryDao {
 		if(spot == null){
 			return null;
 		}
+		
 		List<Item> items = jdbcTemplate.query("select * from item where book_uuid=? order by `index` asc", new Object[] {uuid},
 				(rs, rowNum) ->{
 					Item graph = new Item();
@@ -239,7 +255,7 @@ public class ItineraryDao {
 					TSpot b = new TSpot();
 					b.setUuid(rs.getString("uuid"));
 					b.setName(rs.getString("name"));
-					b.setDays(rs.getInt("days"));
+					b.setDays(rs.getDouble("days"));
 					b.setCost(rs.getDouble("cost"));
 					b.setCreatedBy(rs.getString("created_by"));
 					b.setDateCreated(rs.getDate("date_created"));

@@ -237,9 +237,6 @@ CREATE TABLE `test`.`spot` (
   `name` VARCHAR(256) NULL,
   `days` INT NULL,
   `cost` DOUBLE NULL,
-  `content` BLOB NULL,
-  `shopping` VARCHAR(512) NULL,
-  `food` VARCHAR(512) NULL,
   `created_by` VARCHAR(45) NULL,
   `date_created` DATETIME NULL,
   PRIMARY KEY (`uuid`))

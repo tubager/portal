@@ -107,7 +107,17 @@ public class ItineraryController {
 	
 	@RequestMapping(value="/expert/itinerary/{uuid}", method=RequestMethod.GET, headers = {"content-type=application/json;charset=UTF-8"})
 	public @ResponseBody TItinerary readItinerary(@PathVariable String uuid){
-		return this.itineraryService.read(uuid);
+		TUser user = userService.getCurrentUser();
+		if(user == null){
+			logger.info("user in null");
+			return null;
+		}
+		TItinerary itinerary = this.itineraryService.read(uuid);
+		if(!user.getName().equalsIgnoreCase(itinerary.getCreatedBy())){
+			return null;
+		}
+		
+		return itinerary;
 	}
 
 	@RequestMapping(value="/expert/itinerary/{uuid}", method=RequestMethod.DELETE, headers = {"content-type=application/json;charset=UTF-8"})

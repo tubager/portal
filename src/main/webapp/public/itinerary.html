@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网 - 查看行程</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <style>
+    	.i-checks{
+    		margin: 10px;
+    	}
+    </style>
+</head>
+
+<body class="top-navigation" style="background-color: #f9f9f9;">
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area">
+        	<div class="wrapper wrapper-content">
+	            <div class="row animated fadeInRight">
+	                <div class="col-sm-9">
+						<div class="ibox float-e-margins">
+	                    	<div class="ibox-title">
+	                        	<h5 id="itineraryTitle"></h5>
+	                    	</div>
+	                    	<div id="itinerary-timeline" class="ibox-content inspinia-timeline">
+	                    	</div>
+	                	</div>
+	              	</div>
+	              	<div class="col-sm-3">
+	              		<div class="ibox float-e-margins">
+	              			<div class="ibox-title">
+	                        	<h5>请在此订制您的行程</h5>
+	                    	</div>
+	                    	<div class="ibox-content">
+			              		<div id="spotsList" style="margin-top: 0px;">
+		              			</div>
+		              			<button id="bookBtn" type="button" class="btn btn-block btn-outline btn-primary">马上预订</button>
+	                    	</div>
+	              		</div>
+	              	</div>
+	            </div>
+          	</div>
+        </div>
+      </div>
+   </div>
+   
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- iCheck -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    
+	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			var itinerary = {
+					name: "",
+					spotIds: [],
+					spots: []
+			};
+			var spotIds = [];
+			
+			var itineraryUuid = tbgUtil.getUrlParam("itineraryid");
+			if(itineraryUuid){
+				$.ajax({
+					url: "/itinerary/" + itineraryUuid,
+					type: "GET",
+					contentType:"application/json;charset=UTF-8",
+					success: function(data){
+						itinerary = data;
+						spotIds = itinerary.spots;
+						itinerary.spotIds = [];
+						itinerary.spots.map(function(s){
+							itinerary.spotIds.push(s.uuid);
+							addSpotToTimeline(s);
+						});
+						$("#itineraryTitle").text(itinerary.name);
+						initCheckbox();
+					}
+				});
+			}
+			
+			function showSpot(){
+				clearCheck();
+				if(spotIds.length == 0){
+					$("#emptyDiv").css("display", "block");
+				}
+				else{
+					$("#emptyDiv").css("display", "none");
+				}
+				$("#spotModal").modal("show");
+			}
+			
+			$("#bookBtn").click(function(){
+				var boxes = $("#spotsList input[type=checkbox]");
+				boxes.each(function(cb){
+					var box = boxes[cb];
+					if(box.checked){
+						//addSpot(box.value);
+						console.log(box);
+					}
+				});
+				$("#spotModal").modal("hide");
+			});
+			
+			function addSpotToTimeline(spot){
+				itinerary.spotIds.push(spot.uuid);
+				var arr = [];
+				var node = document.createElement("div");
+				node.classList.add("timeline-item");
+				node.dataset["uuid"] = spot.uuid;
+				arr.push('<div class="row">');
+				arr.push('<div class="col-xs-3 date"><i class="fa fa-calendar"></i><small class="">');
+				arr.push(spot.days||0);
+				arr.push('天</small><br><small class="">￥');
+				arr.push(spot.cost||0);
+				arr.push('</small></div>');
+				arr.push('<div class="col-xs-7 content no-top-border">');
+				arr.push('<div><h3 class="m-b-xs" style="float:left;">');
+				arr.push(spot.name||"");
+				arr.push('</h3></div>');
+				arr.push('<div id="" class="ibox-tools">');
+				arr.push('<a data-action="up" style="margin:5px;" title="上移"><i class="fa fa-arrow-up text-navy" style="margin-right:5px;"></i></a>');
+				arr.push('<a data-action="down" style="margin:5px;" title="下移"><i class="fa fa-arrow-down text-navy" style="margin-right:5px;"></i></a>');
+				arr.push('<a data-action="remove" style="margin:5px;" title="移除景点"><i class="fa fa-times text-navy" style=""></i></a>');
+				arr.push('</div><div style="clear:both;margin:20px;"></div>');
+				arr.push(initSpotItems(spot.items));
+				arr.push('</div></div>');
+				node.innerHTML = arr.join("");
+				var root = document.getElementById("itinerary-timeline");
+				root.appendChild(node);
+			}
+			
+			function initSpotItems(items){
+				var root = document.createElement("div");
+				items.map(function(item){
+					var node = document.createElement("div");
+					node.classList.add("article-item");
+					node.dataset["type"] = item.type;
+					var content = document.createElement("div");
+					content.classList.add("article-item-content");
+					content.dataset["type"] = item.type;
+					node.appendChild(content);
+					switch(item.type){
+						case "title":
+							node.classList.add("tbg-p-title");
+							content.innerHTML = item.text;
+							break;
+						case "text":
+							node.classList.add("tbg-p-text");
+							content.innerHTML = item.text;
+							break;
+						case "tip":
+							node.classList.add("tbg-p-tip");
+							content.innerHTML = item.text;
+							break;
+						case "shop":
+							node.classList.add("tbg-p-shop");
+							content.innerHTML = item.text;
+							break;
+						case "food":
+							node.classList.add("tbg-p-food");
+							content.innerHTML = item.text;
+							break;
+						case "image":
+							node.classList.add("tbg-p-image");
+							var img = document.createElement("img");
+							img.classList.add("tbg-article-img");
+							img.src = item.src;
+							content.appendChild(img);
+							var p = document.createElement("p");
+							p.classList.add("tbg-article-img-text");
+							p.innerHTML = item.text;
+							content.appendChild(p);
+							break;
+					}
+					root.appendChild(node);
+				});
+				return root.innerHTML;
+			}
+			
+			function clearCheck(){
+				var boxes = $("#spotModal input[type=checkbox]");
+				boxes.each(function(cb){
+					var box = boxes[cb];
+					if(box.checked){
+						box.removeAttribute("checked");
+						box.checked = false;
+					}
+					box.parentNode.classList.remove("checked");
+				});
+			}
+			
+			function initCheckbox(){
+				var arr = [];
+				spotIds.map(function(spot){
+					arr.push('<div class="i-checks"><label> <input type="checkbox" checked="checked" value="');
+					arr.push(spot.uuid);
+					arr.push('"> <i></i> ');
+					arr.push(spot.name);
+					arr.push('</label></div>');
+				});
+				document.getElementById("spotsList").innerHTML = arr.join("");
+				
+				$('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
+			}
+		});
+	</script>
+	
+</body>
+
+</html>
