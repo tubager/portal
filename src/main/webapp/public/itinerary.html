@@ -81,6 +81,8 @@
 					spots: []
 			};
 			var spotIds = [];
+			var selectedSopts = [];
+			
 			
 			var itineraryUuid = tbgUtil.getUrlParam("itineraryid");
 			if(itineraryUuid){
@@ -115,14 +117,38 @@
 			
 			$("#bookBtn").click(function(){
 				var boxes = $("#spotsList input[type=checkbox]");
+				selectedSpots = [];
 				boxes.each(function(cb){
 					var box = boxes[cb];
 					if(box.checked){
-						//addSpot(box.value);
-						console.log(box);
+						selectedSpots.push(box.value);
 					}
 				});
 				$("#spotModal").modal("hide");
+
+				console.log(selectedSpots);
+				var data = {
+						itineraryUuid: itinerary.uuid,
+						owner: itinerary.createdBy,
+						spotsUUid: selectedSpots.join(","),
+						status: "SUBMIT"
+				};
+				console.log(data);
+				
+				$.ajax({
+					url:'/account/itinerarybooking',
+					type:'POST',
+					data: JSON.stringify(data),
+					contentType:"application/json;charset=UTF-8",
+					success:function(d){
+						console.log(d);
+						tbgUtil.showMessage("success", "您已预订成功");
+					},
+					error:function(){
+						console.log("upload failed");
+						tbgUtil.showMessage("error", "抱歉，暂时无法预订");
+					}
+				});
 			});
 			
 			function addSpotToTimeline(spot){
@@ -141,11 +167,12 @@
 				arr.push('<div><h3 class="m-b-xs" style="float:left;">');
 				arr.push(spot.name||"");
 				arr.push('</h3></div>');
-				arr.push('<div id="" class="ibox-tools">');
-				arr.push('<a data-action="up" style="margin:5px;" title="上移"><i class="fa fa-arrow-up text-navy" style="margin-right:5px;"></i></a>');
-				arr.push('<a data-action="down" style="margin:5px;" title="下移"><i class="fa fa-arrow-down text-navy" style="margin-right:5px;"></i></a>');
-				arr.push('<a data-action="remove" style="margin:5px;" title="移除景点"><i class="fa fa-times text-navy" style=""></i></a>');
-				arr.push('</div><div style="clear:both;margin:20px;"></div>');
+				//arr.push('<div id="" class="ibox-tools">');
+				//arr.push('<a data-action="up" style="margin:5px;" title="上移"><i class="fa fa-arrow-up text-navy" style="margin-right:5px;"></i></a>');
+				//arr.push('<a data-action="down" style="margin:5px;" title="下移"><i class="fa fa-arrow-down text-navy" style="margin-right:5px;"></i></a>');
+				//arr.push('<a data-action="remove" style="margin:5px;" title="移除景点"><i class="fa fa-times text-navy" style=""></i></a>');
+				//arr.push('</div><div style="clear:both;margin:20px;"></div>');
+				arr.push('<div style="clear:both;margin:20px;"></div>');
 				arr.push(initSpotItems(spot.items));
 				arr.push('</div></div>');
 				node.innerHTML = arr.join("");

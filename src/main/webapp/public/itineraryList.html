@@ -62,6 +62,7 @@
 				var node = document.createElement("div");
 				node.classList.add("col-md-4");
 				var arr = [];
+				arr.push('<a href="itinerary.html?itineraryid='+spot.uuid+'">');
 				arr.push('<div class="contact-box">');
 				arr.push('<div class="col-sm-12">');
 				arr.push('<h3><strong>' + spot.name + '</strong></h3>');
@@ -69,7 +70,7 @@
 				arr.push('<p><i class="fa fa-cny"></i>&nbsp;人均预算： ' + (spot.cost||0) + '</p>');
 				arr.push('</div>');
 				arr.push('<div class="clearfix"></div>');
-				arr.push('</div>');
+				arr.push('</div></a>');
 				node.innerHTML = arr.join("");
 				return node;
 			}

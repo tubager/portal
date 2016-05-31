@@ -261,3 +261,17 @@ CREATE TABLE `test`.`itinerary_spot` (
   PRIMARY KEY (`itinerary_uuid`, `spot_uuid`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+CREATE TABLE `test`.`itinerary_booking` (
+  `uuid` VARCHAR(32) NOT NULL,
+  `itinerary_uuid` VARCHAR(32) NULL,
+  `owner` VARCHAR(45) NULL,
+  `spots_uuid` VARCHAR(4096) NULL,
+  `status` VARCHAR(16) NULL,
+  `created_by` VARCHAR(45) NULL,
+  `date_created` DATETIME NULL,
+  `last_updated` DATETIME NULL,
+  PRIMARY KEY (`uuid`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
