@@ -81,4 +81,16 @@ public class BookingService {
 	public String removeItineraryBooking(String uuid){
 		return itineraryBookingDao.removeItineraryBooking(uuid);
 	}
+	
+	public List<ItineraryBooking> listMyBookings(String createdBy){
+		return this.itineraryBookingDao.listMyItineraryBookings(createdBy);
+	}
+	
+	public List<ItineraryBooking> listBookingsByItinerary(String uuid){
+		return this.itineraryBookingDao.listBookingsByItinerary(uuid);
+	}
+	
+	public List<ItineraryBooking> listBookingsByOwner(String owner){
+		return this.itineraryBookingDao.listBookingsByOwner(owner);
+	}
 }

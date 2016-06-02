@@ -33,17 +33,17 @@ if(header){
             <ul role="menu" class="dropdown-menu">\
                 <li><a id="tbg-menu-edit" href="#">写游记</a></li>\
                 <li><a href="/account/my_article.html">我的游记</a></li>\
-        		<li><a href="/account/new_spot.html">创建景点</a></li>\
 				<li><a href="/account/my_spots.html">我的景点</a></li>\
-        		<li><a href="/account/new_itinerary.html">创建线路</a></li>\
+        		<li><a href="/account/new_spot.html">创建景点</a></li>\
 				<li><a href="/account/my_itinerary.html">我的线路</a></li>\
+				<li><a href="/account/new_itinerary.html">创建线路</a></li>\
             </ul>\
         </li>\
         <li class="dropdown">\
 	        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> 会员中心 <span class="caret"></span></a>\
 	        <ul role="menu" class="dropdown-menu">\
 				<li><a id="tbg-menu-profile" href="/account/profile.html">我的信息</a></li>\
-	            <li><a href="/public/itineraryList.html">我的预订</a></li>\
+	            <li><a href="/account/my_booking.html">我的预订</a></li>\
 	        </ul>\
 	    </li>\
         <li class="dropdown">\
@@ -86,6 +86,8 @@ $.ajax({
 		}
 		document.getElementById("loginMenuItem").style["display"] = "none";
 		document.getElementById("logoutMenuItem").style["display"] = "inline-block";
+		window.tubager = window.tubager || {};
+		window.tubager.user = data;
 	}
 });
 

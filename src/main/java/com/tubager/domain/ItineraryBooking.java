@@ -14,9 +14,58 @@ public class ItineraryBooking {
 	private String status;
 	private String createdBy;
 	private String createdByName;
+	private String contact;
+	private String phone;
+	private String email;
+	private String comments;
+	private Date startDate;
+	private Date returnDate;
+	private int persons;
 	private Date dateCreated;
 	private Date lastUpdated;
 
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getReturnDate() {
+		return returnDate;
+	}
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
+	}
+	public int getPersons() {
+		return persons;
+	}
+	public void setPersons(int persons) {
+		this.persons = persons;
+	}
 	public String getCreatedByName() {
 		return createdByName;
 	}

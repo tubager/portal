@@ -31,26 +31,17 @@
         <div id="content-area">
         	<div class="wrapper wrapper-content">
 	            <div class="row animated fadeInRight">
-	                <div class="col-sm-9">
+	                <div class="col-sm-12">
 						<div class="ibox float-e-margins">
 	                    	<div class="ibox-title">
 	                        	<h5 id="itineraryTitle"></h5>
+	                        	<div id="itinerary-tools" class="ibox-tools">
+		                            <a id="bookBtn" type="button" class="btn btn-primary">马上预订</a>
+		                        </div>
 	                    	</div>
 	                    	<div id="itinerary-timeline" class="ibox-content inspinia-timeline">
 	                    	</div>
 	                	</div>
-	              	</div>
-	              	<div class="col-sm-3">
-	              		<div class="ibox float-e-margins">
-	              			<div class="ibox-title">
-	                        	<h5>请在此订制您的行程</h5>
-	                    	</div>
-	                    	<div class="ibox-content">
-			              		<div id="spotsList" style="margin-top: 0px;">
-		              			</div>
-		              			<button id="bookBtn" type="button" class="btn btn-block btn-outline btn-primary">马上预订</button>
-	                    	</div>
-	              		</div>
 	              	</div>
 	            </div>
           	</div>
@@ -99,7 +90,8 @@
 							addSpotToTimeline(s);
 						});
 						$("#itineraryTitle").text(itinerary.name);
-						initCheckbox();
+						document.getElementById("bookBtn").href="/account/book_itinerary.html?itineraryid=" + itineraryUuid;
+						//initCheckbox();
 					}
 				});
 			}
@@ -226,35 +218,6 @@
 					root.appendChild(node);
 				});
 				return root.innerHTML;
-			}
-			
-			function clearCheck(){
-				var boxes = $("#spotModal input[type=checkbox]");
-				boxes.each(function(cb){
-					var box = boxes[cb];
-					if(box.checked){
-						box.removeAttribute("checked");
-						box.checked = false;
-					}
-					box.parentNode.classList.remove("checked");
-				});
-			}
-			
-			function initCheckbox(){
-				var arr = [];
-				spotIds.map(function(spot){
-					arr.push('<div class="i-checks"><label> <input type="checkbox" checked="checked" value="');
-					arr.push(spot.uuid);
-					arr.push('"> <i></i> ');
-					arr.push(spot.name);
-					arr.push('</label></div>');
-				});
-				document.getElementById("spotsList").innerHTML = arr.join("");
-				
-				$('.i-checks').iCheck({
-                    checkboxClass: 'icheckbox_square-green',
-                    radioClass: 'iradio_square-green',
-                });
 			}
 		});
 	</script>

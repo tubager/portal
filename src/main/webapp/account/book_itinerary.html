@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网 - 查看行程</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <style>
+    	.i-checks{
+    		margin: 10px;
+    	}
+    </style>
+</head>
+
+<body class="top-navigation" style="background-color: #f9f9f9;">
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area">
+        	<div class="wrapper wrapper-content">
+	            <div class="row animated fadeInRight">
+	              	<div class="col-sm-6">
+	              		<div class="ibox float-e-margins">
+	              			<div class="ibox-title">
+	                        	<h5 id="itineraryTitle"></h5>
+	                    	</div>
+	                    	<div class="ibox-content">
+	                    		<div class="row">
+		              				<div class="col-sm-6">
+		                                <label>选择出发日期</label>
+		                                <div class="input-group date">
+		                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="startDateField" type="text" class="form-control">
+		                                </div>
+		              				</div>
+		              				<div class="col-sm-6">
+		                                <label>选择返程日期</label>
+		                                <div class="input-group date">
+		                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input id="returnDateField" type="text" class="form-control">
+		                                </div>
+		              				</div>
+	                    		</div>
+	                    		<div class="row">
+		              				<div class="col-sm-6">
+		                                <label style="margin-top: 20px;">出行人数</label>
+		                                <div class="input-group" style="width:100%;">
+		                                    <input id="personsField" type="number" class="form-control" value="2">
+		                                </div>
+		              				</div>
+	                    		</div>
+	                    		<label style="margin-top: 20px;">请选择你的行程</label>
+			              		<div id="spotsList" style="margin-top: 0px;">
+		              			</div>
+		              			<label style="margin-top: 20px;">联系人</label>
+		              			<input id="contactField" type="text" class="form-control"/>
+		              			<div class="row">
+		              				<div class="col-sm-6">
+				              			<label style="margin-top: 20px;">联系电话</label>
+				              			<input id="phoneField" type="tel" class="form-control"/>
+		              				</div>
+		              				<div class="col-sm-6">
+				              			<label style="margin-top: 20px;">邮箱</label>
+		              					<input id="emailField" type="email" class="form-control"/>
+		              				</div>
+		              			</div>
+		              			<label style="margin-top: 20px;">请告诉我们您的任何需求</label>
+		              			<textarea id="commentsField" rows="5" class="form-control"></textarea>
+		              			<button id="bookBtn" type="button" class="btn btn-outline btn-primary" style="display:block;margin:20px auto;">马上预订</button>
+	                    	</div>
+	              		</div>
+	              	</div>
+	            </div>
+          	</div>
+        </div>
+      </div>
+   </div>
+   
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Data picker -->
+    <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- iCheck -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    
+	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			$('.input-group.date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true,
+                format: "yyyy-mm-dd"
+            });
+			
+			$.ajax({
+				url:'/currentuser',
+			    type:'GET',
+			    headers:{
+			        Accept:"application/json",
+			        "Content-Type": "application/json;charset=UTF-8"
+			    }
+			}).done(function(data){
+				if(data && data.name != "anonymousUser"){
+					$("#contactField").val(data.nickName || data.name)
+					$("#phoneField").val(data.mobile || "");
+					$("#emailField").val(data.email || "");
+				}
+			});
+			
+			var itinerary = {
+					name: "",
+					spotIds: [],
+					spots: []
+			};
+			var spotIds = [];
+			var selectedSopts = [];
+			
+			
+			var itineraryUuid = tbgUtil.getUrlParam("itineraryid");
+			if(itineraryUuid){
+				loadItinerary(itineraryUuid);
+			}
+			
+			function loadItinerary(uuid){
+				$.ajax({
+					url: "/itinerary/" + uuid,
+					type: "GET",
+					contentType:"application/json;charset=UTF-8",
+					success: function(data){
+						itinerary = data;
+						spotIds = itinerary.spots;
+						itinerary.spotIds = [];
+						$("#itineraryTitle").text(itinerary.name);
+						initCheckbox();
+					}
+				});
+			}
+			
+			$("#bookBtn").click(function(){
+				var boxes = $("#spotsList input[type=checkbox]");
+				selectedSpots = [];
+				boxes.each(function(cb){
+					var box = boxes[cb];
+					if(box.checked){
+						selectedSpots.push(box.value);
+					}
+				});
+				$("#spotModal").modal("hide");
+
+				console.log(selectedSpots);
+				var data = {
+						itineraryUuid: itinerary.uuid,
+						owner: itinerary.createdBy,
+						spotsUUid: selectedSpots.join(","),
+						status: "SUBMIT",
+						startDate: $("#startDateField").val(),
+						returnDate: $("#returnDateField").val(),
+						persons: $("#personsField").val(),
+						contact: $("#contactField").val(),
+						phone: $("#phoneField").val(),
+						email: $("#emailField").val(),
+						comments: $("#commentsField").val()
+				};
+				console.log(data);
+				$.ajax({
+					url:'/account/itinerarybooking',
+					type:'POST',
+					data: JSON.stringify(data),
+					contentType:"application/json;charset=UTF-8",
+					success:function(d){
+						console.log(d);
+						tbgUtil.showMessage("success", "您已预订成功");
+					},
+					error:function(){
+						console.log("upload failed");
+						tbgUtil.showMessage("error", "抱歉，暂时无法预订");
+					}
+				});
+			});
+			
+			function initCheckbox(){
+				var arr = [];
+				spotIds.map(function(spot){
+					arr.push('<div class="i-checks"><label> <input type="checkbox" checked="checked" value="');
+					arr.push(spot.uuid);
+					arr.push('"> <i></i> ');
+					arr.push(spot.name);
+					arr.push('</label></div>');
+				});
+				document.getElementById("spotsList").innerHTML = arr.join("");
+				
+				$('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
+			}
+		});
+	</script>
+	
+</body>
+
+</html>
