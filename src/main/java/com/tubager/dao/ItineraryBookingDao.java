@@ -66,6 +66,7 @@ public class ItineraryBookingDao {
 					ItineraryBooking b = new ItineraryBooking();
 					b.setUuid(rs.getString("uuid"));
 					b.setItineraryUuid(rs.getString("itinerary_uuid"));
+					b.setSpotsUUid(rs.getString("spots_uuid"));
 					b.setOwner(rs.getString("owner"));
 					b.setStatus(rs.getString("status"));
 					b.setCreatedBy(rs.getString("created_by"));

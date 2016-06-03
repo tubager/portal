@@ -269,6 +269,13 @@ CREATE TABLE `test`.`itinerary_booking` (
   `spots_uuid` VARCHAR(4096) NULL,
   `status` VARCHAR(16) NULL,
   `created_by` VARCHAR(45) NULL,
+  `contact` VARCHAR(45) NULL,
+  `phone` VARCHAR(45) NULL,
+  `email` VARCHAR(128) NULL,
+  `comments` VARCHAR(1024) NULL,
+  `start_date` DATETIME NULL,
+  `return_date` DATETIME NULL,
+  `persons` INT 0,
   `date_created` DATETIME NULL,
   `last_updated` DATETIME NULL,
   PRIMARY KEY (`uuid`))

@@ -23,6 +23,15 @@
     	.contact-box:hover a{
     		display: block;
     	}
+    	.contact-box{
+    		position: relative;
+    	}
+    	.contact-box .toolbar{
+    		min-height: 28px;
+    		position: absolute;
+    		right: 0px;
+    		bottom: 0px;
+    	}
     </style>
 </head>
 
@@ -64,13 +73,13 @@
 				var uuid = target.dataset["uuid"];
 				if(action == "remove"){
 					swal({
-                        title: "确定删除行程?",
-                        text: "行程删除，将会不留痕迹!",
+                        title: "确定取消预订?",
+                        text: "",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#DD6B55",
-                        confirmButtonText: "删除",
-                        cancelButtonText: "取消",
+                        confirmButtonText: "确定",
+                        cancelButtonText: "再想想",
                         closeOnConfirm: true,
                         closeOnCancel: true },
                     function (isConfirm) {
@@ -91,6 +100,16 @@
 	            });
 			}
 			
+			function getStatus(status){
+				var val = "";
+				switch(status){
+					case "SUBMIT":
+						val = "已预订";
+						break;
+				}
+				return val;
+			}
+			
 			function createArticle(spot){
 				var node = document.createElement("div");
 				node.classList.add("col-md-4");
@@ -98,11 +117,12 @@
 				arr.push('<div class="contact-box">');
 				arr.push('<div class="col-sm-12">');
 				arr.push('<h3><strong>' + spot.itineraryName + '</strong></h3>');
-				arr.push('<p><i class="fa fa-calendar"></i>&nbsp;预计天数： ' + (spot.days||0) + '</p>');
-				arr.push('<p><i class="fa fa-cny"></i>&nbsp;人均预算： ' + (spot.cost||0) + '</p>');
-				arr.push('<p style="min-height: 38px;">');
-				arr.push('<a href="#" data-action="remove" data-uuid="'+spot.uuid+'" class="btn btn-white pull-right" type="button"><i class="fa fa-trash"></i></a>');
-				arr.push('<a href="/account/new_itinerary.html?itineraryid='+spot.uuid+'" class="btn btn-white pull-right" type="button"><i class="fa fa-pencil"></i></a>');
+				arr.push('<p><i class="fa fa-calendar"></i>&nbsp;' + spot.startDate + " 到 " + spot.returnDate + '</p>');
+				arr.push('<p><i class="fa fa-users"></i>&nbsp;' + spot.persons + " 人" + '</p>');
+				arr.push('<p><i class="fa fa-check-square"></i>&nbsp;' + getStatus(spot.status) + " 人" + '</p>');
+				arr.push('<p class="toolbar">');
+				arr.push('<a href="#" data-action="remove" data-uuid="'+spot.uuid+'" class="btn btn-white pull-right" type="button"><i class="fa fa-times"></i></a>');
+				arr.push('<a href="/account/book_itinerary.html?bookingid='+spot.uuid+'" class="btn btn-white pull-right" type="button"><i class="fa fa-pencil"></i></a>');
 				arr.push('</p>');
 				arr.push('</div>');
 				arr.push('<div class="clearfix"></div>');

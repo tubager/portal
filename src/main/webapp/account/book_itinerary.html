@@ -115,33 +115,60 @@
                 format: "yyyy-mm-dd"
             });
 			
-			$.ajax({
-				url:'/currentuser',
-			    type:'GET',
-			    headers:{
-			        Accept:"application/json",
-			        "Content-Type": "application/json;charset=UTF-8"
-			    }
-			}).done(function(data){
-				if(data && data.name != "anonymousUser"){
-					$("#contactField").val(data.nickName || data.name)
-					$("#phoneField").val(data.mobile || "");
-					$("#emailField").val(data.email || "");
-				}
-			});
-			
 			var itinerary = {
 					name: "",
 					spotIds: [],
 					spots: []
 			};
+			var booking = null;
 			var spotIds = [];
+			var bookedSpots = null;
 			var selectedSopts = [];
 			
-			
 			var itineraryUuid = tbgUtil.getUrlParam("itineraryid");
+			var bookingUuid = tbgUtil.getUrlParam("bookingid");
+			
 			if(itineraryUuid){
 				loadItinerary(itineraryUuid);
+				loadUser();
+			}
+			
+			if(bookingUuid){
+				$.ajax({
+					url: "/account/itinerarybooking/" + bookingUuid,
+					type: "GET",
+					contentType:"application/json;charset=UTF-8",
+					success: function(data){
+						booking = data;
+						$("#startDateField").val(booking.startDate);
+						$("#returnDateField").val(booking.returnDate);
+						$("#personsField").val(booking.persons);
+						$("#contactField").val(booking.contact);
+						$("#phoneField").val(booking.phone);
+						$("#emailField").val(booking.email);
+						$("#commentsField").val(booking.comments);
+						
+						bookedSpots = booking.spotsUUid.split(",");
+						loadItinerary(booking.itineraryUuid);
+					}
+				});
+			}
+			
+			function loadUser(){
+				$.ajax({
+					url:'/currentuser',
+				    type:'GET',
+				    headers:{
+				        Accept:"application/json",
+				        "Content-Type": "application/json;charset=UTF-8"
+				    }
+				}).done(function(data){
+					if(data && data.name != "anonymousUser"){
+						$("#contactField").val(data.nickName || data.name)
+						$("#phoneField").val(data.mobile || "");
+						$("#emailField").val(data.email || "");
+					}
+				});
 			}
 			
 			function loadItinerary(uuid){
@@ -204,7 +231,12 @@
 			function initCheckbox(){
 				var arr = [];
 				spotIds.map(function(spot){
-					arr.push('<div class="i-checks"><label> <input type="checkbox" checked="checked" value="');
+					if(bookedSpots && bookedSpots.indexOf(spot.uuid) < 0){
+						arr.push('<div class="i-checks"><label> <input type="checkbox" value="');
+					}
+					else{
+						arr.push('<div class="i-checks"><label> <input type="checkbox" checked="checked" value="');
+					}
 					arr.push(spot.uuid);
 					arr.push('"> <i></i> ');
 					arr.push(spot.name);
