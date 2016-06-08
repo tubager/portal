@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网 - 查看行程</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <style>
+    	.timeline-item .ibox-tools{
+    		display: none;
+    	}
+    	.timeline-item:hover .ibox-tools{
+    		display: block;
+    	}
+    </style>
+</head>
+
+<body class="top-navigation" style="background-color: #f9f9f9;">
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area">
+        	<div class="wrapper wrapper-content">
+            <div class="row animated fadeInRight">
+                <div class="col-lg-7">
+					<div class="ibox float-e-margins">
+	                    <div class="ibox-title">
+	                        <h5 id="itineraryTitle"></h5>
+	                    </div>
+	
+	                    <div id="itinerary-timeline" class="ibox-content inspinia-timeline">
+	                        
+	                    </div>
+	                </div>
+	              </div>
+	             <div class="col-lg-5" style="padding-left: 20px;">
+	             	<div class="ibox float-e-margins">
+	                    <div class="ibox-title">
+	                        <h5>该线路的所有预定</h5>
+	                    </div>
+	                </div>
+                    <div id="itinerary-booking" class="">
+                    </div>
+	             </div>
+            </div>
+          </div>
+        </div>
+    </div>
+   </div>
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- iCheck -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    
+	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			var itineraryUuid = tbgUtil.getUrlParam("itineraryid");
+			
+			//deal with bookings
+			var bookings = [];
+			$.ajax({
+				url: "/account/itinerarybooking/byitinerary/" + itineraryUuid,
+				type: "GET",
+				contentType:"application/json;charset=UTF-8",
+				success: function(data){
+					bookings = data;
+					bookings.map(function(book){
+						var node = renderBooking(book);
+						document.getElementById("itinerary-booking").appendChild(node);
+					});
+				}
+			});
+			
+			function renderBooking(spot){
+				var node = document.createElement("div");
+				node.classList.add("col-md-6");
+				var arr = [];
+				arr.push('<div class="contact-box">');
+				arr.push('<div class="col-sm-12">');
+				arr.push('<p><i class="fa fa-calendar"></i>&nbsp;' + spot.startDate + " 到 " + spot.returnDate + '</p>');
+				arr.push('<p><i class="fa fa-user"></i>&nbsp;'+spot.createdByName+'</p>');
+				arr.push('<p><i class="fa fa-mobile"></i>&nbsp;'+spot.phone+'</p>');
+				arr.push('<p><i class="fa fa-envelope"></i>&nbsp;'+spot.email+'</p>');
+				arr.push('<p><i class="fa fa-users"></i>&nbsp;' + spot.persons + " 人" + '</p>');
+				arr.push('<p><i class="fa fa-check-square"></i>&nbsp;' + getStatus(spot.status) + '</p>');
+				arr.push('<p class="toolbar" style="position:absolute;right:0px;bottom:0px;">');
+				arr.push('<a href="/account/view_booking.html?bookingid='+spot.uuid+'" class="btn btn-white pull-right" type="button"><i class="fa fa-eye"></i></a>');
+				arr.push('</p>');
+				arr.push('</div>');
+				arr.push('<div class="clearfix"></div>');
+				arr.push('</div>');
+				node.innerHTML = arr.join("");
+				return node;
+			}
+			
+			function getStatus(status){
+				var val = "";
+				switch(status){
+					case "SUBMIT":
+						val = "已预订";
+						break;
+				}
+				return val;
+			}
+			
+			
+			//deal with itinerary
+			var itinerary = {
+					name: "新建旅行线路",
+					spotIds: [],
+					spots: []
+			};
+			
+			if(itineraryUuid){
+				$.ajax({
+					url: "/expert/itinerary/" + itineraryUuid,
+					type: "GET",
+					contentType:"application/json;charset=UTF-8",
+					success: function(data){
+						itinerary = data;
+						itinerary.spotIds = [];
+						itinerary.spots.map(function(s){
+							itinerary.spotIds.push(s.uuid);
+							addSpotToTimeline(s);
+						});
+						$("#itineraryTitle").text(itinerary.name);
+						
+					}
+				});
+			}
+			
+			function addSpotToTimeline(spot){
+				itinerary.spotIds.push(spot.uuid);
+				var arr = [];
+				var node = document.createElement("div");
+				node.classList.add("timeline-item");
+				node.dataset["uuid"] = spot.uuid;
+				arr.push('<div class="row">');
+				arr.push('<div class="col-xs-3 date"><i class="fa fa-calendar"></i><small class="">');
+				arr.push(spot.days||0);
+				arr.push('天</small><br><small class="">￥');
+				arr.push(spot.cost||0);
+				arr.push('</small></div>');
+				arr.push('<div class="col-xs-7 content no-top-border">');
+				arr.push('<div><h3 class="m-b-xs" style="float:left;">');
+				arr.push(spot.name||"");
+				arr.push('</h3></div>');
+				arr.push('<div id="" class="ibox-tools">');
+				arr.push('<a data-action="up" style="margin:5px;" title="上移"><i class="fa fa-arrow-up text-navy" style="margin-right:5px;"></i></a>');
+				arr.push('<a data-action="down" style="margin:5px;" title="下移"><i class="fa fa-arrow-down text-navy" style="margin-right:5px;"></i></a>');
+				arr.push('<a data-action="remove" style="margin:5px;" title="移除景点"><i class="fa fa-times text-navy" style=""></i></a>');
+				arr.push('</div><div style="clear:both;margin:20px;"></div>');
+				arr.push(initSpotItems(spot.items));
+				arr.push('</div></div>');
+				node.innerHTML = arr.join("");
+				var root = document.getElementById("itinerary-timeline");
+				root.appendChild(node);
+			}
+			
+			function initSpotItems(items){
+				var root = document.createElement("div");
+				items.map(function(item){
+					var node = document.createElement("div");
+					node.classList.add("article-item");
+					node.dataset["type"] = item.type;
+					var content = document.createElement("div");
+					content.classList.add("article-item-content");
+					content.dataset["type"] = item.type;
+					node.appendChild(content);
+					switch(item.type){
+						case "title":
+							node.classList.add("tbg-p-title");
+							content.innerHTML = item.text;
+							break;
+						case "text":
+							node.classList.add("tbg-p-text");
+							content.innerHTML = item.text;
+							break;
+						case "tip":
+							node.classList.add("tbg-p-tip");
+							content.innerHTML = item.text;
+							break;
+						case "shop":
+							node.classList.add("tbg-p-shop");
+							content.innerHTML = item.text;
+							break;
+						case "food":
+							node.classList.add("tbg-p-food");
+							content.innerHTML = item.text;
+							break;
+						case "image":
+							node.classList.add("tbg-p-image");
+							var img = document.createElement("img");
+							img.classList.add("tbg-article-img");
+							img.src = item.src;
+							content.appendChild(img);
+							var p = document.createElement("p");
+							p.classList.add("tbg-article-img-text");
+							p.innerHTML = item.text;
+							content.appendChild(p);
+							break;
+					}
+					root.appendChild(node);
+				});
+				return root.innerHTML;
+			}
+		});
+	</script>
+	
+</body>
+
+</html>

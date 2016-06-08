@@ -275,7 +275,7 @@ CREATE TABLE `test`.`itinerary_booking` (
   `comments` VARCHAR(1024) NULL,
   `start_date` DATETIME NULL,
   `return_date` DATETIME NULL,
-  `persons` INT 0,
+  `persons` INT NULL,
   `date_created` DATETIME NULL,
   `last_updated` DATETIME NULL,
   PRIMARY KEY (`uuid`))
