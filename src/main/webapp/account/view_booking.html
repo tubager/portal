@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>途八哥创意旅行网 - 查看行程</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link href="/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+    <style>
+    	.i-checks{
+    		margin: 10px;
+    	}
+    </style>
+</head>
+
+<body class="top-navigation" style="background-color: #f9f9f9;">
+    <div id="wrapper">
+      <div style="overflow: hidden;">
+        <div id="header-area" class="row border-bottom">
+        </div>
+        <div id="content-area">
+        	<div class="wrapper wrapper-content">
+	            <div class="row animated fadeInRight">
+	              	<div class="col-sm-7">
+	              		<div class="ibox float-e-margins">
+	              			<div class="ibox-title">
+	                        	<h5 id="itineraryTitle"></h5>
+	                    	</div>
+	                    	<div class="ibox-content">
+	                    		<div class="row">
+		              				<div class="col-sm-6">
+		                                <label>出发日期</label>
+		                                <p id="startDateField"></p>
+		              				</div>
+		              				<div class="col-sm-6">
+		                                <label>返程日期</label>
+		                                <p id="returnDateField"></p>
+		              				</div>
+	                    		</div>
+	                    		<div class="row">
+		              				<div class="col-sm-6">
+		                                <label style="margin-top: 20px;">出行人数</label>
+		                                <span id="personsField" ></span>
+		              				</div>
+	                    		</div>
+	                    		<label style="margin-top: 20px;">已选行程</label>
+			              		<div id="spotsList" style="margin-top: 0px;">
+		              			</div>
+		              			<label style="margin-top: 20px;">联系人</label>
+		              			<p id="contactField"></p>
+		              			<div class="row">
+		              				<div class="col-sm-6">
+				              			<label style="margin-top: 20px;">联系电话</label>
+				              			<p id="phoneField"></p>
+		              				</div>
+		              				<div class="col-sm-6">
+				              			<label style="margin-top: 20px;">邮箱</label>
+		              					<p id="emailField"></p>
+		              				</div>
+		              			</div>
+		              			<label style="margin-top: 20px;">留言</label>
+		              			<p id="commentsField"></p>
+	                    	</div>
+	              		</div>
+	              	</div>
+	            	<div class="col-sm-5" style="padding-left: 20px;">
+	            		<div class="ibox float-e-margins">
+		                    <div class="ibox-title">
+		                        <h5>该线路的所有预定</h5>
+		                    </div>
+		                </div>
+	                    <div id="itinerary-booking" class="">
+	                    </div>
+	            	</div>
+	            </div>
+          	</div>
+        </div>
+      </div>
+   </div>
+   
+
+    <!-- Mainly scripts -->
+    <script src="/js/jquery-2.1.1.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
+    <!-- Data picker -->
+    <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <!-- Sweet alert -->
+    <script src="/js/plugins/sweetalert/sweetalert.min.js"></script>
+    <!-- iCheck -->
+    <script src="/js/plugins/iCheck/icheck.min.js"></script>
+    
+	<script src="/js/tbg/header.js"></script>
+	<script src="/js/tbg/utility.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			
+			var itinerary = {
+					name: "",
+					spotIds: [],
+					spots: []
+			};
+			var booking = null;
+			var spotIds = [];
+			var bookedSpots = null;
+			var selectedSopts = [];
+			
+			var itineraryUuid = tbgUtil.getUrlParam("itineraryid");
+			var bookingUuid = tbgUtil.getUrlParam("bookingid");
+			
+			if(itineraryUuid){
+				loadItinerary(itineraryUuid);
+				loadUser();
+			}
+			
+			if(bookingUuid){
+				$.ajax({
+					url: "/account/itinerarybooking/" + bookingUuid,
+					type: "GET",
+					contentType:"application/json;charset=UTF-8",
+					success: function(data){
+						booking = data;
+						$("#startDateField").text(booking.startDate);
+						$("#returnDateField").text(booking.returnDate);
+						$("#personsField").text(booking.persons);
+						$("#contactField").text(booking.contact);
+						$("#phoneField").text(booking.phone);
+						$("#emailField").text(booking.email);
+						$("#commentsField").text(booking.comments);
+						
+						bookedSpots = booking.spotsUUid.split(",");
+						loadItinerary(booking.itineraryUuid);
+						loadBookings(booking.itineraryUuid);
+					}
+				});
+			}
+			
+			function loadUser(){
+				$.ajax({
+					url:'/currentuser',
+				    type:'GET',
+				    headers:{
+				        Accept:"application/json",
+				        "Content-Type": "application/json;charset=UTF-8"
+				    }
+				}).done(function(data){
+					if(data && data.name != "anonymousUser"){
+						$("#contactField").text(data.nickName || data.name)
+						$("#phoneField").text(data.mobile || "");
+						$("#emailField").text(data.email || "");
+					}
+				});
+			}
+			
+			function loadItinerary(uuid){
+				$.ajax({
+					url: "/itinerary/" + uuid,
+					type: "GET",
+					contentType:"application/json;charset=UTF-8",
+					success: function(data){
+						itinerary = data;
+						spotIds = itinerary.spots;
+						itinerary.spotIds = [];
+						$("#itineraryTitle").text(itinerary.name);
+						initCheckbox();
+					}
+				});
+			}
+			
+			function initCheckbox(){
+				var arr = [];
+				arr.push("<ul>");
+				spotIds.map(function(spot){
+					if(bookedSpots && bookedSpots.indexOf(spot.uuid) >= 0){
+						arr.push('<li>');
+						arr.push(spot.name);
+						arr.push('</li>');
+					}
+				});
+				arr.push("</ul>");
+				document.getElementById("spotsList").innerHTML = arr.join("");
+			}
+			
+			var bookings = [];
+			function loadBookings(itineraryUuid){
+				$.ajax({
+					url: "/account/itinerarybooking/byitinerary/" + itineraryUuid,
+					type: "GET",
+					contentType:"application/json;charset=UTF-8",
+					success: function(data){
+						bookings = data;
+						bookings.map(function(book){
+							var node = renderBooking(book);
+							document.getElementById("itinerary-booking").appendChild(node);
+						});
+					}
+				});
+			}
+			
+			function renderBooking(spot){
+				var node = document.createElement("div");
+				node.classList.add("col-md-6");
+				var arr = [];
+				arr.push('<div class="contact-box">');
+				arr.push('<div class="col-sm-12">');
+				arr.push('<p><i class="fa fa-calendar"></i>&nbsp;' + spot.startDate + " 到 " + spot.returnDate + '</p>');
+				arr.push('<p><i class="fa fa-user"></i>&nbsp;'+spot.createdByName+'</p>');
+				arr.push('<p><i class="fa fa-mobile"></i>&nbsp;'+spot.phone+'</p>');
+				arr.push('<p><i class="fa fa-envelope"></i>&nbsp;'+spot.email+'</p>');
+				arr.push('<p><i class="fa fa-users"></i>&nbsp;' + spot.persons + " 人" + '</p>');
+				arr.push('<p><i class="fa fa-check-square"></i>&nbsp;' + getStatus(spot.status) + '</p>');
+				arr.push('<p class="toolbar" style="position:absolute;right:0px;bottom:0px;">');
+				arr.push('<a href="/account/view_booking.html?bookingid='+spot.uuid+'" class="btn btn-white pull-right" type="button"><i class="fa fa-eye"></i></a>');
+				arr.push('</p>');
+				arr.push('</div>');
+				arr.push('<div class="clearfix"></div>');
+				arr.push('</div>');
+				node.innerHTML = arr.join("");
+				return node;
+			}
+			
+			function getStatus(status){
+				var val = "";
+				switch(status){
+					case "SUBMIT":
+						val = "已预订";
+						break;
+				}
+				return val;
+			}
+			
+			
+			
+		});
+	</script>
+	
+</body>
+
+</html>
